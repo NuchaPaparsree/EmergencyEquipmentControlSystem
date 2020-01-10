@@ -1,0 +1,1008 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4ED097C8-2F26-49D4-80F3-C4E21EF9C347}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyProject</RootNamespace>
+    <AssemblyName>MyProject</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="QRCoder, Version=1.3.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Administrator\Desktop\New folder\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.DataVisualization" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="AspNet.ScriptManager.bootstrap">
+      <HintPath>..\packages\AspNet.ScriptManager.bootstrap.3.0.0\lib\net45\AspNet.ScriptManager.bootstrap.dll</HintPath>
+    </Reference>
+    <Reference Include="AspNet.ScriptManager.jQuery">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.1.10.2\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ScriptManager.MSAjax">
+      <HintPath>..\packages\Microsoft.AspNet.ScriptManager.MSAjax.5.0.0\lib\net45\Microsoft.ScriptManager.MSAjax.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ScriptManager.WebForms">
+      <HintPath>..\packages\Microsoft.AspNet.ScriptManager.WebForms.5.0.0\lib\net45\Microsoft.ScriptManager.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Web.Optimization.WebForms">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.WebForms.1.1.3\lib\net45\Microsoft.AspNet.Web.Optimization.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.FriendlyUrls">
+      <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net45\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Administrator\Desktop\New folder\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Administrator\Desktop\New folder\zxing.presentation.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="About.aspx" />
+    <Content Include="App_Data\DBx.mdf" />
+    <Content Include="App_Data\DBx_log.ldf">
+      <DependentUpon>DBx.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\MyProjectDB.mdf" />
+    <Content Include="App_Data\MyProjectDB_log.ldf">
+      <DependentUpon>MyProjectDB.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\NORTHWND.MDF" />
+    <Content Include="App_Data\NORTHWND_log.ldf">
+      <DependentUpon>NORTHWND.MDF</DependentUpon>
+    </Content>
+    <Content Include="Chart\column.jpg" />
+    <Content Include="css\gallery-grid.css" />
+    <Content Include="DashBoardMain.aspx" />
+    <Content Include="DashBoard\DashBoard.aspx" />
+    <Content Include="fonts\download %281%29.jpg" />
+    <Content Include="Img\1 ชนิดผงเคมีแห้ง ถังสีเเดง.png" />
+    <Content Include="Img\1l.jpg" />
+    <Content Include="Img\2 คาร์บอนไดออกไซด์.png" />
+    <Content Include="Img\3 สูตรนำ.jpg" />
+    <Content Include="Img\4 นำ้สะสมเเรงดัน.jpg" />
+    <Content Include="Img\6 โฟม.png" />
+    <Content Include="Img\Amerex_Group_ABE_2.jpg" />
+    <Content Include="Img\background11.jpg" />
+    <Content Include="Img\Background5.jpg" />
+    <Content Include="Img\bann.jpg" />
+    <Content Include="Img\BF2000.jpg" />
+    <Content Include="Img\BG.jpg" />
+    <Content Include="Img\Camera2.png" />
+    <Content Include="Img\construction-health-and-safety.jpg" />
+    <Content Include="Img\D1.jpg" />
+    <Content Include="Img\Document.png" />
+    <Content Include="Img\download.jpg" />
+    <Content Include="Img\emty-image.png" />
+    <Content Include="Img\fire-hose.jpg" />
+    <Content Include="Img\FireHose.png" />
+    <Content Include="Img\halotron-1-2.jpg" />
+    <Content Include="Img\health-safety-hero.jpg" />
+    <Content Include="Img\high.jpg" />
+    <Content Include="Img\image-full.jpg" />
+    <Content Include="Img\lo.jpg" />
+    <Content Include="Img\login.png" />
+    <Content Include="Img\login2.jpg" />
+    <Content Include="Img\nebosh.jpg" />
+    <Content Include="Img\PreventingSuicideBG.jpg" />
+    <Content Include="Img\qr-code.png" />
+    <Content Include="Img\Safety-Engineering-1243x431.jpg" />
+    <Content Include="Img\safetymanagers.png" />
+    <Content Include="Img\sky.jpg" />
+    <Content Include="Img\Smart-Cities-header-images-safety.png" />
+    <Content Include="Img\wp3504266.png" />
+    <Content Include="LibraryFile\bootstrap-responsive.min.css" />
+    <Content Include="LibraryFile\bootstrap.min.css" />
+    <Content Include="LibraryFile\bootstrap.min.js" />
+    <Content Include="LibraryFile\jquery.min.js" />
+    <Content Include="MyBootStrap\bootstrap.min.css" />
+    <Content Include="MyBootStrap\bootstrap.min.js" />
+    <Content Include="MyBootStrap\font-awesome.min.css" />
+    <Content Include="MyBootStrap\jquery.min.js" />
+    <Content Include="Contact.aspx" />
+    <Content Include="Content\Site.css" />
+    <Content Include="css\home.css" />
+    <Content Include="css\one.css" />
+    <Content Include="css\three.css" />
+    <Content Include="css\login.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Img\a1.png" />
+    <Content Include="Img\a3.png" />
+    <Content Include="Img\FireExtinguisher.png" />
+    <Content Include="Img\map.png" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\jquery.min.js" />
+    <Content Include="MyScripts\bootstrap.js" />
+    <Content Include="MyScripts\jquery-1.8.2.js" />
+    <Content Include="MyScripts\one.js" />
+    <Content Include="MyStyles\bootstrap.css" />
+    <Content Include="PageAdmin\ConfigBackup\WebForm1.aspx" />
+    <Content Include="PageAdmin\Photo\Bell1.jpg" />
+    <Content Include="PageAdmin\Photo\Bell2.jpg" />
+    <Content Include="PageAdmin\Photo\Chem1.jpg" />
+    <Content Include="PageAdmin\Photo\Dt1.png" />
+    <Content Include="PageAdmin\Photo\EI1.png" />
+    <Content Include="PageAdmin\Photo\Elec1.jpg" />
+    <Content Include="PageAdmin\Photo\FD1.jpg" />
+    <Content Include="PageAdmin\Photo\Fhc1.jpg" />
+    <Content Include="Report\WebForm_BuildReport.aspx" />
+    <Content Include="Report\WebForm_Graph.aspx" />
+    <Content Include="PageAdmin\WebForm_CheckItem.aspx" />
+    <Content Include="PageUser\WFCSD.aspx" />
+    <Content Include="PageAdmin\WebForm_Committee.aspx" />
+    <Content Include="Photo\Bell1.jpg" />
+    <Content Include="Photo\Bell2.jpg" />
+    <Content Include="Photo\Chem1.jpg" />
+    <Content Include="Photo\Dt1.png" />
+    <Content Include="Photo\EI1.png" />
+    <Content Include="Photo\Elec1.jpg" />
+    <Content Include="Photo\Ext1.jpg" />
+    <Content Include="Photo\Ext2.jpg" />
+    <Content Include="Photo\Ext3.jpg" />
+    <Content Include="Photo\Ext4.jpg" />
+    <Content Include="Photo\Ext5.jpg" />
+    <Content Include="Photo\Ext6.jpg" />
+    <Content Include="Photo\Ext7.jpg" />
+    <Content Include="Photo\Ext8.jpg" />
+    <Content Include="Photo\FD1.jpg" />
+    <Content Include="Photo\Fhc1.jpg" />
+    <Content Include="Report\ReportChairman.aspx" />
+    <Content Include="Report\ReportCheckSheet.aspx" />
+    <Content Include="Report\ReportCheckSheet_User.aspx" />
+    <Content Include="Report\ReportCommittee.aspx" />
+    <Content Include="Report\WebForm2.aspx" />
+    <Content Include="Report\WebForm_ReportChairman.aspx" />
+    <Content Include="Report\WebForm_ReportCommittee.aspx" />
+    <Content Include="Report\WebForm_PrintQR.aspx" />
+    <Content Include="Report\WebForm_Report.aspx" />
+    <Content Include="Report\WebForm_ReportCheckSheet.aspx" />
+    <Content Include="Report_Chairman.aspx" />
+    <Content Include="Report_Committee.aspx" />
+    <Content Include="Scripts\DateTimePicker1\bootstrap-datetimepicker.css" />
+    <Content Include="Scripts\DateTimePicker1\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\DateTimePicker1\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\DateTimePicker1\moment.min.js" />
+    <Content Include="Scripts\WebForm_Graph.aspx" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Test.aspx" />
+    <Content Include="WebForm_Bell.aspx" />
+    <Content Include="WebForm_CheckSheetDataView.aspx" />
+    <Content Include="WebForm_CheckSheetViewSelect.aspx" />
+    <Content Include="WebForm_ChecklistView.aspx" />
+    <Content Include="WebForm_Contact.aspx" />
+    <Content Include="PageAdmin\WebForm_Controller.aspx" />
+    <Content Include="PageUser\WebForm_DashBoardMobile.aspx" />
+    <Content Include="WebForm_FireExtinguisher.aspx" />
+    <Content Include="WebForm_FireHose.aspx" />
+    <Content Include="WebForm_HomePage.aspx" />
+    <Content Include="PageAdmin\WebForm_Item.aspx" />
+    <Content Include="PageAdmin\WebForm_ItemSubType.aspx" />
+    <Content Include="PageAdmin\WebForm_ItemType.aspx" />
+    <Content Include="WebForm_Login.aspx" />
+    <Content Include="WebForm_LoginCommon.aspx" />
+    <Content Include="WebForm_LoginMobile.aspx" />
+    <Content Include="PageAdmin\WebForm_Manager.aspx" />
+    <Content Include="WebForm_Menu.aspx" />
+    <Content Include="WebForm_Manual.aspx" />
+    <Content Include="PageAdmin\WebForm_Place.aspx" />
+    <Content Include="PageAdmin\Photo\Ext6.jpg" />
+    <Content Include="PageAdmin\Photo\Ext7.jpg" />
+    <Content Include="PageAdmin\Photo\Ext3.jpg" />
+    <Content Include="PageAdmin\Photo\Ext4.jpg" />
+    <Content Include="PageAdmin\Photo\Ext5.jpg" />
+    <Content Include="PageAdmin\Photo\Ext1.jpg" />
+    <Content Include="PageAdmin\Photo\Ext2.jpg" />
+    <Content Include="PageAdmin\Photo\Ext8.jpg" />
+    <Content Include="WebForm_ViewCheckSheet.aspx" />
+    <Content Include="PageAdmin\pdf_Report\Rep.Ext.1.pdf" />
+    <Content Include="Location\Ext_A1.pdf" />
+    <Content Include="Location\Ext_A2.pdf" />
+    <Content Include="Location\Ext_B2.pdf" />
+    <Content Include="Location\Ext_C1.pdf" />
+    <Content Include="Location\Ext_C2.pdf" />
+    <Content Include="Location\Ext_E1.pdf" />
+    <Content Include="Location\Ext_E2.pdf" />
+    <Content Include="Location\Ext_E3.pdf" />
+    <Content Include="Location\Ext_F1.pdf" />
+    <Content Include="Location\Ext_F2.pdf" />
+    <Content Include="Location\Ext_F3.pdf" />
+    <Content Include="Location\Ext_G1.pdf" />
+    <Content Include="Location\Ext_G2.pdf" />
+    <Content Include="Location\Ext_G3.pdf" />
+    <Content Include="Location\Ext_GG.pdf" />
+    <Content Include="Location\Ext_H1.pdf" />
+    <Content Include="Location\Ext_H2.pdf" />
+    <Content Include="Location\Ext_H3.pdf" />
+    <Content Include="Location\Ext_HG.pdf" />
+    <Content Include="Location\Ext_I1.pdf" />
+    <Content Include="Location\Ext_I2.pdf" />
+    <Content Include="Location\Ext_I3.pdf" />
+    <Content Include="Location\Ext_IG.pdf" />
+    <Content Include="PageAdmin\Web.config" />
+    <Content Include="PageUser\Web.config" />
+    <Content Include="DashBoard\SiteTestGod.Master" />
+    <Content Include="pdf_Report\Rep.Ext.1.pdf" />
+    <Content Include="Img\IBuilding3rdfloor.pdf" />
+    <Content Include="Img\H Building, 1st floor.pdf" />
+    <Content Include="pdf_Report\Rep.Hose.1.pdf" />
+    <Content Include="Location\FHC_H1.pdf" />
+    <Content Include="Location\FHC_H2.pdf" />
+    <Content Include="Location\FHC_H3.pdf" />
+    <Content Include="Location\FHC_HG.pdf" />
+    <Content Include="Location\FHC_I1.pdf" />
+    <Content Include="Location\FHC_I2.pdf" />
+    <Content Include="Location\FHC_I3.pdf" />
+    <Content Include="Location\FHC_IG.pdf" />
+    <Content Include="Location\BELL_H1.pdf" />
+    <Content Include="Location\BELL_H2.pdf" />
+    <Content Include="Location\BELL_H3.pdf" />
+    <Content Include="Location\BELL_HG.pdf" />
+    <Content Include="Location\BELL_I1.pdf" />
+    <Content Include="Location\BELL_I2.pdf" />
+    <Content Include="Location\BELL_I3.pdf" />
+    <Content Include="Location\BELL_IG.pdf" />
+    <Content Include="PageAdmin\Location\BELL_H1.pdf" />
+    <Content Include="PageAdmin\Location\BELL_H2.pdf" />
+    <Content Include="PageAdmin\Location\BELL_H3.pdf" />
+    <Content Include="PageAdmin\Location\BELL_HG.pdf" />
+    <Content Include="PageAdmin\Location\BELL_I1.pdf" />
+    <Content Include="PageAdmin\Location\BELL_I2.pdf" />
+    <Content Include="PageAdmin\Location\Ext_A1.pdf" />
+    <Content Include="PageAdmin\Location\Ext_A2.pdf" />
+    <Content Include="PageAdmin\Location\Ext_B2.pdf" />
+    <Content Include="PageAdmin\Location\Ext_C1.pdf" />
+    <Content Include="PageAdmin\Location\Ext_C2.pdf" />
+    <Content Include="PageAdmin\Location\Ext_D1.pdf" />
+    <Content Include="PageAdmin\Location\Ext_D2.pdf" />
+    <Content Include="PageAdmin\Location\Ext_D3.pdf" />
+    <Content Include="PageAdmin\Location\Ext_E1.pdf" />
+    <Content Include="PageAdmin\Location\Ext_E2.pdf" />
+    <Content Include="PageAdmin\Location\Ext_E3.pdf" />
+    <Content Include="PageAdmin\Location\Ext_F1.pdf" />
+    <Content Include="PageAdmin\Location\Ext_F2.pdf" />
+    <Content Include="PageAdmin\Location\Ext_F3.pdf" />
+    <Content Include="PageAdmin\Location\Ext_G1.pdf" />
+    <Content Include="PageAdmin\Location\Ext_G2.pdf" />
+    <Content Include="PageAdmin\Location\Ext_G3.pdf" />
+    <Content Include="PageAdmin\Location\Ext_GG.pdf" />
+    <Content Include="PageAdmin\Location\Ext_H1.pdf" />
+    <Content Include="PageAdmin\Location\Ext_H2.pdf" />
+    <Content Include="PageAdmin\Location\Ext_H3.pdf" />
+    <Content Include="PageAdmin\Location\Ext_HG.pdf" />
+    <Content Include="PageAdmin\Location\Ext_I1.pdf" />
+    <Content Include="PageAdmin\Location\Ext_I2.pdf" />
+    <Content Include="PageAdmin\Location\Ext_I3.pdf" />
+    <Content Include="PageAdmin\Location\Ext_IG.pdf" />
+    <Content Include="PageAdmin\Location\FHC_H1.pdf" />
+    <Content Include="PageAdmin\Location\FHC_H2.pdf" />
+    <Content Include="PageAdmin\Location\FHC_H3.pdf" />
+    <Content Include="PageAdmin\Location\FHC_HG.pdf" />
+    <Content Include="PageAdmin\Location\FHC_I1.pdf" />
+    <Content Include="PageAdmin\Location\FHC_I2.pdf" />
+    <Content Include="PageAdmin\Location\FHC_I3.pdf" />
+    <Content Include="PageAdmin\Location\FHC_IG.pdf" />
+    <Content Include="PageAdmin\pdf_Report\Rep.Hose.1.pdf" />
+    <Content Include="PageAdmin\Location\BELL_I3.pdf" />
+    <Content Include="PageAdmin\Location\BELL_IG.pdf" />
+    <Content Include="Location\Ext_D1.pdf" />
+    <Content Include="Location\Ext_D2.pdf" />
+    <Content Include="Location\Ext_D3.pdf" />
+    <Content Include="WebForm_ViewCheckSheet_User.aspx" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Report\DataSetTable.xsc">
+      <DependentUpon>DataSetTable.xsd</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\Project_Safety.pubxml" />
+    <None Include="Report\DataSetTable.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetTable.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Report\DataSetTable.xss">
+      <DependentUpon>DataSetTable.xsd</DependentUpon>
+    </Content>
+    <Content Include="Report\Web.config" />
+    <Content Include="Report\DataSet_Checklist.xsc">
+      <DependentUpon>DataSet_Checklist.xsd</DependentUpon>
+    </Content>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Report\DataSet_Checklist.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet_Checklist.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Report\DataSet_Checklist.xss">
+      <DependentUpon>DataSet_Checklist.xsd</DependentUpon>
+    </Content>
+    <Content Include="Report\DataSet_PrintQR.xsc">
+      <DependentUpon>DataSet_PrintQR.xsd</DependentUpon>
+    </Content>
+    <None Include="Report\DataSet_PrintQR.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet_PrintQR.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Report\DataSet_PrintQR.xss">
+      <DependentUpon>DataSet_PrintQR.xsd</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="MyModules\General.vb" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\WebForms\DetailsView.js" />
+    <Content Include="Scripts\WebForms\Focus.js" />
+    <Content Include="Scripts\WebForms\GridView.js" />
+    <Content Include="Scripts\WebForms\Menu.js" />
+    <Content Include="Scripts\WebForms\MenuStandards.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjax.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxApplicationServices.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxComponentModel.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxCore.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxGlobalization.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxHistory.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxNetwork.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxSerialization.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxTimer.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxWebForms.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxWebServices.js" />
+    <Content Include="Scripts\WebForms\SmartNav.js" />
+    <Content Include="Scripts\WebForms\TreeView.js" />
+    <Content Include="Scripts\WebForms\WebForms.js" />
+    <Content Include="Scripts\WebForms\WebParts.js" />
+    <Content Include="Scripts\WebForms\WebUIValidation.js" />
+    <Content Include="Site.Master" />
+    <Content Include="ViewSwitcher.ascx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Bundle.config" />
+    <Content Include="Site.Mobile.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="About.aspx.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="About.aspx.designer.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DashBoardMain.aspx.cs">
+      <DependentUpon>DashBoardMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DashBoardMain.aspx.designer.cs">
+      <DependentUpon>DashBoardMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DashBoard\DashBoard.aspx.cs">
+      <DependentUpon>DashBoard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DashBoard\DashBoard.aspx.designer.cs">
+      <DependentUpon>DashBoard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DashBoard\SiteTestGod.Master.cs">
+      <DependentUpon>SiteTestGod.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DashBoard\SiteTestGod.Master.designer.cs">
+      <DependentUpon>SiteTestGod.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="PageAdmin\ConfigBackup\WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageAdmin\ConfigBackup\WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\WebForm_BuildReport.aspx.cs">
+      <DependentUpon>WebForm_BuildReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\WebForm_BuildReport.aspx.designer.cs">
+      <DependentUpon>WebForm_BuildReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\WebForm_Graph.aspx.cs">
+      <DependentUpon>WebForm_Graph.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\WebForm_Graph.aspx.designer.cs">
+      <DependentUpon>WebForm_Graph.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_CheckItem.aspx.cs">
+      <DependentUpon>WebForm_CheckItem.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_CheckItem.aspx.designer.cs">
+      <DependentUpon>WebForm_CheckItem.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageUser\WFCSD.aspx.cs">
+      <DependentUpon>WFCSD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageUser\WFCSD.aspx.designer.cs">
+      <DependentUpon>WFCSD.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_Committee.aspx.cs">
+      <DependentUpon>WebForm_Committee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_Committee.aspx.designer.cs">
+      <DependentUpon>WebForm_Committee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\DataSetTable.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetTable.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Report\DataSet_Checklist.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet_Checklist.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Report\DataSet_PrintQR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet_PrintQR.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportChairman.aspx.cs">
+      <DependentUpon>ReportChairman.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\ReportChairman.aspx.designer.cs">
+      <DependentUpon>ReportChairman.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportCheckSheet.aspx.cs">
+      <DependentUpon>ReportCheckSheet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\ReportCheckSheet.aspx.designer.cs">
+      <DependentUpon>ReportCheckSheet.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportCheckSheet_User.aspx.cs">
+      <DependentUpon>ReportCheckSheet_User.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\ReportCheckSheet_User.aspx.designer.cs">
+      <DependentUpon>ReportCheckSheet_User.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportCommittee.aspx.cs">
+      <DependentUpon>ReportCommittee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\ReportCommittee.aspx.designer.cs">
+      <DependentUpon>ReportCommittee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\WebForm2.aspx.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\WebForm2.aspx.designer.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\WebForm_ReportChairman.aspx.cs">
+      <DependentUpon>WebForm_ReportChairman.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\WebForm_ReportChairman.aspx.designer.cs">
+      <DependentUpon>WebForm_ReportChairman.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\WebForm_ReportCommittee.aspx.cs">
+      <DependentUpon>WebForm_ReportCommittee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\WebForm_ReportCommittee.aspx.designer.cs">
+      <DependentUpon>WebForm_ReportCommittee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\WebForm_PrintQR.aspx.cs">
+      <DependentUpon>WebForm_PrintQR.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\WebForm_PrintQR.aspx.designer.cs">
+      <DependentUpon>WebForm_PrintQR.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\WebForm_Report.aspx.cs">
+      <DependentUpon>WebForm_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\WebForm_Report.aspx.designer.cs">
+      <DependentUpon>WebForm_Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\WebForm_ReportCheckSheet.aspx.cs">
+      <DependentUpon>WebForm_ReportCheckSheet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\WebForm_ReportCheckSheet.aspx.designer.cs">
+      <DependentUpon>WebForm_ReportCheckSheet.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report_Chairman.aspx.cs">
+      <DependentUpon>Report_Chairman.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report_Chairman.aspx.designer.cs">
+      <DependentUpon>Report_Chairman.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report_Committee.aspx.cs">
+      <DependentUpon>Report_Committee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report_Committee.aspx.designer.cs">
+      <DependentUpon>Report_Committee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Scripts\WebForm_Graph.aspx.cs">
+      <DependentUpon>WebForm_Graph.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Scripts\WebForm_Graph.aspx.designer.cs">
+      <DependentUpon>WebForm_Graph.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Test.aspx.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Test.aspx.designer.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_Bell.aspx.cs">
+      <DependentUpon>WebForm_Bell.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_Bell.aspx.designer.cs">
+      <DependentUpon>WebForm_Bell.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_CheckSheetDataView.aspx.cs">
+      <DependentUpon>WebForm_CheckSheetDataView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_CheckSheetDataView.aspx.designer.cs">
+      <DependentUpon>WebForm_CheckSheetDataView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_CheckSheetViewSelect.aspx.cs">
+      <DependentUpon>WebForm_CheckSheetViewSelect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_CheckSheetViewSelect.aspx.designer.cs">
+      <DependentUpon>WebForm_CheckSheetViewSelect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_ChecklistView.aspx.cs">
+      <DependentUpon>WebForm_ChecklistView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_ChecklistView.aspx.designer.cs">
+      <DependentUpon>WebForm_ChecklistView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_Contact.aspx.cs">
+      <DependentUpon>WebForm_Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_Contact.aspx.designer.cs">
+      <DependentUpon>WebForm_Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_Controller.aspx.cs">
+      <DependentUpon>WebForm_Controller.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_Controller.aspx.designer.cs">
+      <DependentUpon>WebForm_Controller.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageUser\WebForm_DashBoardMobile.aspx.cs">
+      <DependentUpon>WebForm_DashBoardMobile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageUser\WebForm_DashBoardMobile.aspx.designer.cs">
+      <DependentUpon>WebForm_DashBoardMobile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_FireExtinguisher.aspx.cs">
+      <DependentUpon>WebForm_FireExtinguisher.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_FireExtinguisher.aspx.designer.cs">
+      <DependentUpon>WebForm_FireExtinguisher.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_FireHose.aspx.cs">
+      <DependentUpon>WebForm_FireHose.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_FireHose.aspx.designer.cs">
+      <DependentUpon>WebForm_FireHose.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_HomePage.aspx.cs">
+      <DependentUpon>WebForm_HomePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_HomePage.aspx.designer.cs">
+      <DependentUpon>WebForm_HomePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_Item.aspx.cs">
+      <DependentUpon>WebForm_Item.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_Item.aspx.designer.cs">
+      <DependentUpon>WebForm_Item.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_ItemSubType.aspx.cs">
+      <DependentUpon>WebForm_ItemSubType.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_ItemSubType.aspx.designer.cs">
+      <DependentUpon>WebForm_ItemSubType.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_ItemType.aspx.cs">
+      <DependentUpon>WebForm_ItemType.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_ItemType.aspx.designer.cs">
+      <DependentUpon>WebForm_ItemType.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_Login.aspx.cs">
+      <DependentUpon>WebForm_Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_Login.aspx.designer.cs">
+      <DependentUpon>WebForm_Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_LoginCommon.aspx.cs">
+      <DependentUpon>WebForm_LoginCommon.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_LoginCommon.aspx.designer.cs">
+      <DependentUpon>WebForm_LoginCommon.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_LoginMobile.aspx.cs">
+      <DependentUpon>WebForm_LoginMobile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_LoginMobile.aspx.designer.cs">
+      <DependentUpon>WebForm_LoginMobile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_Manager.aspx.cs">
+      <DependentUpon>WebForm_Manager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_Manager.aspx.designer.cs">
+      <DependentUpon>WebForm_Manager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_Menu.aspx.cs">
+      <DependentUpon>WebForm_Menu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_Menu.aspx.designer.cs">
+      <DependentUpon>WebForm_Menu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_Manual.aspx.cs">
+      <DependentUpon>WebForm_Manual.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_Manual.aspx.designer.cs">
+      <DependentUpon>WebForm_Manual.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_Place.aspx.cs">
+      <DependentUpon>WebForm_Place.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageAdmin\WebForm_Place.aspx.designer.cs">
+      <DependentUpon>WebForm_Place.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Master.designer.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="SiteMe.Mobile.Master.cs">
+      <DependentUpon>SiteMe.Mobile.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SiteMe.Mobile.Master.designer.cs">
+      <DependentUpon>SiteMe.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Mobile.Master.cs">
+      <DependentUpon>Site.Mobile.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Mobile.Master.designer.cs">
+      <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="SiteMe.Master.cs">
+      <DependentUpon>SiteMe.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SiteMe.Master.designer.cs">
+      <DependentUpon>SiteMe.Master</DependentUpon>
+    </Compile>
+    <Compile Include="SiteMySystem.Master.cs">
+      <DependentUpon>SiteMySystem.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SiteMySystem.Master.designer.cs">
+      <DependentUpon>SiteMySystem.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ViewSwitcher.ascx.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewSwitcher.ascx.designer.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_ViewCheckSheet.aspx.cs">
+      <DependentUpon>WebForm_ViewCheckSheet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_ViewCheckSheet.aspx.designer.cs">
+      <DependentUpon>WebForm_ViewCheckSheet.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm_ViewCheckSheet_User.aspx.cs">
+      <DependentUpon>WebForm_ViewCheckSheet_User.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm_ViewCheckSheet_User.aspx.designer.cs">
+      <DependentUpon>WebForm_ViewCheckSheet_User.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MyFiles\" />
+    <Folder Include="PageUser\ConfigBackup\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="SiteMe.Master" />
+    <Content Include="SiteMe.Mobile.Master" />
+    <Content Include="SiteMySystem.Master" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Report\Report_Checklist.rdlc" />
+    <EmbeddedResource Include="Report\Report_CheckSheet.rdlc" />
+    <EmbeddedResource Include="Report\Report_PrintQR.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

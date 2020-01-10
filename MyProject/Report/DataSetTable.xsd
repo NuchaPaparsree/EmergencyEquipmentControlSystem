@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSetTable" targetNamespace="http://tempuri.org/DataSetTable.xsd" xmlns:mstns="http://tempuri.org/DataSetTable.xsd" xmlns="http://tempuri.org/DataSetTable.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection ConnectionStringObject="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\DBx.mdf;Integrated Security=True" IsAppSettingsProperty="false" Modifier="Assembly" Name="DBxConnectionString1 (MyProject)" ParameterPrefix="@" Provider="System.Data.SqlClient" />
+          <Connection ConnectionStringObject="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\MyProjectDB.mdf;Integrated Security=True" IsAppSettingsProperty="false" Modifier="Assembly" Name="xPimConnectionString1 (MyProject)" ParameterPrefix="@" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DataTableCheckSheetTableAdapter" GeneratorDataComponentClassName="DataTableCheckSheetTableAdapter" Name="DataTableCheckSheet" UserDataComponentName="DataTableCheckSheetTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="xPimConnectionString1 (MyProject)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill_ID" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData_ID" GeneratorSourceName="Fill_ID" GetMethodModifier="Public" GetMethodName="GetData_ID" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData_ID" UserSourceName="Fill_ID">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT ItemType.ID,(SELECT  CheckSheet.ID  FROM  CheckSheet ) as IDCheckSheet,
+ItemType.Name,
+CheckItem.CheckID,CheckItem.Detail
+,CASE 
+WHEN result = 0 THEN '/' 
+WHEN result &gt;= 1000 THEN '-'
+ELSE 'O'
+END as CheckResult
+,CheckData.CommentNG
+,(SELECT  CheckSheet.YearMonth  FROM  CheckSheet ) as YearMonth
+,(SELECT  Place.Area FROM  Place INNER Join CheckSheet on CheckSheet.PlaceID = Place.ID ) as Area
+,(SELECT  Controller.Name FROM  Controller INNER Join CheckSheet on CheckSheet.ControllerID = Controller.ID ) as NameUser
+,(SELECT (Controller.Department+' '+Controller.Section) as DIV  FROM  Controller INNER Join CheckSheet on CheckSheet.ControllerID = Controller.ID ) as DIV
+FROM             CheckItem
+					LEFT JOIN  ItemType ON CheckItem.ItemTypeID = ItemType.ID 
+					LEFT JOIN
+						 
+						 (SELECT  CheckSheetDetail.CheckItemID,sum(case when (OK = 1 and NG = 0) then 0 when (OK = 0 and NG = 0) then 1000 else 1 end) as result ,DtComment.CommentNG
+						 FROM      CheckSheetDetail left join 
+							(SELECT distinct CheckItemID, STUFF((SELECT   ',' + Comment 
+							 FROM (SELECT distinct CheckItemID,Comment
+									FROM [dbo].[CheckSheetDetail]
+									where (OK = 'false' and NG = 'true')	 
+									and Comment &lt;&gt; '') as TB
+			
+									where TB.CheckItemID=CheckSheetDetail.CheckItemID
+									FOR XML PATH ('')), 1, 1, '') as CommentNG
+
+						FROM [dbo].[CheckSheetDetail]
+ 
+						where (OK = 'false' and NG = 'true')	 
+						and Comment &lt;&gt; '') as DtComment on DtComment.CheckItemID = CheckSheetDetail.CheckItemID
+
+						
+						 group by CheckSheetDetail.CheckItemID,CommentNG
+						
+                        ) as CheckData on CheckItem.ID = CheckData.CheckItemID</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ID" DataSetColumn="ID" />
+              <Mapping SourceColumn="IDCheckSheet" DataSetColumn="IDCheckSheet" />
+              <Mapping SourceColumn="Name" DataSetColumn="Name" />
+              <Mapping SourceColumn="Detail" DataSetColumn="Detail" />
+              <Mapping SourceColumn="CheckResult" DataSetColumn="CheckResult" />
+              <Mapping SourceColumn="YearMonth" DataSetColumn="YearMonth" />
+              <Mapping SourceColumn="Area" DataSetColumn="Area" />
+              <Mapping SourceColumn="NameUser" DataSetColumn="NameUser" />
+              <Mapping SourceColumn="DIV" DataSetColumn="DIV" />
+              <Mapping SourceColumn="CommentNG" DataSetColumn="CommentNG" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSetTable" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSetTable" msprop:Generator_UserDSName="DataSetTable">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DataTableCheckSheet" msprop:Generator_TableClassName="DataTableCheckSheetDataTable" msprop:Generator_TableVarName="tableDataTableCheckSheet" msprop:Generator_TablePropName="DataTableCheckSheet" msprop:Generator_RowDeletingName="DataTableCheckSheetRowDeleting" msprop:Generator_RowChangingName="DataTableCheckSheetRowChanging" msprop:Generator_RowEvHandlerName="DataTableCheckSheetRowChangeEventHandler" msprop:Generator_RowDeletedName="DataTableCheckSheetRowDeleted" msprop:Generator_UserTableName="DataTableCheckSheet" msprop:Generator_RowChangedName="DataTableCheckSheetRowChanged" msprop:Generator_RowEvArgName="DataTableCheckSheetRowChangeEvent" msprop:Generator_RowClassName="DataTableCheckSheetRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="IDCheckSheet" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnIDCheckSheet" msprop:Generator_ColumnPropNameInRow="IDCheckSheet" msprop:Generator_ColumnPropNameInTable="IDCheckSheetColumn" msprop:Generator_UserColumnName="IDCheckSheet" type="xs:int" minOccurs="0" />
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="120" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CheckID" msprop:Generator_ColumnVarNameInTable="columnCheckID" msprop:Generator_ColumnPropNameInRow="CheckID" msprop:Generator_ColumnPropNameInTable="CheckIDColumn" msprop:Generator_UserColumnName="CheckID" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="Detail" msprop:Generator_ColumnVarNameInTable="columnDetail" msprop:Generator_ColumnPropNameInRow="Detail" msprop:Generator_ColumnPropNameInTable="DetailColumn" msprop:Generator_UserColumnName="Detail" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="160" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CheckResult" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCheckResult" msprop:Generator_ColumnPropNameInRow="CheckResult" msprop:Generator_ColumnPropNameInTable="CheckResultColumn" msprop:Generator_UserColumnName="CheckResult" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="YearMonth" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnYearMonth" msprop:Generator_ColumnPropNameInRow="YearMonth" msprop:Generator_ColumnPropNameInTable="YearMonthColumn" msprop:Generator_UserColumnName="YearMonth" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="7" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Area" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnArea" msprop:Generator_ColumnPropNameInRow="Area" msprop:Generator_ColumnPropNameInTable="AreaColumn" msprop:Generator_UserColumnName="Area" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NameUser" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNameUser" msprop:Generator_ColumnPropNameInRow="NameUser" msprop:Generator_ColumnPropNameInTable="NameUserColumn" msprop:Generator_UserColumnName="NameUser" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DIV" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDIV" msprop:Generator_ColumnPropNameInRow="DIV" msprop:Generator_ColumnPropNameInTable="DIVColumn" msprop:Generator_UserColumnName="DIV" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="101" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CommentNG" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCommentNG" msprop:Generator_ColumnPropNameInRow="CommentNG" msprop:Generator_ColumnPropNameInTable="CommentNGColumn" msprop:Generator_UserColumnName="CommentNG" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NAMESTAMP" msprop:Generator_ColumnVarNameInTable="columnNAMESTAMP" msprop:Generator_ColumnPropNameInRow="NAMESTAMP" msprop:Generator_ColumnPropNameInTable="NAMESTAMPColumn" msprop:Generator_UserColumnName="NAMESTAMP" type="xs:string" minOccurs="0" />
+              <xs:element name="Approve_Date1" msprop:Generator_ColumnVarNameInTable="columnApprove_Date1" msprop:Generator_ColumnPropNameInRow="Approve_Date1" msprop:Generator_ColumnPropNameInTable="Approve_Date1Column" msprop:Generator_UserColumnName="Approve_Date1" type="xs:string" minOccurs="0" />
+              <xs:element name="Approve_Date2" msprop:Generator_ColumnVarNameInTable="columnApprove_Date2" msprop:Generator_ColumnPropNameInRow="Approve_Date2" msprop:Generator_ColumnPropNameInTable="Approve_Date2Column" msprop:Generator_UserColumnName="Approve_Date2" type="xs:string" minOccurs="0" />
+              <xs:element name="Approve_Date3" msprop:Generator_ColumnVarNameInTable="columnApprove_Date3" msprop:Generator_ColumnPropNameInRow="Approve_Date3" msprop:Generator_ColumnPropNameInTable="Approve_Date3Column" msprop:Generator_UserColumnName="Approve_Date3" type="xs:string" minOccurs="0" />
+              <xs:element name="NAME_Committee" msprop:Generator_ColumnVarNameInTable="columnNAME_Committee" msprop:Generator_ColumnPropNameInRow="NAME_Committee" msprop:Generator_ColumnPropNameInTable="NAME_CommitteeColumn" msprop:Generator_UserColumnName="NAME_Committee" type="xs:string" minOccurs="0" />
+              <xs:element name="NAME_Chairman" msprop:Generator_ColumnVarNameInTable="columnNAME_Chairman" msprop:Generator_ColumnPropNameInRow="NAME_Chairman" msprop:Generator_ColumnPropNameInTable="NAME_ChairmanColumn" msprop:Generator_UserColumnName="NAME_Chairman" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:DataTableCheckSheet" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

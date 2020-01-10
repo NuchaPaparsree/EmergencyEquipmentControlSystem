@@ -1,0 +1,145 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="SiteMySystem.Master.cs" Inherits="MyProject.SiteMySystem" %>
+
+<!DOCTYPE html>
+
+<html>
+    
+<head runat="server" >
+    <%--<link rel="stylesheet" href="css/bootstrap.min.css">--%>
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/three.css">
+    <script src="MyScripts/one.js"></script>
+    <link href="~/MyStyles/bootstrap.css" rel="stylesheet" />
+    <script src="~/MyScripts/jquery-1.8.2.js"></script>
+    <script src="~/MyScripts/bootstrap.js"></script> 
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    
+    <style>
+        {
+            font-size:smaller;
+        }
+
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="respond" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        <div >
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <%--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>                        
+                        </button>--%>
+                        <a class="navbar-brand" runat="server" href="~/WebForm_HomePage" style="font-size:15px;">Emergency Equipment Control</a>
+                    </div>
+
+                    
+                    
+                    <div <%--class="collapse navbar-collapse"--%> id="myNavbar">
+                        <ul class="nav navbar-nav navbar-right">
+
+                        <asp:MultiView ID="MVCheckUser" runat="server">
+                        <asp:View ID="Vadmin" runat="server">
+                            <li><a runat="server" href="~/WebForm_HomePage"><span class="glyphicon glyphicon-home"></span>HOME</a></li>
+                            <li><a runat="server" href="~/WebForm_Manual">MANUAL</a></li>
+                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">ITEM<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <%--<li><a runat="server" href="~/Report/WebForm_ReportCheckSheet">REPORT</a></li>--%>
+                                    <li><a runat="server" href="~/WebForm_ViewCheckSheet">CHECKDATA</a></li>
+                                    <li><a runat="server" href="~/WebForm_Menu">INFORMATION</a></li>
+                                    
+                                    <li><a runat="server" href="~/PageUser/WFCSD">CHECKSHEET</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">MASTER DATA<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a runat="server" href="~/PageAdmin/WebForm_Manager">Manager</a></li>
+                                     <li><a runat="server" href="~/PageAdmin/WebForm_Committee">Committee</a></li>
+                                    <li><a runat="server" href="~/PageAdmin/WebForm_Controller">Controller</a></li>
+                                    <li><a runat="server" href="~/PageAdmin/WebForm_Place">Place</a></li>
+                                    <li><a runat="server" href="~/PageAdmin/WebForm_ItemType">ItemType</a></li>
+                                    <li><a runat="server" href="~/PageAdmin/WebForm_ItemSubType">ItemSubType</a></li>
+                                    <li><a runat="server" href="~/PageAdmin/WebForm_Item">Item</a></li>
+                                    <li><a runat="server" href="~/PageAdmin/WebForm_CheckItem">CheckItem</a></li>
+                                </ul>
+                            </li>
+                            
+
+                             <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">REPORT<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a runat="server" href="~/Report/WebForm_Report">Report</a></li>
+                                     <li><a runat="server" href="~/Report/WebForm_ReportCommittee">Committee</a></li>
+                                    <li><a runat="server" href="~/Report/WebForm_ReportChairman">Chairman</a></li>
+                                     <li><a runat="server" href="~/DashBoardMain">Dashboard</a></li>
+                                    <li><a runat="server" href="~/Report/WebForm_Graph">Graph</a></li>
+
+                                    </ul>
+                                 </li>
+                            <li><a runat="server" href="~/WebForm_Contact">CONTACT</a></li>
+
+                        </asp:View>
+
+                        <asp:View ID="Vuser" runat="server">
+                            <li><a runat="server" href="~/WebForm_HomePage"><span class="glyphicon glyphicon-home"></span>HOME</a></li>
+                            <li><a runat="server" href="~/WebForm_Manual">MANUAL</a></li>
+                            <li><a runat="server" href="~/Report/WebForm_ReportCheckSheet">REPORT</a></li>
+                            <li><a runat="server" href="~/WebForm_ViewCheckSheet_User">CHECKDATA</a></li>
+                            <li><a runat="server" href="~/DashBoardMain">DASHBOARD</a></li>
+                            <li><a runat="server" href="~/WebForm_Contact">CONTACT</a></li>
+                        </asp:View>
+                             
+                        <asp:View ID="Vempty" runat="server">
+
+                        </asp:View>
+                    </asp:MultiView>
+
+                                <div id="LogStateSection;" style=" height:45px; float:right; margin-right:5px; margin-top:0px;">
+                                    <asp:MultiView ID="MultiViewLogState" runat="server" ActiveViewIndex="0"  EnableTheming="True">
+                                        <asp:View ID="ViewAnonymous" runat="server">
+                                            <asp:Button ID="btnLogin" CssClass="btn btn-link" runat="server" Text="Login" OnClick="btnLogin_Click" ForeColor="White" />
+                                                    <br />
+                                        </asp:View>
+                                        <asp:View ID="ViewLoggedIn" runat="server">
+                                            <asp:Label ID="lblUserName" runat="server" Text="UserName" ForeColor="Lime" Font-Bold="True" ></asp:Label>
+                                            <asp:Label ID="Label2" runat="server" Text="!" ForeColor="Lime" Font-Bold="True" ></asp:Label>
+                                            <asp:Button ID="btnLogout" CssClass="btn btn-link" runat="server" Text="Logout" OnClick="btnLogout_Click" ForeColor="White" /> 
+                                        </asp:View>
+                                    </asp:MultiView>
+                                </div>
+                        </ul>
+                </div>
+                </div>
+            </nav>
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

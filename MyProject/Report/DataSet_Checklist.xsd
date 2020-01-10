@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet_Checklist" targetNamespace="http://tempuri.org/DataSet_Checklist.xsd" xmlns:mstns="http://tempuri.org/DataSet_Checklist.xsd" xmlns="http://tempuri.org/DataSet_Checklist.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection ConnectionStringObject="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\MyProjectDB.mdf;Integrated Security=True" IsAppSettingsProperty="false" Modifier="Assembly" Name="xPimConnectionString1 (MyProject)" ParameterPrefix="@" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ViewCheckSheetTableAdapter" GeneratorDataComponentClassName="ViewCheckSheetTableAdapter" Name="ViewCheckSheet" UserDataComponentName="ViewCheckSheetTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="xPimConnectionString1 (MyProject)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT distinct max(SUBSTRING(YearMonth, 6, 7)) AS Month
+				,max (Date) AS Datetime
+				, Name
+                ,CASE WHEN OK = 'false' THEN '/' ELSE '/' END AS OK
+				, CASE WHEN NG = 'true' THEN '-' ELSE '-' END AS NG
+				,TB.Note
+
+                ,max (SUBSTRING(YearMonth, 1, 4)) AS Year
+			    ,Code
+				,ItemTypeName
+
+				,case when charindex(' ',Name) = 0 then Name else left(Name, charindex(' ' ,Name)-1) end as FirstName 
+
+                FROM ViewCheckSheet 
+				left join (SELECT DISTINCT CheckSheetID, STUFF((SELECT ',' + CheckID  
+				FROM (SELECT distinct CheckSheetID,CheckID 
+					  FROM ViewCheckSheet 
+					  WHERE OK='False' and NG = 'True' 
+					  group by CheckSheetID,CheckID) AS TB1
+
+				where TB1.CheckSheetID = ViewCheckSheet.CheckSheetID
+                FOR XML PATH('')), 1, 1, '') as Note 
+
+				FROM ViewCheckSheet 
+				WHERE
+				 OK='False' and NG = 'True') as TB
+
+				on TB.CheckSheetID = ViewCheckSheet.CheckSheetID
+
+
+				
+				GROUP BY  YearMonth,Name,Code,ItemTypeName,OK,NG,TB.Note</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Year" DataSetColumn="Year" />
+              <Mapping SourceColumn="Name" DataSetColumn="Name" />
+              <Mapping SourceColumn="OK" DataSetColumn="OK" />
+              <Mapping SourceColumn="NG" DataSetColumn="NG" />
+              <Mapping SourceColumn="Month" DataSetColumn="Month" />
+              <Mapping SourceColumn="Code" DataSetColumn="Code" />
+              <Mapping SourceColumn="ItemTypeName" DataSetColumn="ItemTypeName" />
+              <Mapping SourceColumn="FirstName" DataSetColumn="FirstName" />
+              <Mapping SourceColumn="Datetime" DataSetColumn="Datetime" />
+              <Mapping SourceColumn="Note" DataSetColumn="Note" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet_Checklist" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet_Checklist" msprop:Generator_UserDSName="DataSet_Checklist">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ViewCheckSheet" msprop:Generator_TableClassName="ViewCheckSheetDataTable" msprop:Generator_TableVarName="tableViewCheckSheet" msprop:Generator_TablePropName="ViewCheckSheet" msprop:Generator_RowDeletingName="ViewCheckSheetRowDeleting" msprop:Generator_RowChangingName="ViewCheckSheetRowChanging" msprop:Generator_RowEvHandlerName="ViewCheckSheetRowChangeEventHandler" msprop:Generator_RowDeletedName="ViewCheckSheetRowDeleted" msprop:Generator_UserTableName="ViewCheckSheet" msprop:Generator_RowChangedName="ViewCheckSheetRowChanged" msprop:Generator_RowEvArgName="ViewCheckSheetRowChangeEvent" msprop:Generator_RowClassName="ViewCheckSheetRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Year" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnYear" msprop:Generator_ColumnPropNameInRow="Year" msprop:Generator_ColumnPropNameInTable="YearColumn" msprop:Generator_UserColumnName="Year" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="7" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OK" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnOK" msprop:Generator_ColumnPropNameInRow="OK" msprop:Generator_ColumnPropNameInTable="OKColumn" msprop:Generator_UserColumnName="OK" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NG" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNG" msprop:Generator_ColumnPropNameInRow="NG" msprop:Generator_ColumnPropNameInTable="NGColumn" msprop:Generator_UserColumnName="NG" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Month" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMonth" msprop:Generator_ColumnPropNameInRow="Month" msprop:Generator_ColumnPropNameInTable="MonthColumn" msprop:Generator_UserColumnName="Month" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="7" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Code" msprop:Generator_ColumnVarNameInTable="columnCode" msprop:Generator_ColumnPropNameInRow="Code" msprop:Generator_ColumnPropNameInTable="CodeColumn" msprop:Generator_UserColumnName="Code" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ItemTypeName" msprop:Generator_ColumnVarNameInTable="columnItemTypeName" msprop:Generator_ColumnPropNameInRow="ItemTypeName" msprop:Generator_ColumnPropNameInTable="ItemTypeNameColumn" msprop:Generator_UserColumnName="ItemTypeName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="120" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FirstName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFirstName" msprop:Generator_ColumnPropNameInRow="FirstName" msprop:Generator_ColumnPropNameInTable="FirstNameColumn" msprop:Generator_UserColumnName="FirstName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Datetime" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDatetime" msprop:Generator_ColumnPropNameInRow="Datetime" msprop:Generator_ColumnPropNameInTable="DatetimeColumn" msprop:Generator_UserColumnName="Datetime" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Note" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNote" msprop:Generator_ColumnPropNameInRow="Note" msprop:Generator_ColumnPropNameInTable="NoteColumn" msprop:Generator_UserColumnName="Note" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
