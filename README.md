@@ -1,2 +1,2 @@
-# EmergencyEpuipmentControlSystem
+# EmergencyEquipmentControlSystem
 FECS
