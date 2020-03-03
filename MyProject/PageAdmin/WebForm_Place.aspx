@@ -96,6 +96,8 @@
                         <asp:BoundField DataField="Area" HeaderText="Area" SortExpression="Area" />
                         <asp:BoundField DataField="ControllerID" HeaderText="ControllerID" SortExpression="ControllerID" />
                         <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+                        <asp:BoundField DataField="CommitteeID" HeaderText="CommitteeID" SortExpression="CommitteeID" />
+                        <asp:BoundField DataField="Com_name" HeaderText="Name" SortExpression="Comm_name" />
                     </Columns>
 
                
@@ -112,7 +114,7 @@
 
 
                 </asp:GridView>
-                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT TOP(10000) [Place].[ID],[Place].[Floor],[Place].[Building],[Place].[Area],[Place].[ControllerID],[Controller].[Name] FROM [Place] LEFT JOIN [Controller] ON (Controller.ID = Place.ControllerID) WHERE (([Floor] LIKE '%' + @Floor + '%') AND ([ControllerID] LIKE '%' + @ControllerID + '%') AND ([Building] LIKE '%' + @Building + '%'))" OnSelecting="SqlDataSource1_Selecting">
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT TOP (10000) Place.ID, Place.Floor, Place.Building, Place.Area, Place.ControllerID, Controller.Name, Place.CommitteeID, Committee.Name AS Com_name FROM Place INNER JOIN Committee ON Place.CommitteeID = Committee.ID LEFT OUTER JOIN Controller ON Controller.ID = Place.ControllerID WHERE (Place.Floor LIKE '%' + @Floor + '%') AND (Place.ControllerID LIKE '%' + @ControllerID + '%') AND (Place.Building LIKE '%' + @Building + '%')" OnSelecting="SqlDataSource1_Selecting">
                     <SelectParameters>
                         <asp:ControlParameter ControlID="DropDownList4" DefaultValue="%" Name="Floor" PropertyName="SelectedValue" Type="String" />
                         <asp:ControlParameter ControlID="TextBoxControllerID" DefaultValue="%" Name="ControllerID" PropertyName="Text" Type="String" />
@@ -127,7 +129,7 @@
 
         <!-- Detail Modal Starts here-->
         <!--เปิด pop ให้ปิด class="modal hide fade"  -->
-        <div id="detailModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="True">
+        <div id="detailModal" class="modal  fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="True">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 id="myModalLabel">Detailed View</h3>
@@ -147,13 +149,13 @@
                             <EmptyDataRowStyle Width="100%" />
                             <FieldHeaderStyle BackColor="LavenderBlush" Font-Bold="True" ForeColor="Black" Wrap="False" Width="60%" />
                             <Fields>
-                                <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" SortExpression="ID" InsertVisible="false" />
+                                <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" SortExpression="ID" />
                                 <asp:BoundField DataField="Building" HeaderText="Building" SortExpression="Building" />
                                 <asp:BoundField DataField="Floor" HeaderText="Floor" SortExpression="Floor" />
                                 <asp:BoundField DataField="Area" HeaderText="Area" SortExpression="Area" />
                                 <asp:TemplateField HeaderText="ControllerName">
                                     <EditItemTemplate>
-                                        <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource3" DataTextField="Name" DataValueField="ID" SelectedValue='<%# Bind("ControllerID") %>'>
+                                        <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource3" DataTextField="ID" DataValueField="ID" SelectedValue='<%# Bind("ControllerID") %>'>
                                         </asp:DropDownList>
                                         <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT * FROM [Controller]"></asp:SqlDataSource>
                                     </EditItemTemplate>
@@ -166,7 +168,19 @@
                                         <asp:Label ID="lbControllerName" runat="server" Text='<%# Bind("Name") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
+                                <asp:TemplateField HeaderText="CommitteeName" SortExpression="Com_name">
+                                    <EditItemTemplate>
+                                        <asp:DropDownList ID="ddlEditCom" runat="server" DataSourceID="SqlDataSource8" DataTextField="ID" DataValueField="ID" SelectedValue='<%# Bind("CommitteeID") %>'></asp:DropDownList>
+                                        <asp:SqlDataSource ID="SqlDataSource8" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT ID, Name FROM Committee" ></asp:SqlDataSource>
+                                    </EditItemTemplate>
+                                    <InsertItemTemplate>
+                                        <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("Com_name") %>'></asp:TextBox>
+                                    </InsertItemTemplate>
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbComName" runat="server" Text='<%# Bind("Com_name") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:CommandField ShowEditButton="True" />
                             </Fields>
                             <FooterStyle Width="100%" />
                             <HeaderStyle Width="100%" />
@@ -174,7 +188,7 @@
                             <PagerStyle Width="100%" />
                             <RowStyle Width="100%" />
                         </asp:DetailsView>
-                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" DeleteCommand="DELETE FROM [Place] WHERE [ID] = @ID" InsertCommand="INSERT INTO [Place] ([Building], [Floor], [Area], [ControllerID]) VALUES (@Building, @Floor, @Area, @ControllerID)" SelectCommand="SELECT Place.ID, Place.Building, Place.Floor, Place.Area, Place.ControllerID, Controller.Name FROM Place INNER JOIN Controller ON Controller.ID = Place.ControllerID WHERE (Place.ID = @ID)" UpdateCommand="UPDATE Place SET Building = @Building, Floor = @Floor, Area = @Area, ControllerID = @ControllerID, Update_at = GETDATE(), Update_by = @BY WHERE (ID = @ID)">
+                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" DeleteCommand="DELETE FROM [Place] WHERE [ID] = @ID" InsertCommand="INSERT INTO [Place] ([Building], [Floor], [Area], [ControllerID]) VALUES (@Building, @Floor, @Area, @ControllerID)" SelectCommand="SELECT Place.ID, Place.Building, Place.Floor, Place.Area, Place.ControllerID, Controller.Name, Place.CommitteeID, Committee.Name AS Com_name FROM Place INNER JOIN Controller ON Controller.ID = Place.ControllerID INNER JOIN Committee ON Place.CommitteeID = Committee.ID WHERE (Place.ID = @ID)" UpdateCommand="UPDATE Place SET Building = @Building, Floor = @Floor, Area = @Area, ControllerID = @ControllerID, CommitteeID = @CommitteeID, Update_at = GETDATE(), Update_by = @BY WHERE (ID = @ID)">
                             <DeleteParameters>
                                 <asp:Parameter Name="ID" Type="String" />
                             </DeleteParameters>
@@ -192,8 +206,9 @@
                                 <asp:Parameter Name="Floor" Type="String" />
                                 <asp:Parameter Name="Area" Type="String" />
                                 <asp:Parameter Name="ControllerID" Type="String" />
-                                <asp:Parameter Name="ID" Type="String" />
+                                <asp:Parameter Name="CommitteeID" Type="String"/>
                                 <asp:SessionParameter Name="BY" Type="String" SessionField="myLoginID" />
+                                <asp:Parameter Name="ID" Type="String" />
                             </UpdateParameters>
                         </asp:SqlDataSource>
 
@@ -266,7 +281,7 @@
                         <asp:TemplateField HeaderText="CommitteeID">
                             <InsertItemTemplate>
                                 <asp:DropDownList ID="DropDownList8" runat="server"  DataSourceID="SqlDataSource7" DataTextField="ID" DataValueField="ID" SelectedValue='<%# Bind("CommitteeID") %>'></asp:DropDownList>
-                                          <asp:SqlDataSource ID="SqlDataSource7" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT [ID] FROM [Committee]"></asp:SqlDataSource>
+                                          <asp:SqlDataSource ID="SqlDataSource7" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT * FROM [Committee]"></asp:SqlDataSource>
 
                             </InsertItemTemplate>
                         </asp:TemplateField>
