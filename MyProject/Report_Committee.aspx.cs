@@ -102,7 +102,7 @@ namespace MyProject
 
                         SqlCommand command = conn.CreateCommand();
                         command.CommandText = "EXEC msdb.dbo.sp_send_dbmail @recipients = @Email, @profile_name = @name , @subject =@sub , @body = @mailbody";
-                        command.Parameters.AddWithValue("@Email", "Tawatchai.Mal@rist.local");
+                        command.Parameters.AddWithValue("@Email", "Sratdha.Pee@rist.local");
                         command.Parameters.AddWithValue("@name", "Safety");
                         command.Parameters.AddWithValue("@sub", "ใบตรวจสอบการป้องกันอัคคีภัยของผู้รับผิดชอบต้นเพลิง และความพร้อมก่อนการเกิดเหตุฉุกเฉิน");
                         command.Parameters.AddWithValue("@mailbody", mailbody);

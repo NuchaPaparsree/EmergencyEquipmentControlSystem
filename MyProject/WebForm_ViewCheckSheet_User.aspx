@@ -24,7 +24,9 @@ FROM            Item INNER JOIN
                          CheckSheetDetail ON Item.ID = CheckSheetDetail.ItemID INNER JOIN
                          CheckSheet ON CheckSheetDetail.CheckSheetID = CheckSheet.ID
 	      INNER JOIN ItemType ON ItemType.ID = ItemSubType.ItemTypeID
-WHERE        (CheckSheet.YearMonth = @yearmonth and CheckSheet.ControllerID = @ControllerID) order by ItemType.ID asc">
+WHERE        (CheckSheet.YearMonth = @yearmonth and CheckSheet.ControllerID = @ControllerID) 
+and (item.PlaceID in (SELECT id FROM Place WHERE ControllerID = @ControllerID) or Item.PlaceID IS NULL)
+order by ItemType.ID asc">
             <SelectParameters>
                 <asp:ControlParameter ControlID="DropDownList3" Name="yearmonth" PropertyName="SelectedValue" />
                 <asp:SessionParameter Name="ControllerID" SessionField="myLoginID" />
@@ -72,7 +74,7 @@ WHERE        (CheckSheet.YearMonth = @yearmonth and CheckSheet.ControllerID = @C
         </div>
 
 	    <asp:sqldatasource id="SqlDataSource6" runat="server" connectionstring="<%$ ConnectionStrings:xPimConnectionString1 %>"
-    selectcommand="SELECT COUNT(DISTINCT CheckSheetDetail.ItemID) AS Column1, (SELECT COUNT(Item.ID) AS Expr1 FROM Item INNER JOIN Place ON Place.ID = Item.PlaceID INNER JOIN Controller ON Controller.ID = Place.ControllerID WHERE (Place.ControllerID = @ControllerID)) AS Column2 FROM CheckSheetDetail INNER JOIN CheckSheet ON CheckSheet.ID = CheckSheetDetail.CheckSheetID INNER JOIN CheckItem ON CheckItem.ID = CheckSheetDetail.CheckItemID INNER JOIN ItemType ON ItemType.ID = CheckItem.ItemTypeID WHERE (CheckSheet.ControllerID = @ControllerID) AND (ItemType.ID IN (1, 2, 5)) AND (CheckSheet.YearMonth = @YearMonth)">
+    selectcommand="SELECT COUNT(DISTINCT CheckSheetDetail.ItemID) AS Column1, (SELECT COUNT(Item.ID) AS Expr1 FROM Item INNER JOIN Place ON Place.ID = Item.PlaceID INNER JOIN Controller ON Controller.ID = Place.ControllerID WHERE (Place.ControllerID = @ControllerID)) AS Column2 FROM CheckSheetDetail INNER JOIN CheckSheet ON CheckSheet.ID = CheckSheetDetail.CheckSheetID INNER JOIN CheckItem ON CheckItem.ID = CheckSheetDetail.CheckItemID INNER JOIN ItemType ON ItemType.ID = CheckItem.ItemTypeID WHERE (CheckSheet.ControllerID = @ControllerID) AND (ItemType.ID IN (1, 2, 5)) AND (CheckSheet.YearMonth = @YearMonth) AND CheckSheetDetail.ItemID IN (SELECT Item.ID FROM Item INNER JOIN Place ON Place.ID = Item.PlaceID INNER JOIN Controller ON Controller.ID = Place.ControllerID WHERE (Place.ControllerID = @ControllerID))">
             <SelectParameters>
                 <asp:SessionParameter Name="ControllerID" SessionField="myLoginID" />
                 <asp:ControlParameter ControlID="DropDownList3" DefaultValue="0" Name="YearMonth" PropertyName="SelectedValue" />
@@ -184,86 +186,87 @@ WHERE ItemID = @ItemID AND YearMonth = @YearMonth  AND CheckSheet.ControllerID =
 
                                 <asp:TemplateField HeaderText="LocationLink" > 
                                 <ItemTemplate>
-                                    <a href="<%# ((Eval("Location").ToString() == Convert.ToString("EA1")) ? "../PageAdmin/Location/Ext_A1.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EA2") ? "../PageAdmin/Location/Ext_A2.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EB2") ? "../PageAdmin/Location/Ext_B2.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EC1") ? "../PageAdmin/Location/Ext_C1.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EC2") ? "../PageAdmin/Location/Ext_C2.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("ED1") ? "../PageAdmin/Location/Ext_D1.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("ED2") ? "../PageAdmin/Location/Ext_D2.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("ED3") ? "../PageAdmin/Location/Ext_D3.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EE1") ? "../PageAdmin/Location/Ext_E1.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EE2") ? "../PageAdmin/Location/Ext_E2.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EE3") ? "../PageAdmin/Location/Ext_E3.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EF1") ? "../PageAdmin/Location/Ext_F1.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EF2") ? "../PageAdmin/Location/Ext_F2.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EF3") ? "../PageAdmin/Location/Ext_F3.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EG1") ? "../PageAdmin/Location/Ext_G1.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EG2") ? "../PageAdmin/Location/Ext_G2.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EG3") ? "../PageAdmin/Location/Ext_G3.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EGG") ? "../PageAdmin/Location/Ext_GG.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EH1") ? "../PageAdmin/Location/Ext_H1.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EH2") ? "../PageAdmin/Location/Ext_H2.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EH3") ? "../PageAdmin/Location/Ext_H3.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EHG") ? "../PageAdmin/Location/Ext_HG.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EI1") ? "../PageAdmin/Location/Ext_I1.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EI2") ? "../PageAdmin/Location/Ext_I2.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EI3") ? "../PageAdmin/Location/Ext_I3.pdf" :
-                                                     ((Eval("Location").ToString()) == Convert.ToString("EIG") ? "../PageAdmin/Location/Ext_IG.pdf" :
+                                    <a href="<%# ((Eval("Location").ToString() == Convert.ToString("EA1")) ? "PageAdmin/Location/Ext_A1.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EA2") ? "PageAdmin/Location/Ext_A2.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EB2") ? "PageAdmin/Location/Ext_B2.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EC1") ? "PageAdmin/Location/Ext_C1.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EC2") ? "PageAdmin/Location/Ext_C2.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("ED1") ? "PageAdmin/Location/Ext_D1.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("ED2") ? "PageAdmin/Location/Ext_D2.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("ED3") ? "PageAdmin/Location/Ext_D3.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EE1") ? "PageAdmin/Location/Ext_E1.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EE2") ? "PageAdmin/Location/Ext_E2.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EE3") ? "PageAdmin/Location/Ext_E3.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EF1") ? "PageAdmin/Location/Ext_F1.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EF2") ? "PageAdmin/Location/Ext_F2.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EF3") ? "PageAdmin/Location/Ext_F3.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EG1") ? "PageAdmin/Location/Ext_G1.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EG2") ? "PageAdmin/Location/Ext_G2.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EG3") ? "PageAdmin/Location/Ext_G3.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EGG") ? "PageAdmin/Location/Ext_GG.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EH1") ? "PageAdmin/Location/Ext_H1.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EH2") ? "PageAdmin/Location/Ext_H2.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EH3") ? "PageAdmin/Location/Ext_H3.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EHG") ? "PageAdmin/Location/Ext_HG.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EI1") ? "PageAdmin/Location/Ext_I1.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EI2") ? "PageAdmin/Location/Ext_I2.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EI3") ? "PageAdmin/Location/Ext_I3.pdf" :
+                                                     ((Eval("Location").ToString()) == Convert.ToString("EIG") ? "PageAdmin/Location/Ext_IG.pdf" :
                                                      
-                                                    ((Eval("Location").ToString() == Convert.ToString("HA1")) ? "../PageAdmin/Location/FHC_A1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HA2") ? "../PageAdmin/Location/FHC_A2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HB2") ? "../PageAdmin/Location/FHC_B2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HC1") ? "../PageAdmin/Location/FHC_C1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HC2") ? "../PageAdmin/Location/FHC_C2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HD1") ? "../PageAdmin/Location/FHC_D1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HD2") ? "../PageAdmin/Location/FHC_D2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HD3") ? "../PageAdmin/Location/FHC_D3.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HE1") ? "../PageAdmin/Location/FHC_E1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HE2") ? "../PageAdmin/Location/FHC_E2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HE3") ? "../PageAdmin/Location/FHC_E3.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HF1") ? "../PageAdmin/Location/FHC_F1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HF2") ? "../PageAdmin/Location/FHC_F2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HF3") ? "../PageAdmin/Location/FHC_F3.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HG1") ? "../PageAdmin/Location/FHC_G1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HG2") ? "../PageAdmin/Location/FHC_G2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HG3") ? "../PageAdmin/Location/FHC_G3.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HGG") ? "../PageAdmin/Location/FHC_GG.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HH1") ? "../PageAdmin/Location/FHC_H1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HH2") ? "../PageAdmin/Location/FHC_H2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HH3") ? "../PageAdmin/Location/FHC_H3.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HHG") ? "../PageAdmin/Location/FHC_HG.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HI1") ? "../PageAdmin/Location/FHC_I1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HI2") ? "../PageAdmin/Location/FHC_I2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HI3") ? "../PageAdmin/Location/FHC_I3.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("HIG") ? "../PageAdmin/Location/FHC_IG.pdf" :
+                                                    ((Eval("Location").ToString() == Convert.ToString("HA1")) ? "PageAdmin/Location/FHC_A1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HA2") ? "PageAdmin/Location/FHC_A2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HB2") ? "PageAdmin/Location/FHC_B2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HC1") ? "PageAdmin/Location/FHC_C1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HC2") ? "PageAdmin/Location/FHC_C2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HD1") ? "PageAdmin/Location/FHC_D1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HD2") ? "PageAdmin/Location/FHC_D2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HD3") ? "PageAdmin/Location/FHC_D3.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HE1") ? "PageAdmin/Location/FHC_E1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HE2") ? "PageAdmin/Location/FHC_E2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HE3") ? "PageAdmin/Location/FHC_E3.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HF1") ? "PageAdmin/Location/FHC_F1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HF2") ? "PageAdmin/Location/FHC_F2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HF3") ? "PageAdmin/Location/FHC_F3.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HG1") ? "PageAdmin/Location/FHC_G1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HG2") ? "PageAdmin/Location/FHC_G2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HG3") ? "PageAdmin/Location/FHC_G3.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HGG") ? "PageAdmin/Location/FHC_GG.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HH1") ? "PageAdmin/Location/FHC_H1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HH2") ? "PageAdmin/Location/FHC_H2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HH3") ? "PageAdmin/Location/FHC_H3.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HHG") ? "PageAdmin/Location/FHC_HG.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HI1") ? "PageAdmin/Location/FHC_I1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HI2") ? "PageAdmin/Location/FHC_I2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HI3") ? "PageAdmin/Location/FHC_I3.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("HIG") ? "PageAdmin/Location/FHC_IG.pdf" :
 
-                                                    ((Eval("Location").ToString() == Convert.ToString("BA1")) ? "../PageAdmin/Location/BELL_A1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BA2") ? "../PageAdmin/Location/BELL_A2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BB2") ? "../PageAdmin/Location/BELL_B2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BC1") ? "../PageAdmin/Location/BELL_C1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BC2") ? "../PageAdmin/Location/BELL_C2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BD1") ? "../PageAdmin/Location/BELL_D1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BD2") ? "../PageAdmin/Location/BELL_D2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BD3") ? "../PageAdmin/Location/BELL_D3.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BE1") ? "../PageAdmin/Location/BELL_E1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BE2") ? "../PageAdmin/Location/BELL_E2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BE3") ? "../PageAdmin/Location/BELL_E3.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BF1") ? "../PageAdmin/Location/BELL_F1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BF2") ? "../PageAdmin/Location/BELL_F2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BF3") ? "../PageAdmin/Location/BELL_F3.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BG1") ? "../PageAdmin/Location/BELL_G1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BG2") ? "../PageAdmin/Location/BELL_G2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BG3") ? "../PageAdmin/Location/BELL_G3.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BGG") ? "../PageAdmin/Location/BELL_GG.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BH1") ? "../PageAdmin/Location/BELL_H1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BH2") ? "../PageAdmin/Location/BELL_H2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BH3") ? "../PageAdmin/Location/BELL_H3.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BHG") ? "../PageAdmin/Location/BELL_HG.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BI1") ? "../PageAdmin/Location/BELL_I1.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BI2") ? "../PageAdmin/Location/BELL_I2.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BI3") ? "../PageAdmin/Location/BELL_I3.pdf" :
-                                                    ((Eval("Location").ToString()) == Convert.ToString("BIG") ? "../PageAdmin/Location/BELL_IG.pdf" 
+                                                    ((Eval("Location").ToString() == Convert.ToString("BA1")) ? "PageAdmin/Location/BELL_A1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BA2") ? "PageAdmin/Location/BELL_A2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BB2") ? "PageAdmin/Location/BELL_B2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BC1") ? "PageAdmin/Location/BELL_C1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BC2") ? "PageAdmin/Location/BELL_C2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BD1") ? "PageAdmin/Location/BELL_D1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BD2") ? "PageAdmin/Location/BELL_D2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BD3") ? "PageAdmin/Location/BELL_D3.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BE1") ? "PageAdmin/Location/BELL_E1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BE2") ? "PageAdmin/Location/BELL_E2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BE3") ? "PageAdmin/Location/BELL_E3.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BF1") ? "PageAdmin/Location/BELL_F1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BF2") ? "PageAdmin/Location/BELL_F2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BF3") ? "PageAdmin/Location/BELL_F3.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BG1") ? "PageAdmin/Location/BELL_G1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BG2") ? "PageAdmin/Location/BELL_G2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BG3") ? "PageAdmin/Location/BELL_G3.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BGG") ? "PageAdmin/Location/BELL_GG.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BH1") ? "PageAdmin/Location/BELL_H1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BH2") ? "PageAdmin/Location/BELL_H2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BH3") ? "PageAdmin/Location/BELL_H3.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BHG") ? "PageAdmin/Location/BELL_HG.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BI1") ? "PageAdmin/Location/BELL_I1.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BI2") ? "PageAdmin/Location/BELL_I2.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BI3") ? "PageAdmin/Location/BELL_I3.pdf" :
+                                                    ((Eval("Location").ToString()) == Convert.ToString("BIG") ? "PageAdmin/Location/BELL_IG.pdf" 
+ 
 
                                                      : "#")))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) %>" target="_blank" >Location</a>
                                 </ItemTemplate>

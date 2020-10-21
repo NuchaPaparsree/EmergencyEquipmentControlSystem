@@ -22,7 +22,7 @@ namespace MyProject
             {
                 cmd.CommandText = "UPDATE  CheckSheet SET ChairmanID=@ChairmanID, ApproveDate3= GETDATE() WHERE CheckSheet.ID = '" + Request.QueryString["CheckSheetID"].ToString() + "'";
 
-                cmd.Parameters.AddWithValue("@ChairmanID", "001294");
+                cmd.Parameters.AddWithValue("@ChairmanID", "007997");
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 conn.Close();
