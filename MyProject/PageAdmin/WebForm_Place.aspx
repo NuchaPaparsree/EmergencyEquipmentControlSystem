@@ -274,14 +274,14 @@
                         <asp:TemplateField HeaderText="ControllerID" SortExpression="ControllerID">
                             <InsertItemTemplate>
                                     <asp:DropDownList ID="DropDownList7" runat="server" DataSourceID="SqlDataSource6" DataTextField="ID" DataValueField="ID" SelectedValue='<%# Bind("ControllerID") %>'></asp:DropDownList>
-                <asp:SqlDataSource ID="SqlDataSource6" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT ID FROM Controller"></asp:SqlDataSource>
+                <asp:SqlDataSource ID="SqlDataSource6" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT ID FROM Controller WHERE Is_Logout <> 1"></asp:SqlDataSource>
 
                             </InsertItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="CommitteeID">
                             <InsertItemTemplate>
                                 <asp:DropDownList ID="DropDownList8" runat="server"  DataSourceID="SqlDataSource7" DataTextField="ID" DataValueField="ID" SelectedValue='<%# Bind("CommitteeID") %>'></asp:DropDownList>
-                                          <asp:SqlDataSource ID="SqlDataSource7" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT * FROM [Committee]"></asp:SqlDataSource>
+                                          <asp:SqlDataSource ID="SqlDataSource7" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT * FROM [Committee] WHERE Is_Logout <> 1"></asp:SqlDataSource>
 
                             </InsertItemTemplate>
                         </asp:TemplateField>

@@ -302,14 +302,14 @@ FROM Place INNER JOIN Controller ON Place.ControllerID = Controller.ID
 
                         <asp:SqlDataSource ID="SqlDataSelect_item" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" DeleteCommand="DELETE FROM [Item] WHERE [ID] = @ID" InsertCommand="INSERT INTO [Item] ([ItemSubTypeID], [Code], [SerialNumber], [DatePurchased], [PlaceID], [Location]) VALUES (@ItemSubTypeID, @Code, @SerialNumber, @DatePurchased, @PlaceID, @Location)" SelectCommand="SELECT Item.ItemSubTypeID, Item.Code, Item.SerialNumber, Item.DatePurchased, Item.PlaceID, Item.Location, Place.Building + ' , ' + Place.Floor + ' , ' + Place.Area AS Area, ItemSubType.SubType + ' , ' + ItemSubType.Size AS SubType, Item.ID FROM Item INNER JOIN Place ON Item.PlaceID = Place.ID INNER JOIN ItemSubType ON Item.ItemSubTypeID = ItemSubType.ID WHERE (Item.ID = @ID)" UpdateCommand="UPDATE [Item] SET [ItemSubTypeID] = @ItemSubTypeID, [Code] = @Code, [SerialNumber] = @SerialNumber, [DatePurchased] = @DatePurchased, [PlaceID] = @PlaceID, [Location] = @Location WHERE [ID] = @ID">
                             <DeleteParameters>
-                                <asp:Parameter Name="ID" Type="Int16" />
+                                <asp:Parameter Name="ID" Type="Int32" />
                             </DeleteParameters>
                             <InsertParameters>
                                 <asp:Parameter Name="ItemSubTypeID" Type="Byte" />
                                 <asp:Parameter Name="Code" Type="String" />
                                 <asp:Parameter Name="SerialNumber" Type="String" />
                                 <asp:Parameter Name="DatePurchased" Type="String" />
-                                <asp:Parameter Name="PlaceID" Type="Byte" />
+                                <asp:Parameter Name="PlaceID" Type="Int32" />
                                 <asp:Parameter Name="Location" Type="String" />
                             </InsertParameters>
                             <SelectParameters>
@@ -320,9 +320,9 @@ FROM Place INNER JOIN Controller ON Place.ControllerID = Controller.ID
                                 <asp:Parameter Name="Code" Type="String" />
                                 <asp:Parameter Name="SerialNumber" Type="String" />
                                 <asp:Parameter Name="DatePurchased" Type="String" />
-                                <asp:Parameter Name="PlaceID" Type="Byte" />
+                                <asp:Parameter Name="PlaceID" Type="Int32" />
                                 <asp:Parameter Name="Location" Type="String" />
-                                <asp:Parameter Name="ID" Type="Int16" />
+                                <asp:Parameter Name="ID" Type="Int32" />
                             </UpdateParameters>
                         </asp:SqlDataSource>
 

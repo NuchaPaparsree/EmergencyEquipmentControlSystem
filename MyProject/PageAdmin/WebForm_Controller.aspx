@@ -78,8 +78,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
                             <asp:BoundField DataField="MobileNo" HeaderText="MobileNo" SortExpression="MobileNo" Visible="False"/>
                             <asp:BoundField DataField="InternalNo" HeaderText="InternalNo" SortExpression="InternalNo" />
                             <asp:BoundField DataField="Building" HeaderText="Building" SortExpression="Building" HeaderStyle-Width="8%" />
-                            <asp:BoundField DataField="CommitteeID" HeaderText="CommitteeID" SortExpression="CommitteeID" />
-                            <asp:BoundField DataField="CommitteeName" HeaderText="CommitteeName" SortExpression="CommitteeName" />
+                            <asp:BoundField DataField="ManagerID" HeaderText="ManagerID" SortExpression="ManagerID" />
+                            <asp:BoundField DataField="ManagerName" HeaderText="ManagerName" SortExpression="ManagerName" />
                         </Columns>
 
                        <FooterStyle BackColor="#CCCCCC" />
@@ -95,7 +95,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
 
                     </asp:GridView>
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" 
-                        SelectCommand="SELECT DISTINCT Controller.ID, Controller.Name, Controller.Department, Controller.Section, Controller.Email, Controller.InternalNo, Place.Building, Committee.ID AS CommitteeID, Committee.Name AS CommitteeName FROM Controller LEFT OUTER JOIN Place ON Controller.ID = Place.ControllerID LEFT OUTER JOIN Committee ON Place.CommitteeID = Committee.ID WHERE (Controller.ID LIKE '%' + @ID + '%') OR (Controller.Name LIKE '%' + @Name + '%') AND (Place.Building LIKE @Build + '%')">
+                        SelectCommand="SELECT DISTINCT Controller.ID, Controller.Name, Controller.Department, Controller.Section, 
+Controller.Email, Controller.InternalNo, Place.Building, Manager.ID AS ManagerID, Manager.Name AS ManagerName 
+FROM Controller LEFT OUTER JOIN Place ON Controller.ID = Place.ControllerID 
+LEFT OUTER JOIN Manager ON Controller.ManagerID = Manager.ID WHERE ((Controller.ID LIKE '%' + @ID + '%') OR (Controller.Name LIKE '%' + @Name + '%') AND (Place.Building LIKE @Build + '%')) AND (Controller.Is_Logout &lt;&gt; 1)">
                         <SelectParameters>
                             <asp:ControlParameter ControlID="TextBoxSearch" DefaultValue="%" Name="ID" PropertyName="Text" Type="String" />
                             <asp:ControlParameter ControlID="TextBoxSearch" DefaultValue="%" Name="Name" PropertyName="Text" Type="String" />
@@ -137,17 +140,18 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
                                         <EditItemTemplate>
                                             <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource3" DataTextField="Name" DataValueField="ID" SelectedValue='<%# Bind("ManagerID") %>'>
                                             </asp:DropDownList>
-                                            <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT * FROM [Manager]"></asp:SqlDataSource>
+                                            <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT * FROM [Manager] "></asp:SqlDataSource>
                                         </EditItemTemplate>
                                         <InsertItemTemplate>
                                             <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource4" DataTextField="Name" DataValueField="ID" SelectedValue='<%# Bind("ManagerID") %>'>
                                             </asp:DropDownList>
-                                            <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT * FROM [Manager]"></asp:SqlDataSource>
+                                            <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT * FROM [Manager] WHERE Is_Logout <> 1"></asp:SqlDataSource>
                                         </InsertItemTemplate>
                                         <ItemTemplate>
                                             <asp:Label ID="lbManagerName" runat="server" Text='<%# Bind("Name") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                    <asp:BoundField DataField="Is_Logout" HeaderText="Is_Logout" SortExpression="Is_Logout" />
                                     <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
                                 </Fields>                                
                                 <FooterStyle Width="100%" />
@@ -160,7 +164,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
                             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" 
                                 SelectCommand="SELECT * FROM [Controller] WHERE ([ID] = @ID)" DeleteCommand="DELETE FROM [Controller] WHERE [ID] = @ID" 
                                 InsertCommand="INSERT INTO [Controller] ([ID], [Name], [Department], [Section], [Email], [Password], [MobileNo], [InternalNo], [ManagerID]) VALUES (@ID, @Name, @Department, @Section, @Email, @Password, @MobileNo, @InternalNo, @ManagerID)" 
-                                UpdateCommand="UPDATE Controller SET Name = @Name, Department = @Department, Section = @Section, Email = @Email, Password = @Password, MobileNo = @MobileNo, InternalNo = @InternalNo, ManagerID = @ManagerID, Update_at = GETDATE(),Update_by = @BY WHERE (ID = @ID)">
+                                UpdateCommand="UPDATE Controller SET Name = @Name, Department = @Department, Section = @Section, Email = @Email, Password = @Password, MobileNo = @MobileNo, InternalNo = @InternalNo, ManagerID = @ManagerID, Update_at = GETDATE(),Update_by = @BY, Is_Logout = @Is_Logout WHERE (ID = @ID)">
                                 <DeleteParameters>
                                     <asp:Parameter Name="ID" Type="String" />
                                 </DeleteParameters>
@@ -174,6 +178,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
                                     <asp:Parameter Name="MobileNo" Type="String" />
                                     <asp:Parameter Name="InternalNo" Type="String" />
                                     <asp:Parameter Name="ManagerID" Type="String" />
+                                    
                                 </InsertParameters>
                                 <SelectParameters>
                                     <asp:ControlParameter ControlID="GridView1" DefaultValue="SelectedRow.Cells(1).Text" Name="ID" PropertyName="SelectedValue" Type="String" />
@@ -188,6 +193,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
                                     <asp:Parameter Name="InternalNo" Type="String" />
                                     <asp:Parameter Name="ManagerID" Type="String" />
                                     <asp:Parameter Name="ID" Type="String" />
+                                    <asp:Parameter Name="Is_Logout" Type="String" />
                                     <asp:SessionParameter Name="BY" Type="String" SessionField="myLoginID" />
                                 </UpdateParameters>
                             </asp:SqlDataSource>
@@ -238,7 +244,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
                                         <InsertItemTemplate>
                                             <asp:DropDownList ID="ddlAdd" runat="server" AutoPostBack="True" DataSourceID="SqlDataSourceAdd" DataTextField="Name" DataValueField="ID" SelectedValue='<%# Bind("ManagerID") %>'>
                                             </asp:DropDownList>
-                                            <asp:SqlDataSource ID="SqlDataSourceAdd" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT * FROM [Manager]"></asp:SqlDataSource>
+                                            <asp:SqlDataSource ID="SqlDataSourceAdd" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT * FROM [Manager] WHERE Is_Logout <> 1"></asp:SqlDataSource>
                                         </InsertItemTemplate>
                                         <ItemTemplate>
                                             <asp:Label ID="Label1" runat="server" Text='<%# Bind("ManagerID") %>'></asp:Label>

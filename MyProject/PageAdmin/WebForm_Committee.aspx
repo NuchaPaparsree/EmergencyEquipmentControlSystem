@@ -90,7 +90,7 @@ body, html {height: 100%}
 
                     </asp:GridView>
                     <!-- //search data -->
-                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT * FROM [Committee] WHERE ([ID] LIKE '%' + @ID + '%' OR [Name] LIKE '%' + @Name + '%')">
+                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT * FROM [Committee] WHERE (([ID] LIKE '%' + @ID + '%' OR [Name] LIKE '%' + @Name + '%')) AND Is_Logout <> 1">
                         <SelectParameters>
                             <asp:ControlParameter ControlID="TextBoxSearch" DefaultValue="%" Name="ID" PropertyName="Text" Type="String" />
                             <asp:ControlParameter ControlID="TextBoxSearch" DefaultValue="%" Name="Name" PropertyName="Text" />
@@ -130,6 +130,7 @@ body, html {height: 100%}
                                     <asp:BoundField DataField="Password" HeaderText="Password" SortExpression="Password" />
                                     <asp:BoundField DataField="MobileNo" HeaderText="MobileNo" SortExpression="MobileNo" />
                                     <asp:BoundField DataField="InternalNo" HeaderText="InternalNo" SortExpression="InternalNo" />
+                                    <asp:BoundField DataField="Is_Logout" HeaderText="Is_Logout" SortExpression="Is_Logout" />
                                     <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
                                 </Fields>
 
@@ -149,7 +150,7 @@ body, html {height: 100%}
                             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" 
                                 DeleteCommand="DELETE FROM [Committee] WHERE [ID] = @ID" 
                                 InsertCommand="INSERT INTO [Committee] ([ID], [Name], [Department], [Section], [Email], [Password], [MobileNo], [InternalNo]) VALUES (@ID, @Name, @Department, @Section, @Email, @Password, @MobileNo, @InternalNo)" SelectCommand="SELECT * FROM [Committee] WHERE ([ID] = @ID)" 
-                                UpdateCommand="UPDATE Committee SET Name = @Name, Department = @Department, Section = @Section, Email = @Email, Password = @Password, MobileNo = @MobileNo, InternalNo = @InternalNo, Update_at = GETDATE(),Update_by = @BY WHERE (ID = @ID)">
+                                UpdateCommand="UPDATE Committee SET Name = @Name, Department = @Department, Section = @Section, Email = @Email, Password = @Password, MobileNo = @MobileNo, InternalNo = @InternalNo, Update_at = GETDATE(),Update_by = @BY, Is_Logout = @Is_Logout WHERE (ID = @ID)">
                                 <DeleteParameters>
                                     <asp:Parameter Name="ID" Type="String" />
                                 </DeleteParameters>
@@ -178,6 +179,7 @@ body, html {height: 100%}
                                     <asp:Parameter Name="InternalNo" Type="String" />
                                     <asp:Parameter Name="ID" Type="String" />
                                     <asp:SessionParameter Name="BY" Type="String" SessionField="myLoginID" />
+                                    <asp:Parameter Name="Is_Logout" Type="String" />
                                 </UpdateParameters>
                             </asp:SqlDataSource>
 
