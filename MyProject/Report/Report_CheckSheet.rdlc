@@ -928,9 +928,9 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox6</rd:DefaultName>
-              <Left>0.00231in</Left>
+              <Top>0.00083in</Top>
               <Height>0.12482in</Height>
-              <Width>0.77903in</Width>
+              <Width>0.80333in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -991,8 +991,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0.1526in</Top>
-              <Left>0.0405in</Left>
+              <Top>0.15343in</Top>
+              <Left>0.05438in</Left>
               <Height>0.69174in</Height>
               <Width>0.68249in</Width>
               <ZIndex>1</ZIndex>
@@ -1026,10 +1026,9 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox8</rd:DefaultName>
-              <Top>0.87583in</Top>
-              <Left>0.00578in</Left>
-              <Height>0.15625in</Height>
-              <Width>0.79013in</Width>
+              <Top>0.87666in</Top>
+              <Height>0.156in</Height>
+              <Width>0.80333in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -1043,10 +1042,10 @@
             </Textbox>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
-          <Top>0.05431in</Top>
-          <Left>5.505in</Left>
-          <Height>1.03208in</Height>
-          <Width>0.79591in</Width>
+          <Top>0.05348in</Top>
+          <Left>5.50501in</Left>
+          <Height>1.03366in</Height>
+          <Width>0.80333in</Width>
           <ZIndex>7</ZIndex>
           <Style>
             <Border>
@@ -1076,9 +1075,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox6</rd:DefaultName>
-              <Left>0.00464in</Left>
               <Height>0.12482in</Height>
-              <Width>0.77903in</Width>
+              <Width>0.80333in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1174,10 +1172,9 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox8</rd:DefaultName>
-              <Top>0.875in</Top>
-              <Left>0.0132in</Left>
+              <Top>0.87931in</Top>
               <Height>0.156in</Height>
-              <Width>0.79013in</Width>
+              <Width>0.80333in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -1194,7 +1191,7 @@
           <KeepTogether>true</KeepTogether>
           <Top>0.04917in</Top>
           <Left>6.29049in</Left>
-          <Height>1.03208in</Height>
+          <Height>1.03531in</Height>
           <Width>0.80333in</Width>
           <ZIndex>8</ZIndex>
           <Style>
@@ -1266,7 +1263,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value> 1. ในช่องว่างผลการตรวจให้ใส่เครื่องหมาย      /                                   ถ้าผิดปกติให้ใส่เครื่องหมาย      O</Value>
+                  <Value> 1. ในช่องว่างผลการตรวจให้ใส่เครื่องหมาย      /                                   ถ้าผิดปกติให้ใส่เครื่องหมาย      O                           ไม่มีส่วนเกี่ยวข้อง   -  </Value>
                   <Style>
                     <FontFamily>CordiaUPC</FontFamily>
                     <FontSize>6pt</FontSize>
@@ -1278,7 +1275,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox24</rd:DefaultName>
-          <Top>0.02778in</Top>
+          <Top>0.02213in</Top>
           <Left>0.88541in</Left>
           <Height>0.1in</Height>
           <Width>6.07368in</Width>
@@ -1297,7 +1294,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>  ถ้าผิดปกติแล้วมีการปรับปรุงให้ใส่เครื่องหมาย    ^                               ถ้าไม่มีการตรวจสอบในหัวข้อใดให้ใส่เครื่องหมาย    -</Value>
+                  <Value>  ถ้าผิดปกติแล้วมีการปรับปรุงให้ใส่เครื่องหมาย    ^                               ถ้าไม่มีการตรวจสอบในหัวข้อใดให้ใส่เครื่องหมาย   *</Value>
                   <Style>
                     <FontFamily>CordiaUPC</FontFamily>
                     <FontSize>6pt</FontSize>

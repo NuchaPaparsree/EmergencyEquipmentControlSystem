@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyProject.PageAdmin {
-    
-    
-    public partial class WebForm_CheckItem {
-        
+namespace MyProject.PageAdmin
+{
+
+
+    public partial class WebForm_CheckItem
+    {
+
         /// <summary>
         /// TextBoxSearch control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace MyProject.PageAdmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBoxSearch;
-        
+
         /// <summary>
         /// ButtonSearch control.
         /// </summary>
@@ -29,7 +31,16 @@ namespace MyProject.PageAdmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonSearch;
-        
+
+        /// <summary>
+        /// ButtonAdd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonAdd;
+
         /// <summary>
         /// upCrudGrid control.
         /// </summary>
@@ -38,7 +49,7 @@ namespace MyProject.PageAdmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upCrudGrid;
-        
+
         /// <summary>
         /// GridView1 control.
         /// </summary>
@@ -47,7 +58,7 @@ namespace MyProject.PageAdmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridView1;
-        
+
         /// <summary>
         /// SqlDataSource1 control.
         /// </summary>
@@ -56,7 +67,7 @@ namespace MyProject.PageAdmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
-        
+
         /// <summary>
         /// UpdatePanel2 control.
         /// </summary>
@@ -65,7 +76,7 @@ namespace MyProject.PageAdmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel2;
-        
+
         /// <summary>
         /// DetailsView1 control.
         /// </summary>
@@ -74,7 +85,7 @@ namespace MyProject.PageAdmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DetailsView DetailsView1;
-        
+
         /// <summary>
         /// SqlDataselect_Checkitem control.
         /// </summary>
@@ -83,7 +94,7 @@ namespace MyProject.PageAdmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataselect_Checkitem;
-        
+
         /// <summary>
         /// SqlDataSource2 control.
         /// </summary>
@@ -92,7 +103,7 @@ namespace MyProject.PageAdmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource2;
-        
+
         /// <summary>
         /// Button1 control.
         /// </summary>
@@ -101,5 +112,32 @@ namespace MyProject.PageAdmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
+
+        /// <summary>
+        /// DetailsView2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DetailsView DetailsView2;
+
+        /// <summary>
+        /// SqlDataSource5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource5;
+
+        /// <summary>
+        /// Button2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button2;
     }
 }

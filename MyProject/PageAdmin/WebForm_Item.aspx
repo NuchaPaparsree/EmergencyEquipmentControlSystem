@@ -117,9 +117,9 @@ FROM Place INNER JOIN Controller ON Place.ControllerID = Controller.ID
                         <asp:BoundField DataField="PlaceID" HeaderText="PlaceID" SortExpression="PlaceID" Visible="False" />
                         <asp:BoundField DataField="Building" HeaderText="Building" SortExpression="Building" />
                         <asp:BoundField DataField="Floor" HeaderText="Floor" SortExpression="Floor" />
-
-
                         <asp:BoundField DataField="Area" HeaderText="Area" SortExpression="Area" />
+                        <asp:BoundField DataField="ControllerID" HeaderText="Controller ID" SortExpression="ControllerID" />
+
                         <asp:TemplateField HeaderText="LocationLink">
                             <ItemTemplate>
                                 <a href="<%# ((Eval("Location").ToString() == Convert.ToString("EA1")) ? "Location/Ext_A1.pdf" :
@@ -227,15 +227,15 @@ FROM Place INNER JOIN Controller ON Place.ControllerID = Controller.ID
                 </asp:GridView>
                 </div> 
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>"
-                        SelectCommand="SELECT Item.ID, Item.ItemSubTypeID, ItemType.Name, ItemSubType.SubType, Item.Code, Item.SerialNumber, Item.DatePurchased, Item.PlaceID, Place.Building, Place.Floor, Place.Area, Item.Location FROM Item LEFT OUTER JOIN ItemSubType ON ItemSubType.ID = Item.ItemSubTypeID LEFT OUTER JOIN Place ON Place.ID = Item.PlaceID 
+                        SelectCommand="SELECT Item.ID, Item.ItemSubTypeID, ItemType.Name, ItemSubType.SubType, Item.Code, Item.SerialNumber, Item.DatePurchased, Item.PlaceID, Place.Building, Place.Floor, Place.Area,Place.ControllerID, Item.Location FROM Item LEFT OUTER JOIN ItemSubType ON ItemSubType.ID = Item.ItemSubTypeID LEFT OUTER JOIN Place ON Place.ID = Item.PlaceID 
                         LEFT OUTER JOIN ItemType ON ItemType.ID = ItemSubType.ItemTypeID 
                         WHERE (Item.Code LIKE '%' + @Code + '%') AND (Place.Building LIKE '%' + @Build + '%') AND (Place.Floor LIKE '%' + @Floor +'%') AND (Place.Area LIKE '%' + @Area +'%') AND (ItemType.Name LIKE '%' + @Name +'%')">
                         <SelectParameters>
                             <asp:ControlParameter ControlID="TextBoxSearch" DefaultValue="%" Name="Code" PropertyName="Text" Type="String" />
-                            <asp:ControlParameter ControlID="DropDownList2" DefaultValue="" Name="Build" PropertyName="SelectedValue" />
-                            <asp:ControlParameter ControlID="DropDownList3" Name="Floor" PropertyName="SelectedValue" />
-                            <asp:ControlParameter ControlID="DropDownList4" Name="Area" PropertyName="SelectedValue" />
-                            <asp:ControlParameter ControlID="DropDownList5" DefaultValue="" Name="Name" PropertyName="SelectedValue" />
+                            <asp:ControlParameter ControlID="DropDownList2" DefaultValue="%" Name="Build" PropertyName="SelectedValue" />
+                            <asp:ControlParameter ControlID="DropDownList3" Name="Floor" PropertyName="SelectedValue" DefaultValue="%" />
+                            <asp:ControlParameter ControlID="DropDownList4" Name="Area" PropertyName="SelectedValue" DefaultValue="%" />
+                            <asp:ControlParameter ControlID="DropDownList5" DefaultValue="%" Name="Name" PropertyName="SelectedValue" />
                         </SelectParameters>
                     </asp:SqlDataSource>
             </ContentTemplate>
@@ -360,7 +360,8 @@ FROM Place INNER JOIN Controller ON Place.ControllerID = Controller.ID
                                     <InsertItemTemplate>
                                         <asp:DropDownList ID="ddlAddSubType" runat="server" AutoPostBack="True" DataSourceID="SqlDataSourceAddSubType" DataTextField="MyColumn" DataValueField="ID" SelectedValue='<%# Bind("ItemSubTypeID") %>' Width="100%">
                                         </asp:DropDownList>
-                                        <asp:SqlDataSource ID="SqlDataSourceAddSubType" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT *,( SubType + ' , ' + Size ) AS MyColumn FROM [ItemSubType]"></asp:SqlDataSource>
+                                        <asp:SqlDataSource ID="SqlDataSourceAddSubType" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT *,( [ItemSubType].SubType + ' , ' + ISNULL(Size,''  ) ) AS MyColumn FROM [ItemSubType] ORDER BY ItemTypeID "></asp:SqlDataSource>                                   
+
                                     </InsertItemTemplate>
                                 </asp:TemplateField>
 
@@ -371,7 +372,7 @@ FROM Place INNER JOIN Controller ON Place.ControllerID = Controller.ID
                                     <InsertItemTemplate>
                                         <asp:DropDownList ID="ddlAddPlace" runat="server" AutoPostBack="True" DataSourceID="SqlDataSourceAddPlace" DataTextField="MyColumn" DataValueField="ID" SelectedValue='<%# Bind("PlaceID") %>' Width="100%">
                                         </asp:DropDownList>
-                                        <asp:SqlDataSource ID="SqlDataSourceAddPlace" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT *,( Building + ' , ' + Floor + ' , ' + Area ) AS MyColumn FROM [Place]"></asp:SqlDataSource>
+                                        <asp:SqlDataSource ID="SqlDataSourceAddPlace" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT *,( Building + ' , ' + Floor + ' , ' + Area ) AS MyColumn FROM [Place] ORDER BY Building "></asp:SqlDataSource>
                                     </InsertItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="Location" HeaderText="Location" SortExpression="Location" />

@@ -11,30 +11,35 @@
     <script src="../MyBootStrap/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-    table {
-        border-collapse: collapse;
-        border-spacing: 0;
-        width: 100%;
-    }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+        }
 
-    th, td {
-        text-align: left;
-        padding: 8px;
-    }
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
 
-    /*tr:nth-child(even){background-color: #f2f2f2}
+        .radioall {
+            margin: 4px 4px 4px;
+        }
+
+        /*tr:nth-child(even){background-color: #f2f2f2}
         .auto-style1 {
             font-size: large;
         }*/
     </style>
 
 </head>
-    
+ 
 <body>
-   
+
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-        <asp:Button ID="BtnLogout" CssClass="btn btn-link" runat="server" OnClick="BtnLogout_Click" Text="Logout" style="position:absolute;top:0px;right:0px;"/><br />
+        <asp:Button ID="BtnLogout" CssClass="btn btn-link" runat="server" OnClick="BtnLogout_Click" Text="Logout" Style="position: absolute; top: 0px; right: 0px;" />
+        <br />
         <div class="container">
             <asp:Label ID="Controller" class="form-group" runat="server" Font-Names="Yu Gothic UI Semibold" Font-Size="Large">ControllerID : </asp:Label>&nbsp;<asp:Label ID="lblControllerID" class="form-group" runat="server" Font-Names="Yu Gothic UI Semibold" Font-Size="Large"></asp:Label>
             &nbsp;&nbsp;<asp:Label ID="Place" class="form-group" runat="server" Font-Names="Yu Gothic UI Semibold" Font-Size="Large">Place : </asp:Label>&nbsp;<asp:Label ID="lblPlaceID" class="form-group" runat="server" Font-Names="Yu Gothic UI Semibold" Font-Size="Large" Visible="false"></asp:Label>
@@ -57,10 +62,10 @@
             </asp:FormView>
             <asp:SqlDataSource ID="SqlDataSource7" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT [Area] FROM [Place] WHERE ([ID] = @ID2)">
                 <SelectParameters>
-                    <asp:ControlParameter ControlID="lblPlaceID" Name="ID2" PropertyName="Text" Type="Byte" />
+                    <asp:ControlParameter ControlID="lblPlaceID" Name="ID2" PropertyName="Text" Type="Int32" />
                 </SelectParameters>
             </asp:SqlDataSource>
-            <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" 
+            <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>"
                 SelectCommand="SELECT Item.ID, Item.Code, ItemType.Name, ItemSubType.SubType 
                 FROM ItemType 
                 INNER JOIN ItemSubType ON ItemType.ID = ItemSubType.ItemTypeID 
@@ -71,14 +76,14 @@
                 </SelectParameters>
             </asp:SqlDataSource>
 
-                <asp:Button ID="Button1" class="btn btn-primary btn-lg btn-block" runat="server" OnClick="Button1_Click" Text="Create" />
-                &nbsp;&nbsp;
+            <asp:Button ID="Button1" class="btn btn-primary btn-lg btn-block" runat="server" OnClick="Button1_Click" Text="เริ่มตรวจสอบ" />
+            &nbsp;&nbsp;
                 <asp:Button CssClass="btn btn-primary" ID="ButtonRefresh" runat="server" Text="Refresh" OnClick="ButtonRefresh_Click" Visible="False" />
 
 
 
-            
-            <asp:FormView ID="FormView4" runat="server" DataSourceID="SqlDataSource6" >
+
+            <asp:FormView ID="FormView4" runat="server" DataSourceID="SqlDataSource6">
                 <RowStyle HorizontalAlign="Center" />
                 <InsertRowStyle HorizontalAlign="Center" />
                 <EditItemTemplate>
@@ -104,17 +109,17 @@
                 <ItemTemplate>
                     <div align="center">
                         <span class="auto-style1">Item Checked :</span>
-                        <asp:LinkButton ID="Column1Label" runat="server" Text='<%# Bind("Column1") %>' style="font-size: large" data-toggle="modal" data-target="#ItemCheck" />
+                        <asp:LinkButton ID="Column1Label" runat="server" Text='<%# Bind("Column1") %>' Style="font-size: large" data-toggle="modal" data-target="#ItemCheck" />
                         &nbsp;<span class="auto-style1">/ Item to Check :
-                        <asp:LinkButton ID="Column2Label" runat="server" Text='<%# Bind("Column2") %>' data-toggle="modal" data-target="#ItemNoCheck"/>
-                 
-                        </span></div>
-                </ItemTemplate>
+                        <asp:LinkButton ID="Column2Label" runat="server" Text='<%# Bind("Column2") %>' data-toggle="modal" data-target="#ItemNoCheck" />
 
+                        </span>
+                    </div>
+                </ItemTemplate>
             </asp:FormView>
 
-	    <asp:sqldatasource id="SqlDataSource6" runat="server" connectionstring="<%$ ConnectionStrings:xPimConnectionString1 %>"
-    selectcommand="SELECT COUNT(DISTINCT ViewCheckSheetThisMonth.ItemID) AS Column1, 
+            <asp:SqlDataSource ID="SqlDataSource6" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>"
+                SelectCommand="SELECT COUNT(DISTINCT ViewCheckSheetThisMonth.ItemID) AS Column1, 
 (SELECT COUNT(ID) AS Expr1 FROM Item WHERE (PlaceID = @PlaceID)) AS Column2,
 (SELECT DISTINCT(Location) AS Expr1 FROM Item WHERE (PlaceID = @PlaceID) AND (Item.ID = @ItemID)) AS Location
 
@@ -122,22 +127,22 @@ FROM ViewCheckSheetThisMonth
 
 WHERE (ViewCheckSheetThisMonth.ControllerID = @ControllerID) AND (ViewCheckSheetThisMonth.PlaceID = @PlaceID)
  AND (ViewCheckSheetThisMonth.ItemTypeID IN (1, 2, 5)) ">
-            <SelectParameters>
-                <asp:ControlParameter ControlID="lblPlaceID" Name="PlaceID" PropertyName="Text" />
-                <asp:QueryStringParameter Name="ItemID" QueryStringField="ItemID" />
-                <asp:ControlParameter ControlID="lblControllerID" Name="ControllerID" PropertyName="Text" />
-            </SelectParameters>
-	    </asp:sqldatasource>
+                <SelectParameters>
+                    <asp:ControlParameter ControlID="lblPlaceID" Name="PlaceID" PropertyName="Text" />
+                    <asp:QueryStringParameter Name="ItemID" QueryStringField="ItemID" />
+                    <asp:ControlParameter ControlID="lblControllerID" Name="ControllerID" PropertyName="Text" />
+                </SelectParameters>
+            </asp:SqlDataSource>
             <br />
 
             <div>
-                 <asp:GridView ID="GridView2" CssClass="table" runat="server" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource1" ForeColor="#333333" GridLines="None">
+                <asp:GridView ID="GridView2" CssClass="table" runat="server" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource1" ForeColor="#333333" GridLines="None">
                     <AlternatingRowStyle BackColor="White" HorizontalAlign="Center" ForeColor="#284775" />
                     <Columns>
-                        <asp:TemplateField HeaderText="PHOTO">                     
+                        <asp:TemplateField HeaderText="PHOTO">
                             <ItemTemplate>
                                 <div align="center">
-                                    <asp:Image ID="Image1" runat="server" ImageUrl =' <%# "~/" + Eval("PHOTO").ToString()%>' Width="300" />
+                                    <asp:Image ID="Image1" runat="server" ImageUrl=' <%# "~/" + Eval("PHOTO").ToString()%>' Width="300" />
                                 </div>
                             </ItemTemplate>
                         </asp:TemplateField>
@@ -164,162 +169,174 @@ WHERE (Item.ID = @ID)">
                     </SelectParameters>
                 </asp:SqlDataSource>
             </div>
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                <ContentTemplate>
-            <div style="overflow-x:auto;">
-                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="CheckSheetDetailID" DataSourceID="SqlDataSource2" HorizontalAlign="Center" OnRowDataBound="OnRowDataBound" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black">
-                    <Columns>
+           <%-- <asp:UpdatePanel ID="UpdatePanel1" runat="server">--%>
+              <%--  <ContentTemplate>--%>
+                    <div style="overflow-x: auto;">
+                        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="CheckSheetDetailID" DataSourceID="SqlDataSource2" HorizontalAlign="Center" OnRowDataBound="OnRowDataBound" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black">
+                            <Columns>
 
-            <%-- <asp:BoundField DataField="CheckSheetDetailID" HeaderText="" ReadOnly="True" SortExpression="CheckSheetDetailID">
+                                <%-- <asp:BoundField DataField="CheckSheetDetailID" HeaderText="" ReadOnly="True" SortExpression="CheckSheetDetailID">
                         <ItemStyle ForeColor="White" Width="5px" Height="0px" />
                         </asp:BoundField>--%>
 
-                        <asp:BoundField DataField="CheckID" HeaderText="No." SortExpression="CheckID" />
-                        <asp:BoundField DataField="Detail" HeaderText="CheckingDataDetails" SortExpression="Detail" />
-                        <asp:CheckBoxField DataField="OK" HeaderText="OK" SortExpression="OK" Visible="False" />
-                        <asp:TemplateField HeaderText="OK">
-                            <ItemTemplate>
-                                <asp:RadioButton ID="RadioButton1" runat="server" Checked='<%# Bind("OK") %>' GroupName="MyGroup" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:CheckBoxField DataField="NG" HeaderText="NG" SortExpression="NG" Visible="False" />
-                        <asp:TemplateField HeaderText="NG">
-                            <ItemTemplate>
-                                <asp:RadioButton ID="RadioButton2" runat="server" Checked='<%# Bind("NG") %>' GroupName="MyGroup" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
+                                <asp:BoundField DataField="CheckID" HeaderText="No." SortExpression="CheckID" />
+                                <asp:BoundField DataField="Detail" HeaderText="CheckingDataDetails" SortExpression="Detail" />
+                                <asp:CheckBoxField DataField="OK" HeaderText="OK" SortExpression="OK" Visible="False" />
+                                <asp:TemplateField HeaderText="OK">
+                                    <ItemTemplate>
+                                        <asp:RadioButton ID="RadioButton1" runat="server" Checked='<%# Bind("OK") %>' GroupName="MyGroup" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:CheckBoxField DataField="NG" HeaderText="NG" SortExpression="NG" Visible="False" />
+                                <asp:TemplateField HeaderText="NG">
+                                    <ItemTemplate>
+                                        <asp:RadioButton ID="RadioButton2" runat="server" Checked='<%# Bind("NG") %>' GroupName="MyGroup" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField ShowHeader="False" ItemStyle-HorizontalAlign="Center">
-                <ItemTemplate>
-                    <img src="../Img/Camera2.png" style="cursor:pointer;height:49px; width: 49px;" onclick="OpenCamera(this)"/>
-                    <asp:FileUpload ID="FileUploadCamera" runat="server" onchange="SetPreview(this)" Style="display: none"/>
-                </ItemTemplate>
+                                    <ItemTemplate>
+                                        <img src="../Img/Camera2.png" style="cursor: pointer; height: 49px; width: 49px;" onclick="OpenCamera(this)" />
+                                        <asp:FileUpload ID="FileUploadCamera" runat="server" onchange="SetPreview(this)" Style="display: none" />
+                                    </ItemTemplate>
 
-    <ItemStyle HorizontalAlign="Center"></ItemStyle>
-            </asp:TemplateField>
-            <asp:TemplateField ShowHeader="False" ItemStyle-HorizontalAlign="Center">
-                    <ItemTemplate>
-                        <asp:Image ID="ImagePreview" runat="server" style="cursor:pointer;height:49px; width: 49px;" onclick="SetZoomImage(this)" data-toggle="modal" data-target="#myModal" ImageUrl="~/Img/emty-image.png"/>
-                    </ItemTemplate>
-
-    <ItemStyle HorizontalAlign="Center"></ItemStyle>
-            </asp:TemplateField>
-                        <asp:BoundField DataField="ItemID" HeaderText="ItemID" SortExpression="ItemID" Visible="False" />
-                        <asp:BoundField DataField="YearMonth" HeaderText="YearMonth" SortExpression="YearMonth" Visible="False" />
-                        <asp:TemplateField HeaderText="Comment">
-                            <ItemTemplate>
-                                <asp:TextBox ID="TextBoxComment" runat="server" Text='<%# Bind("Comment") %>' ></asp:TextBox>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="btnClear" class="btn btn-primary" OnClientClick="Clear(this);" runat="server" Text="Clear" />
-                            </ItemTemplate>
-                            <ItemStyle HorizontalAlign="Center" />
-                        </asp:TemplateField>
-                    </Columns>
-                    <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
-                    <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
-                    <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
-                    <SelectedRowStyle BackColor="White" Font-Bold="True" ForeColor="White" />
-                    <SortedAscendingCellStyle BackColor="White" />
-                    <SortedAscendingHeaderStyle BackColor="White" />
-                    <SortedDescendingCellStyle BackColor="White" />
-                    <SortedDescendingHeaderStyle BackColor="White" />
-                </asp:GridView>
-
-
-                <div style="margin-top:30px;"></div><center>
-                <h3><asp:Label ID="Label1" runat="server" Text="อุปกรณ์ที่ไม่มี QR Code "></asp:Label></h3></center>
-                <div style="margin-bottom:30px;"></div>
-
-                  <%/////////////////////////Gridview No ItemID////////////////////////////// %>
-
-                <asp:GridView ID="GridViewNoItem" runat="server" AutoGenerateColumns="False" DataKeyNames="CheckSheetDetailID" DataSourceID="SqlDataSourceNoItem" HorizontalAlign="Center" OnRowDataBound="OnRowDataBound" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black">
-                    <Columns>
-
-                        <%--<asp:BoundField DataField="CheckSheetDetailID" ReadOnly="True" SortExpression="CheckSheetDetailID">
-                        <ItemStyle ForeColor="White" Height="1px" Width="5px" />
-                        </asp:BoundField>--%>
-                 <%--          <asp:TemplateField HeaderText="No.">
-                        <ItemTemplate>
-                            <asp:Label ID="Label1" runat="server" ForeColor="Gray" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label>
-                            
-                        </ItemTemplate>
-                        <HeaderStyle Width="30px" />
-                    </asp:TemplateField>--%>
-
-                        <asp:BoundField DataField="Name" HeaderText="ItemType" SortExpression="Name" />
-                        <asp:BoundField DataField="CheckID" HeaderText="ID" SortExpression="CheckID" />
-                        <asp:BoundField DataField="Detail" HeaderText="CheckingDataDetails" SortExpression="Detail" />
-                        <asp:CheckBoxField DataField="OK" HeaderText="OK" SortExpression="OK" Visible="False" />
-                        <asp:TemplateField HeaderText="OK">
-                            <ItemTemplate>
-                                <asp:RadioButton ID="RadioButton1" runat="server" Checked='<%# Bind("OK") %>' GroupName="MyGroup" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:CheckBoxField DataField="NG" HeaderText="NG" SortExpression="NG" Visible="False" />
-                        <asp:TemplateField HeaderText="NG">
-                            <ItemTemplate>
-                                <asp:RadioButton ID="RadioButton2" runat="server" Checked='<%# Bind("NG") %>' GroupName="MyGroup" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
+                                    <ItemStyle HorizontalAlign="Center"></ItemStyle>
+                                </asp:TemplateField>
                                 <asp:TemplateField ShowHeader="False" ItemStyle-HorizontalAlign="Center">
-                <ItemTemplate>
-                    <img src="../Img/Camera2.png" style="cursor:pointer;height:49px; width: 49px;" onclick="OpenCamera(this)"/>
-                    <asp:FileUpload ID="FileUploadCamera" runat="server" onchange="SetPreview(this)" Style="display: none"/>
-                </ItemTemplate>
+                                    <ItemTemplate>
+                                        <asp:Image ID="ImagePreview" runat="server" Style="cursor: pointer; height: 49px; width: 49px;" onclick="SetZoomImage(this)" data-toggle="modal" data-target="#myModal" ImageUrl="~/Img/emty-image.png" />
+                                    </ItemTemplate>
 
-    <ItemStyle HorizontalAlign="Center"></ItemStyle>
-            </asp:TemplateField>
-            <asp:TemplateField ShowHeader="False" ItemStyle-HorizontalAlign="Center">
-                    <ItemTemplate>
-                        <asp:Image ID="ImagePreview" runat="server" style="cursor:pointer;height:49px; width: 49px;" onclick="SetZoomImage(this)" data-toggle="modal" data-target="#myModal" ImageUrl="~/Img/emty-image.png"/>
-                    </ItemTemplate>
+                                    <ItemStyle HorizontalAlign="Center"></ItemStyle>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="ItemID" HeaderText="ItemID" SortExpression="ItemID" Visible="False" />
+                                <asp:BoundField DataField="YearMonth" HeaderText="YearMonth" SortExpression="YearMonth" Visible="False" />
+                                <asp:TemplateField HeaderText="Comment">
+                                    <ItemTemplate>
+                                        <asp:TextBox ID="TextBoxComment" runat="server" Text='<%# Bind("Comment") %>'></asp:TextBox>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:Button ID="btnClear" class="btn btn-primary" OnClientClick="Clear(this);" runat="server" Text="Clear" />
+                                    </ItemTemplate>
+                                    <ItemStyle HorizontalAlign="Center" />
+                                </asp:TemplateField>
+                            </Columns>
+                            <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
+                            <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
+                            <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
+                            <SelectedRowStyle BackColor="White" Font-Bold="True" ForeColor="White" />
+                            <SortedAscendingCellStyle BackColor="White" />
+                            <SortedAscendingHeaderStyle BackColor="White" />
+                            <SortedDescendingCellStyle BackColor="White" />
+                            <SortedDescendingHeaderStyle BackColor="White" />
+                        </asp:GridView>
 
-    <ItemStyle HorizontalAlign="Center"></ItemStyle>
-            </asp:TemplateField>
-                        <asp:BoundField DataField="ItemID" HeaderText="ItemID" SortExpression="ItemID" Visible="False" />
-                        <asp:BoundField DataField="YearMonth" HeaderText="YearMonth" SortExpression="YearMonth" Visible="False" />
-                        <asp:TemplateField HeaderText="Comment">
-                            <ItemTemplate>
-                                <asp:TextBox ID="TextBoxComment" runat="server" Text='<%# Bind("Comment") %>' ></asp:TextBox>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                            <asp:Button ID="btnClear" class="btn btn-primary" OnClientClick="Clear(this);" runat="server" Text="Clear" />
-                            </ItemTemplate>
-                            <ItemStyle HorizontalAlign ="Center" />
-                        </asp:TemplateField>
-                    </Columns>
-                    <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
-                    <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
-                    <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
-                    <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
-                    <SortedAscendingCellStyle BackColor="#F7F7F7" />
-                    <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
-                    <SortedDescendingCellStyle BackColor="#E5E5E5" />
-                    <SortedDescendingHeaderStyle BackColor="#242121" />
-                </asp:GridView>
-                <asp:SqlDataSource ID="SqlDataSourceNoItem" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" 
-                    SelectCommand="SELECT ViewCheckSheetThisMonth.CheckSheetDetailID, ItemType.Name, ViewCheckSheetThisMonth.CheckID, ViewCheckSheetThisMonth.Detail, ViewCheckSheetThisMonth.OK, ViewCheckSheetThisMonth.NG, ViewCheckSheetThisMonth.ItemID, ViewCheckSheetThisMonth.Picture, ViewCheckSheetThisMonth.YearMonth, ViewCheckSheetThisMonth.Comment 
+                        <div style="margin-top: 30px;"></div>
+
+                        <h3>
+                            <asp:Label ID="Label1" runat="server" Text="อุปกรณ์ที่ไม่มี QR Code"></asp:Label>
+                        </h3>
+                        <asp:CheckBox ID="CheckShowGridNoQR" runat="server" AutoPostBack="True" Checked="False" OnCheckedChanged="CheckShowGridNoQR_CheckedChanged" Text="แก้ไขสอบอุปกร์ที่ไม่มี QR Code" />
+
+
+
+                        <div style="margin-bottom: 30px;"></div>
+                        <center>
+                            <asp:RadioButton class="radioall" ID="RadioButtonALLYes" type="radio" GroupName="group5" value="1" runat="server" onclick="selectAll(form1)" Text="All Yes " />
+                            <asp:RadioButton class="radioall" ID="RadioButtonALLNO" type="radio" GroupName="group5" value="0" runat="server" onclick="selectAll(form1)" Text="All No" />
+                            <asp:RadioButton class="radioall" ID="RadioButtonALLNA" type="radio" GroupName="group5" value="2" runat="server" onclick="selectAll(form1)" Text="All N/A" />
+                            <br />
+                        </center>
+
+                        <%/////////////////////////Gridview No ItemID////////////////////////////// %>
+
+  <%--                      <asp:GridView ID="GridViewNoItemNew" runat="server" EnableViewState="false" AutoGenerateColumns="False" DataKeyNames="CheckSheetDetailID" DataSourceID="SqlDataSourceNoItem" HorizontalAlign="Center" OnRowDataBound="OnRowDataBound" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black">
+                            <Columns>--%>
+                         
+                        <asp:GridView ID="GridViewNoItemNew" runat="server" AutoGenerateColumns="False" DataKeyNames="CheckSheetDetailID" DataSourceID="SqlDataSourceNoItem" HorizontalAlign="Center" OnRowDataBound="OnRowDataBound" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black">
+                            <Columns>
+
+
+                                <asp:BoundField DataField="Name" HeaderText="ItemType" SortExpression="Name" />
+                                <asp:BoundField DataField="CheckID" HeaderText="ID" SortExpression="CheckID" />
+                                <asp:BoundField DataField="Detail" HeaderText="CheckingDataDetails" SortExpression="Detail" />
+                                <asp:CheckBoxField DataField="OK" HeaderText="OK" SortExpression="OK" Visible="False" />
+                                <asp:TemplateField HeaderText="OK">
+                                    <ItemTemplate>
+                                        <asp:RadioButton ID="RadioButton1NoNew" runat="server" value="1" Checked='<%# Bind("OK") %>' GroupName="MyGroup" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:CheckBoxField DataField="NG" HeaderText="NG" SortExpression="NG" Visible="False" />
+                                <asp:TemplateField HeaderText="NG">
+                                    <ItemTemplate>
+                                        <asp:RadioButton ID="RadioButton2NoNew" runat="server" value="0" Checked='<%# Bind("NG") %>' GroupName="MyGroup" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:CheckBoxField DataField="NA" HeaderText="N/A" SortExpression="NA" Visible="False" />
+                                <asp:TemplateField HeaderText="N/A">
+                                    <ItemTemplate>
+                                        <asp:RadioButton ID="RadioButton3NoNew" runat="server" value="2" Checked='<%# Bind("NA") %>' GroupName="MyGroup" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField ShowHeader="False" ItemStyle-HorizontalAlign="Center">
+                                    <ItemTemplate>
+                                        <img src="../Img/Camera2.png" style="cursor: pointer; height: 49px; width: 49px;" onclick="OpenCamera(this)" />
+                                        <asp:FileUpload ID="FileUploadCamera" runat="server" onchange="SetPreview(this)" Style="display: none" />
+                                    </ItemTemplate>
+
+                                    <ItemStyle HorizontalAlign="Center"></ItemStyle>
+                                </asp:TemplateField>
+                                <asp:TemplateField ShowHeader="False" ItemStyle-HorizontalAlign="Center">
+                                    <ItemTemplate>
+                                        <asp:Image ID="ImagePreview" runat="server" Style="cursor: pointer; height: 49px; width: 49px;" onclick="SetZoomImage(this)" data-toggle="modal" data-target="#myModal" ImageUrl="~/Img/emty-image.png" />
+                                    </ItemTemplate>
+
+                                    <ItemStyle HorizontalAlign="Center"></ItemStyle>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="ItemID" HeaderText="ItemID" SortExpression="ItemID" Visible="False" />
+                                <asp:BoundField DataField="YearMonth" HeaderText="YearMonth" SortExpression="YearMonth" Visible="False" />
+                                <asp:TemplateField HeaderText="Comment">
+                                    <ItemTemplate>
+                                        <asp:TextBox ID="TextBoxCommentNo" runat="server" Text='<%# Bind("Comment") %>'></asp:TextBox>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:Button ID="btnClearNo" class="btn btn-primary" OnClientClick="ClearNo(this);" runat="server" Text="Clear" />
+                                    </ItemTemplate>
+                                    <ItemStyle HorizontalAlign="Center" />
+                                </asp:TemplateField>
+
+
+                            </Columns>
+                            <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
+                            <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
+                            <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
+                            <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
+                            <SortedAscendingCellStyle BackColor="#F7F7F7" />
+                            <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
+                            <SortedDescendingCellStyle BackColor="#E5E5E5" />
+                            <SortedDescendingHeaderStyle BackColor="#242121" />
+                        </asp:GridView>
+                        <asp:SqlDataSource ID="SqlDataSourceNoItem" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>"
+                            SelectCommand="SELECT ViewCheckSheetThisMonth.CheckSheetDetailID, ItemType.Name, ViewCheckSheetThisMonth.CheckID, ViewCheckSheetThisMonth.Detail, ViewCheckSheetThisMonth.OK, ViewCheckSheetThisMonth.NG, ViewCheckSheetThisMonth.NA , ViewCheckSheetThisMonth.ItemID, ViewCheckSheetThisMonth.Picture, ViewCheckSheetThisMonth.YearMonth, ViewCheckSheetThisMonth.Comment 
                     FROM ViewCheckSheetThisMonth 
                     LEFT OUTER JOIN ItemType ON ViewCheckSheetThisMonth.ItemTypeID = ItemType.ID 
                     WHERE (ViewCheckSheetThisMonth.CheckSheetID = @CheckSheetID)  AND (ViewCheckSheetThisMonth.ItemTypeID NOT IN ('1', '2', '5'))">
-                    <SelectParameters>
-                        <asp:SessionParameter Name="CheckSheetID" SessionField="CheckSheetID" />
-                    </SelectParameters>
-                </asp:SqlDataSource>
+                            <SelectParameters>
+                                <asp:SessionParameter Name="CheckSheetID" SessionField="CheckSheetID" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
+                    </div>
+            <%--    </ContentTemplate>
+            </asp:UpdatePanel>--%>
+            <%/////////////////////////////////////////////////////// %>
 
 
-                
-                <%/////////////////////////////////////////////////////// %>
-
-            </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
             <asp:FormView ID="FormView3" runat="server" DataSourceID="SqlDataSource5">
-                
+
                 <ItemTemplate>
                     Date:
                     <asp:Label ID="DateLabel" runat="server" Text='<%# Bind("Date") %>' />
@@ -335,7 +352,7 @@ WHERE (Item.ID = @ID)">
                 </SelectParameters>
             </asp:SqlDataSource>
 
-            <div style="margin-bottom:30px;"></div>
+            <div style="margin-bottom: 30px;"></div>
             <asp:Button ID="Button2" class="btn btn-primary btn-lg btn-block" runat="server" Text="Send Report" OnClick="Button2_Click" />
 
             <%--<asp:Label ID="Label5" runat="server" Text=""></asp:Label>--%>
@@ -351,28 +368,30 @@ WHERE (ItemID = @ItemID) AND (PlaceID = @PlaceID) AND (YearMonth = @YearMonth) "
                 </SelectParameters>
             </asp:SqlDataSource>
             <br />
-                <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog"> 
-                <div class="modal-content">
-                <div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Modal Header</h4></div>
-                <div class="modal-body">
-                    <asp:Image ID="ImageZoom" runat="server" width="100%" Height="100%"/>
-                </div>
-                <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div>
-                </div>  
-            </div>
-        </div>
-
-<%////////////////////////////////////////////////// Status Item //////////////////////////////////////////////////////////////////////////////// %>
-            <div class="modal fade" id="ItemCheck" role="dialog">
-                <div class="modal-dialog"> 
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
                     <div class="modal-content">
-                    
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"/>x</div>
+                        <div class="modal-body">
+                            <asp:Image ID="ImageZoom" runat="server" Width="100%" Height="100%" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <%////////////////////////////////////////////////// Status Item //////////////////////////////////////////////////////////////////////////////// %>
+            <div class="modal fade" id="ItemCheck" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Item Check Already</h4>
                         </div>
-                    
+
                         <div class="modal-body">
                             <asp:GridView ID="gvItemChecked" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceItemChecked" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical">
                                 <AlternatingRowStyle BackColor="White" />
@@ -401,33 +420,35 @@ WHERE (ItemID = @ItemID) AND (PlaceID = @PlaceID) AND (YearMonth = @YearMonth) "
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
-                    
-                    </div>  
-                </div>        
+
+                    </div>
+                </div>
             </div>
 
-          <div class="modal fade" id="ItemNoCheck" role="dialog">
-                <div class="modal-dialog"> 
+            <div class="modal fade" id="ItemNoCheck" role="dialog">
+                <div class="modal-dialog">
                     <div class="modal-content">
-                    <div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Item No Check</h4></div>
-                    <div class="modal-body">
-                        <asp:GridView ID="gvItemNocheck" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceItemNoCheck" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical">
-                            <AlternatingRowStyle BackColor="White" />
-                            <Columns>
-                               
-                                <asp:BoundField DataField="Code" HeaderText="Item Code" SortExpression="Code" >
-                                <HeaderStyle HorizontalAlign="Center" />
-                                <ItemStyle HorizontalAlign="Center" />
-                                </asp:BoundField>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Item No Check</h4>
+                        </div>
+                        <div class="modal-body">
+                            <asp:GridView ID="gvItemNocheck" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceItemNoCheck" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical">
+                                <AlternatingRowStyle BackColor="White" />
+                                <Columns>
 
-                                <asp:BoundField DataField="Area" HeaderText="Area" SortExpression="Area" >
-                                <HeaderStyle HorizontalAlign="Center" />
-                                <ItemStyle HorizontalAlign="Center" />
-                                </asp:BoundField>
+                                    <asp:BoundField DataField="Code" HeaderText="Item Code" SortExpression="Code">
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                        <ItemStyle HorizontalAlign="Center" />
+                                    </asp:BoundField>
 
-                                <asp:TemplateField HeaderText="LocationLink" > 
-                                <ItemTemplate>
-                                    <a href="<%# ((Eval("Location").ToString() == Convert.ToString("EA1")) ? "../PageAdmin/Location/Ext_A1.pdf" :
+                                    <asp:BoundField DataField="Area" HeaderText="Area" SortExpression="Area">
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                        <ItemStyle HorizontalAlign="Center" />
+                                    </asp:BoundField>
+
+                                    <asp:TemplateField HeaderText="LocationLink">
+                                        <ItemTemplate>
+                                            <a href="<%# ((Eval("Location").ToString() == Convert.ToString("EA1")) ? "../PageAdmin/Location/Ext_A1.pdf" :
                                                      ((Eval("Location").ToString()) == Convert.ToString("EA2") ? "../PageAdmin/Location/Ext_A2.pdf" :
                                                      ((Eval("Location").ToString()) == Convert.ToString("EB2") ? "../PageAdmin/Location/Ext_B2.pdf" :
                                                      ((Eval("Location").ToString()) == Convert.ToString("EC1") ? "../PageAdmin/Location/Ext_C1.pdf" :
@@ -508,93 +529,158 @@ WHERE (ItemID = @ItemID) AND (PlaceID = @PlaceID) AND (YearMonth = @YearMonth) "
                                                     ((Eval("Location").ToString()) == Convert.ToString("BI3") ? "../PageAdmin/Location/BELL_I3.pdf" :
                                                     ((Eval("Location").ToString()) == Convert.ToString("BIG") ? "../PageAdmin/Location/BELL_IG.pdf" 
 
-                                                     : "#")))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) %>" target="_blank" >Location</a>
-                                </ItemTemplate>
-                            </asp:TemplateField >
-  
-                            </Columns>
-                            <FooterStyle BackColor="#CCCC99" />
-                            <HeaderStyle BackColor="#6B696B" Font-Bold="True" ForeColor="White" />
-                            <PagerStyle BackColor="#F7F7DE" ForeColor="Black" HorizontalAlign="Right" />
-                            <RowStyle HorizontalAlign="Center" BackColor="#F7F7DE" />
-                            <SelectedRowStyle BackColor="#CE5D5A" Font-Bold="True" ForeColor="White" />
-                            <SortedAscendingCellStyle BackColor="#FBFBF2" />
-                            <SortedAscendingHeaderStyle BackColor="#848384" />
-                            <SortedDescendingCellStyle BackColor="#EAEAD3" />
-                            <SortedDescendingHeaderStyle BackColor="#575357" />
-                        </asp:GridView>
-                        <asp:SqlDataSource ID="SqlDataSourceItemNoCheck" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT dt.CheckSheetID, dt.YearMonth, Item.ID, dt.ItemID, Item.Code, Controller.ID AS ControllerID, Controller.Name, Place.Area, Place.ID AS Expr1, Item.Location FROM Item LEFT OUTER JOIN Place ON Item.PlaceID = Place.ID LEFT OUTER JOIN Controller ON Place.ControllerID = Controller.ID LEFT OUTER JOIN ItemSubType ON Item.ItemSubTypeID = ItemSubType.ID INNER JOIN ItemType ON ItemType.ID = ItemSubType.ItemTypeID LEFT OUTER JOIN (SELECT DISTINCT CheckSheet.ID AS CheckSheetID, CheckSheet.ControllerID, CheckSheetDetail.ItemID, CheckSheet.YearMonth FROM CheckSheetDetail LEFT OUTER JOIN CheckSheet ON CheckSheet.ID = CheckSheetDetail.CheckSheetID WHERE (CheckSheet.YearMonth = CONVERT ([varchar] (7), GETDATE(), 120)) AND (CheckSheet.ControllerID = @ControllerID)) AS dt ON dt.ItemID = Item.ID WHERE (Controller.ID = @ControllerID) AND (dt.CheckSheetID IS NULL) AND (Place.ID = @PlaceID)">
-                            <SelectParameters>
-                                <asp:ControlParameter ControlID="lblControllerID" Name="ControllerID" PropertyName="Text" />
-                                <asp:ControlParameter ControlID="lblPlaceID" Name="PlaceID" PropertyName="Text" />
+                                                     : "#")))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) %>"
+                                                target="_blank">Location</a>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
-                            </SelectParameters>
-                        </asp:SqlDataSource>
+                                </Columns>
+                                <FooterStyle BackColor="#CCCC99" />
+                                <HeaderStyle BackColor="#6B696B" Font-Bold="True" ForeColor="White" />
+                                <PagerStyle BackColor="#F7F7DE" ForeColor="Black" HorizontalAlign="Right" />
+                                <RowStyle HorizontalAlign="Center" BackColor="#F7F7DE" />
+                                <SelectedRowStyle BackColor="#CE5D5A" Font-Bold="True" ForeColor="White" />
+                                <SortedAscendingCellStyle BackColor="#FBFBF2" />
+                                <SortedAscendingHeaderStyle BackColor="#848384" />
+                                <SortedDescendingCellStyle BackColor="#EAEAD3" />
+                                <SortedDescendingHeaderStyle BackColor="#575357" />
+                            </asp:GridView>
+                            <asp:SqlDataSource ID="SqlDataSourceItemNoCheck" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT dt.CheckSheetID, dt.YearMonth, Item.ID, dt.ItemID, Item.Code, Controller.ID AS ControllerID, Controller.Name, Place.Area, Place.ID AS Expr1, Item.Location FROM Item LEFT OUTER JOIN Place ON Item.PlaceID = Place.ID LEFT OUTER JOIN Controller ON Place.ControllerID = Controller.ID LEFT OUTER JOIN ItemSubType ON Item.ItemSubTypeID = ItemSubType.ID INNER JOIN ItemType ON ItemType.ID = ItemSubType.ItemTypeID LEFT OUTER JOIN (SELECT DISTINCT CheckSheet.ID AS CheckSheetID, CheckSheet.ControllerID, CheckSheetDetail.ItemID, CheckSheet.YearMonth FROM CheckSheetDetail LEFT OUTER JOIN CheckSheet ON CheckSheet.ID = CheckSheetDetail.CheckSheetID WHERE (CheckSheet.YearMonth = CONVERT ([varchar] (7), GETDATE(), 120)) AND (CheckSheet.ControllerID = @ControllerID)) AS dt ON dt.ItemID = Item.ID WHERE (Controller.ID = @ControllerID) AND (dt.CheckSheetID IS NULL) AND (Place.ID = @PlaceID)">
+                                <SelectParameters>
+                                    <asp:ControlParameter ControlID="lblControllerID" Name="ControllerID" PropertyName="Text" />
+                                    <asp:ControlParameter ControlID="lblPlaceID" Name="PlaceID" PropertyName="Text" />
+
+                                </SelectParameters>
+                            </asp:SqlDataSource>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div>
+
+
+
                     </div>
-                    <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div>
-
-                        
-
-                    </div>  
                 </div>
-         </div>
+            </div>
 
- </div>
+        </div>
 
 
-<script type="text/javascript">
+        <script type="text/javascript">
 
-    function Clear(lnk)
-    {
-        //Reference the GridView Row.
-        var row = lnk.parentNode.parentNode;
- 
-        //Determine the Row Index.
-        var message = "Row Index: " + (row.rowIndex - 1);
+            function Clear(lnk) {
+                //Reference the GridView Row.
+                var row = lnk.parentNode.parentNode;
 
-        var txt = $("input[id*=TextBoxComment]");
-        txt[row.rowIndex - 1].value = '';
+                //Determine the Row Index.
+                var message = "Row Index: " + (row.rowIndex - 1);
 
-        var rdb = $("input[id*=RadioButton1]");
-        rdb[row.rowIndex - 1].value = false;
+                var txt = $("input[id*=TextBoxComment]");
+                txt[row.rowIndex - 1].value = '';
 
-        var rdb2 = $("input[id*=RadioButton2]");
-        rdb2[row.rowIndex - 1].value = false;
+                var rdb = $("input[id*=RadioButton1]");
+                rdb[row.rowIndex - 1].value = false;
 
-        alert(message);
-        return false;
-    }
+                var rdb2 = $("input[id*=RadioButton2]");
+                rdb2[row.rowIndex - 1].value = false;
 
-    //function คลิก Browse file จาก Image แทน
-    function OpenCamera(ele)
-    {    
-        var FileUploadCTRL = $(ele).closest('tr').find('[id*=FileUploadCamera]');
-        FileUploadCTRL.click();
-    }
-
-    //Set preview image เมื่อ Browse file แต่ยังไม่ Save to DB
-    function SetPreview(ele)
-    {
-            var ImagePreviewCTRL = $(ele).closest('tr').find('[id*=ImagePreview]');
-            //var File = $(ele).closest('tr').find('[id*=FileUploadCamera]');
-            if (typeof (FileReader) != "undefined")
-            {
-                $(ImagePreviewCTRL).show();
-                var reader = new FileReader();
-                reader.onload = function (e){$(ImagePreviewCTRL).attr("src", e.target.result);}
-                reader.readAsDataURL($(ele)[0].files[0]);
+                alert(message);
+                return false;
             }
-    };
 
-    //แสดงรูปใหญ่ เมื่อ click รูปใน Gridview
-    function SetZoomImage(ele)
-    {
-           var ImageDB = $(ele).closest('tr').find('[id*=ImagePreview]');
-           var URL = $(ImageDB).attr("src");
-           document.getElementById('<%=ImageZoom.ClientID%>').setAttribute('src', URL);
-    };
+            function ClearNo(lnk) {
+                //Reference the GridView Row.
+                var row = lnk.parentNode.parentNode;
 
-</script>
+                //Determine the Row Index.
+                var message = "Row Index: " + (row.rowIndex - 1);
+
+                var txt = $("input[id*=TextBoxCommentNo]");
+                txt[row.rowIndex - 1].value = '';
+
+                var rdb = $("input[id*=RadioButton1No]");
+                rdb[row.rowIndex - 1].value = false;
+
+                var rdb2 = $("input[id*=RadioButton2No]");
+                rdb2[row.rowIndex - 1].value = false;
+
+                var rdb3 = $("input[id*=RadioButton3No]");
+                rdb3[row.rowIndex - 1].value = false;
+
+
+                alert(message);
+                return false;
+            }
+
+            //function คลิก Browse file จาก Image แทน
+            function OpenCamera(ele) {
+                var FileUploadCTRL = $(ele).closest('tr').find('[id*=FileUploadCamera]');
+                FileUploadCTRL.click();
+            }
+
+            //Set preview image เมื่อ Browse file แต่ยังไม่ Save to DB
+            function SetPreview(ele) {
+                var ImagePreviewCTRL = $(ele).closest('tr').find('[id*=ImagePreview]');
+                //var File = $(ele).closest('tr').find('[id*=FileUploadCamera]');
+                if (typeof (FileReader) != "undefined") {
+                    $(ImagePreviewCTRL).show();
+                    var reader = new FileReader();
+                    reader.onload = function (e) { $(ImagePreviewCTRL).attr("src", e.target.result); }
+                    reader.readAsDataURL($(ele)[0].files[0]);
+                }
+            };
+
+            //แสดงรูปใหญ่ เมื่อ click รูปใน Gridview
+            function SetZoomImage(ele) {
+                var ImageDB = $(ele).closest('tr').find('[id*=ImagePreview]');
+                var URL = $(ImageDB).attr("src");
+                document.getElementById('<%=ImageZoom.ClientID%>').setAttribute('src', URL);
+            };
+
+            function selectAll(form1) {
+
+                var check = document.getElementsByName("group5"),
+                    radios = $("input[id*=GridViewNoItem]");
+
+                //radioButton1.Checked = true;
+
+                //RadioButton
+
+                //If the first radio is checked
+                if (check[0].checked) {
+                    for (i = 0; i < radios.length; i++) {
+                        if (radios[i].type == "radio") {
+                            if (radios[i].value == 1) {
+                                radios[i].checked = true;
+                            }
+                        }
+                    }
+                } else if (check[1].checked) {
+
+                    for (i = 0; i < radios.length; i++) {
+
+                        if (radios[i].type == "radio") {
+
+                            if (radios[i].value == 0) {
+                                radios[i].checked = true;
+                            }
+                        }
+                    }
+                } else {
+                    for (i = 0; i < radios.length; i++) {
+
+                        if (radios[i].type == "radio") {
+
+                            if (radios[i].value == 2) {
+                                radios[i].checked = true;
+                            }
+                        }
+                    }
+                };
+                /* return null;*/
+            }
+        </script>
     </form>
+
 </body>
+
 </html>

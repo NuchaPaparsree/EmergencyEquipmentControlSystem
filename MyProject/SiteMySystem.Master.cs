@@ -19,17 +19,42 @@ namespace MyProject
             string contr = System.Configuration.ConfigurationManager.ConnectionStrings["xPimConnectionString1"].ConnectionString;
             SqlConnection con = new SqlConnection(contr);
             DataTable dt = new DataTable();
+            DataTable dtCommitte = new DataTable();
+
 
             //////////////Find UserCommittee /////////////////////
             SqlCommand query = new SqlCommand("SELECT * FROM [Controller] WHERE ID = '"+Session["myLoginID"] +"' ", con);
             SqlDataAdapter da = new SqlDataAdapter(query);
             da.Fill(dt);
 
+
+            SqlCommand CheckCommittee = new SqlCommand("SELECT * FROM [Committee] WHERE ID = '" + Session["myLoginID"] + "' ", con);
+            SqlDataAdapter daCommittee = new SqlDataAdapter(CheckCommittee);
+            daCommittee.Fill(dtCommitte);
+
             if (Session["myLoginID"] == null)
             {
                 Response.Redirect("~/WebForm_Login.aspx");
             }
-            else if (dt.Rows.Count != 0 && Session["myLoginID"].ToString() != "008452")
+            else if (dtCommitte.Rows.Count != 0 )
+            {
+                MVCheckUser.SetActiveView(Vadmin);
+                // Alway Update Logon State... (Every time navigate Page Refresh)
+                if (Session["myLoginUser"] != null)
+                {
+                    MultiViewLogState.SetActiveView(ViewLoggedIn);
+                    string lineOfText = (string)Session["myLoginUser"];
+                    string[] wordArray = lineOfText.Split(' ');
+                    this.lblUserName.Text = wordArray[0];
+                }
+                else
+                {
+                    this.lblUserName.Text = "";
+                    this.MultiViewLogState.SetActiveView(ViewAnonymous);
+                }
+            }
+
+            else if (dt.Rows.Count != 0  && Session["myLoginID"].ToString() != "008452")
             {
                 MVCheckUser.SetActiveView(Vuser);
 

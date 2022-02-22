@@ -5,32 +5,41 @@
 
 
   <style>
-body, html {height: 100%}
-body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
-.menu {display: none}
+      body, html {
+          height: 100%
+      }
+
+      body, h1, h2, h3, h4, h5, h6 {
+          font-family: "Amatic SC", sans-serif
+      }
+
+      .menu {
+          display: none
+      }
+
       .bgimg {
           background-repeat: no-repeat;
           background-size: cover;
           background-image: url("../Img/health-safety-hero.jpg");
           min-height: 100%;
       }
-</style>
+  </style>
     <style>
         body {
             background-image: url("/Img/LV-01-Grey.jpg");
             background-repeat: repeat;
         }
-</style>
+    </style>
 
 <header class="bgimg w3-display-container w3-grayscale-min" id="home">
   <div class="w3-display-bottomleft w3-padding">
  
   <div class="w3-display-middle w3-center">
         <div style="padding-top:150px;">
-    <span class="w3-text-white w3-hide-small" style="font-size:100px">
-        <div class="text-center">
+     <div class="text-center"><span class="w3-text-white w3-hide-small" style="font-size:100px">
        
-            <br>ITEMSUBTYPE</span></div> </div></div>
+       
+            <br>ITEMSUBTYPE</span></div></div> </div> </div>
 
       <div style="margin-top:100px;">
       <div class="text-center">
@@ -49,6 +58,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
 
             <asp:TextBox ID="TextBoxSubType" runat="server" Height="25px" Width="250px" placeholder="SubType" AutoPostBack="True"></asp:TextBox>
             <asp:Button ID="ButtonSearch" runat="server" Text="Search" class="btn btn-info" aria-hidden="true" Style="margin-left:5px; margin-bottom:11px; Height:30px;"/>
+              <asp:Button ID="ButtonAdd" runat="server" Text="Add" class="btn btn-success" aria-hidden="true" Style="margin-left:5px; margin-bottom:11px; Height:30px;" data-toggle="modal" data-target="#AddNewItem"/>
         <br /><br />
 
 
@@ -68,8 +78,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
                                 </asp:TemplateField >
 
                                 <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" ReadOnly="True" Visible="False"/>
-                                <%--<asp:BoundField DataField="Report" HeaderText="Report" SortExpression="Report" />--%>
-                                <%--<asp:BoundField DataField="ItemTypeID" HeaderText="ItemTypeID" SortExpression="ItemTypeID"/>--%>
+                              
                                 <asp:BoundField DataField="Name" HeaderText="ItemTypeName" SortExpression="Name" />
                                 <asp:BoundField DataField="SubType" HeaderText="SubType" SortExpression="SubType" />
                                 <asp:BoundField DataField="Size" HeaderText="Size" SortExpression="Size" />
@@ -79,33 +88,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
                                      <a ID="ImagePreview" runat="server" onclick="SetZoomImage(this)" data-toggle="modal" data-target="#myModal">Image
                                        <img ID="Image1"  style="width:80px;height:80px; display:none;" onclick="SetZoomImage(this)" data-toggle="modal" data-target="#myModal" src="<%#Eval("Photo")%>""/>
                                      </a>
-                                        <%--<a href="<%# ((Eval("SubType").ToString() == Convert.ToString("Dry Chemical")) ?
-                                                     ((Eval("Size").ToString()) == Convert.ToString("10 lb") ? "Photo/Ext1.jpg" : 
-                                                     ((Eval("Size").ToString()) == Convert.ToString("15 lb") ? "Photo/Ext2.jpg" : "#"))  :
-
-                                                     (Eval("SubType").ToString() == Convert.ToString("Carbondioxide")) ?
-                                                     ((Eval("Size").ToString()) == Convert.ToString("5 lb") ? "Photo/Ext3.jpg" : 
-                                                     ((Eval("Size").ToString()) == Convert.ToString("10 lb") ? "Photo/Ext4.jpg" :                                                      
-                                                     ((Eval("Size").ToString()) == Convert.ToString("15 lb") ? "Photo/Ext5.jpg" : "#"))) : 
-
-                                                     (Eval("SubType").ToString() == Convert.ToString("ABFFC")) ?
-                                                     ((Eval("Size").ToString()) == Convert.ToString("10 lb") ? "Photo/Ext6.jpg" : 
-                                                     ((Eval("Size").ToString()) == Convert.ToString("15 lb") ? "Photo/Ext7.jpg" : "#")) :
-
-                                                     (Eval("SubType").ToString() == Convert.ToString("Sodium Chloride")) ?
-                                                     ((Eval("Size").ToString()) == Convert.ToString("10 lb") ? "Photo/Ext8.jpg" : "#") :
-
-                                                     ((Eval("SubType").ToString() == Convert.ToString("Fire Hose Rack")) ? "Photo/Fhc1.jpg"  :
-
-                                                     ((Eval("SubType").ToString()) == Convert.ToString("Bell & FHC") ? "Photo/Bell1.jpg" : 
-                                                     ((Eval("SubType").ToString()) == Convert.ToString("Bell") ? "Photo/Bell2.jpg" :
-                                                   
-                                                     ((Eval("SubType").ToString() == Convert.ToString("El Inspect")) ? "Photo/EI1.png"  :
-                                                     ((Eval("SubType").ToString() == Convert.ToString("Dt Inspect")) ? "Photo/Dt1.png"  :
-                                                     ((Eval("SubType").ToString() == Convert.ToString("Chem Inspect")) ? "Photo/Chem1.jpg"  :
-                                                     ((Eval("SubType").ToString() == Convert.ToString("FD Inspect")) ? "Photo/FD1.jpg"  :
-                                                     ((Eval("SubType").ToString() == Convert.ToString("Elec Inspect")) ? "Photo/Elec1.jpg"  
-                                                     : "#"))))))))) %>" >Image</a>--%>
+                                       
                                     </ItemTemplate>
                                 </asp:TemplateField >
                         </Columns>
@@ -172,7 +155,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
                                     <asp:BoundField DataField="SubType" HeaderText="SubType" SortExpression="SubType" />
                                     <asp:BoundField DataField="Size" HeaderText="Size" SortExpression="Size" />
                                     <asp:BoundField DataField="PurchasePrice" HeaderText="PurchasePrice" SortExpression="PurchasePrice" />
-                                    <asp:CommandField ShowEditButton="True" />
+                                    <asp:CommandField ShowEditButton="True"  ShowDeleteButton="True"/>
                                 </Fields>
                                 <FooterStyle Width="100%" />
                                 <InsertRowStyle Width="100%" Height="30px" />
@@ -230,6 +213,70 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
          </div>
         <!-- Detail Modal Ends here -->
     </div>
+    <!--เปิด popup Add ให้ปิด class="modal hide fade"  -->
+    <div id="AddNewItem"  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="True">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="AddLabel">Detailed View</h3>
+        </div>
+        <div class="modal-body">
+            <asp:DetailsView ID="DetailsView2" runat="server" CssClass="table table-bordered table-hover" BackColor="White" ForeColor="Black"
+                FieldHeaderStyle-Wrap="false" FieldHeaderStyle-Font-Bold="true"
+                FieldHeaderStyle-BackColor="LavenderBlush" FieldHeaderStyle-ForeColor="Black"
+                BorderStyle="Groove" AutoGenerateRows="False" Width="100%" DataKeyNames="ID" DefaultMode="Insert" DataSourceID="SqlDataSource5">
+                <EditRowStyle Width="100%" Height="30px" />
+
+                <FieldHeaderStyle Wrap="False" BackColor="LavenderBlush" Font-Bold="True" ForeColor="Black"></FieldHeaderStyle>
+                <Fields>
+                    <asp:TemplateField HeaderText="ItemName">
+                        <InsertItemTemplate>
+                            <asp:DropDownList ID="DropDownList7" runat="server" DataSourceID="SqlDataSource7" DataTextField="ItemName" DataValueField="ItemTypeID" SelectedValue='<%# Bind("ItemTypeID") %>'></asp:DropDownList>
+                            <asp:SqlDataSource ID="SqlDataSource7" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand=" SELECT ID AS ItemTypeID	,Name AS ItemName FROM  [ItemType] "></asp:SqlDataSource>
+
+                        </InsertItemTemplate>
+                    </asp:TemplateField>
+                    <asp:BoundField DataField="SubType" HeaderText="SubType" SortExpression="SubType" />
+                    <asp:BoundField DataField="Size" HeaderText="Size" SortExpression="Size" />
+                    <asp:BoundField DataField="PurchasePrice" HeaderText="PurchasePrice" SortExpression="PurchasePrice" />
+
+                    <asp:CommandField ShowInsertButton="True" />
+                </Fields>
+            </asp:DetailsView>
+
+
+            <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>"
+                DeleteCommand="DELETE FROM ItemSubType WHERE [ID] = @ID"
+                InsertCommand="INSERT INTO ItemSubType(ItemTypeID, SubType, Size, PurchasePrice, Update_at,Update_by) VALUES (@ItemTypeID, @SubType, @Size, @PurchasePrice,GETDATE(),@AT)"
+                SelectCommand="SELECT * FROM [ItemSubType]" UpdateCommand="UPDATE [ItemSubType] SET [ItemTypeID] = @ItemTypeName, [SubType] = @SubType,[Size] = @Size,[PurchasePrice] = @PurchasePrice, [ID] = @ID">
+
+                <DeleteParameters>
+                    <asp:Parameter Name="ID" Type="String" />
+                </DeleteParameters>
+
+                <InsertParameters>
+                    <asp:Parameter Name="ItemTypeName" Type="String" />
+                    <asp:Parameter Name="SubType" Type="String" />
+                    <asp:Parameter Name="Size" Type="String" />
+                    <asp:Parameter Name="PurchasePrice" Type="String" />
+                    <asp:SessionParameter Name="AT" Type="String" SessionField="myLoginID" />
+                    </InsertParameters>
+
+                    <UpdateParameters>
+                        <asp:Parameter Name="ItemTypeName" Type="String" />
+                        <asp:Parameter Name="SubType" Type="String" />
+                        <asp:Parameter Name="Size" Type="String" />
+                        <asp:Parameter Name="PurchasePrice" Type="String" />                       
+                       </UpdateParameters>
+
+                </asp:SqlDataSource>
+                <div class="modal-footer">
+                    <asp:Button ID="Button2" runat="server" OnClick="Button1_Click" Text="Close" class="btn btn-info" aria-hidden="true" />
+                </div>
+            </div>
+        </div>
+
+
+
 
     <script>
         function SetZoomImage(ele) {

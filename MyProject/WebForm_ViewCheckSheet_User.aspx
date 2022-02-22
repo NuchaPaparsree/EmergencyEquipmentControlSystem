@@ -96,6 +96,10 @@ order by ItemType.ID asc">
             <HeaderStyle HorizontalAlign="Center" />
             <ItemStyle HorizontalAlign="Center" />
             </asp:CheckBoxField>
+            <asp:CheckBoxField DataField="NA" HeaderText="N/A" SortExpression="NA" >
+            <HeaderStyle HorizontalAlign="Center" />
+            <ItemStyle HorizontalAlign="Center" />
+            </asp:CheckBoxField>
             <asp:TemplateField ShowHeader="False" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
                     <asp:Image ID="ImagePreview" runat="server" style="width:80px;height:80px" onclick="SetZoomImage(this)" data-toggle="modal" data-target="#myModal" ImageUrl="~/Img/emty-image.png"/>
@@ -105,7 +109,7 @@ order by ItemType.ID asc">
             </asp:TemplateField>
             <asp:BoundField DataField="Comment" HeaderText="Comment" SortExpression="Comment" /></Columns>
     </asp:GridView>
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT        CheckItem.Detail, CheckItem.CheckID, CheckSheetDetail.OK, CheckSheetDetail.NG, CheckSheetDetail.Picture, CheckSheetDetail.Comment
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT        CheckItem.Detail, CheckItem.CheckID, CheckSheetDetail.OK, CheckSheetDetail.NG, ISNULL(CheckSheetDetail.NA,0) AS NA, CheckSheetDetail.Picture, CheckSheetDetail.Comment
 FROM            CheckSheetDetail INNER JOIN
                          CheckSheet ON CheckSheetDetail.CheckSheetID = CheckSheet.ID INNER JOIN
                          CheckItem ON CheckSheetDetail.CheckItemID = CheckItem.ID

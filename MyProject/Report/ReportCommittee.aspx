@@ -5,7 +5,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-     <div style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top:70px; text-align: center" >
+     <div style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top:70px; text-align: center; margin-bottom: 1135px;" >
 
    
          <div style="margin-bottom:2%"></div>
@@ -80,12 +80,11 @@ FROM CheckItem
         </SelectParameters>
          </asp:SqlDataSource>
 
-
-            <div  style="margin-top:40px">
+</div>
+            <div  style="text-align: center;">
             <asp:Button ID="approve" runat="server" Text="APPROVE" CssClass=" btn btn-warning" Width="25%" Height="40px" OnClick="Approve_Click" />
         </div>
-          <div  style="margin-bottom :60px">
-</div>
+ 
 
              <asp:sqldatasource id="SqlDataSourceCheckItemCheck" runat="server" connectionstring="<%$ ConnectionStrings:xPimConnectionString1 %>"
     selectcommand="SELECT COUNT(DISTINCT CheckSheetDetail.ItemID) AS Column1, (SELECT COUNT(Item.ID) AS Expr1 FROM Item INNER JOIN Place ON Place.ID = Item.PlaceID INNER JOIN Controller ON Controller.ID = Place.ControllerID WHERE (Place.ControllerID = @ControllerID)) AS Column2 

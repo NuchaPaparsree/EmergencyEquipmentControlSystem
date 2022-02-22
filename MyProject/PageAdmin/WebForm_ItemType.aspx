@@ -42,6 +42,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
 
             <asp:TextBox ID="TextBoxSearch" runat="server" Height="25px" Width="250px" placeholder="Name" AutoPostBack="True"></asp:TextBox>
             <asp:Button ID="ButtonSearch" runat="server" Text="Search" class="btn btn-info" aria-hidden="true" Style="margin-left:5px; margin-bottom:11px; Height:30px;"/>
+            <asp:Button ID="ButtonAdd" runat="server" Text="Add" class="btn btn-success" aria-hidden="true" Style="margin-left:5px; margin-bottom:11px; Height:30px;" data-toggle="modal" data-target="#AddNewItem"/>
+
         <br /><br />
              </div></div></div></header>
     <div style="margin-right: 5%; margin-left: 5%; text-align: center" class="auto-style1"><br />
@@ -50,7 +52,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
 					<asp:GridView ID="GridView1" runat="server" Width="100%" HorizontalAlign="Center" 
 					AutoGenerateColumns="False" AllowPaging="True"
 					DataKeyNames="ID" CssClass="table table-hover table-striped"
-					DataSourceID="SqlDataSource1" EmptyDataText="There are no data records to display." OnSelectedIndexChanged="GridView1_SelectedIndexChanged" BackColor="#DEBA84" BorderColor="White" BorderStyle="None" BorderWidth="1px" CellPadding="3" CellSpacing="2"> 
+					DataSourceID="SqlDataSource1" EmptyDataText="There are no data records to display." OnSelectedIndexChanged="GridView1_SelectedIndexChanged" BackColor="#DEBA84" BorderColor="White" BorderStyle="None" BorderWidth="1px" CellPadding="3" CellSpacing="2" AllowSorting="True"> 
                         <Columns>
                             <asp:CommandField ShowSelectButton="True" />
                             <asp:TemplateField HeaderText="No." > 
@@ -115,8 +117,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
                                 <Fields>
                                     <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" SortExpression="ID" InsertVisible="false"/>
                                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
-<%--                                    <asp:BoundField DataField="WherePurchased" HeaderText="WherePurchased" SortExpression="WherePurchased" />
-                                    <asp:BoundField DataField="Report" HeaderText="Report" SortExpression="Report" />--%>
                                     <asp:BoundField DataField="WherePurchased" HeaderText="WherePurchased" SortExpression="WherePurchased" />
                                     <asp:TemplateField HeaderText="Report" SortExpression="Report">
                                         <EditItemTemplate>
@@ -149,7 +149,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
                                     <asp:Parameter Name="Name" Type="String" />
                                     <asp:Parameter Name="WherePurchased" Type="String" />
                                     <asp:Parameter Name="Report" Type="String" />
-
                                 </InsertParameters>
                                 <SelectParameters>
                                     <asp:ControlParameter ControlID="GridView1" DefaultValue="1" Name="ID" PropertyName="SelectedValue" Type="String" />
@@ -176,4 +175,55 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
             </div>
         <!-- Detail Modal Ends here -->
     </div>
+
+      <!--เปิด popup Add ให้ปิด class="modal hide fade"  -->
+        <div id="AddNewItem" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="True">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="AddLabel">Detailed View</h3>
+            </div>
+            <div class="modal-body">
+                <asp:DetailsView ID="DetailsView2" runat="server" CssClass="table table-bordered table-hover" BackColor="White" ForeColor="Black"
+                    FieldHeaderStyle-Wrap="false" FieldHeaderStyle-Font-Bold="true"
+                    FieldHeaderStyle-BackColor="LavenderBlush" FieldHeaderStyle-ForeColor="Black"
+                    BorderStyle="Groove" AutoGenerateRows="False" Width="100%" DataKeyNames="ID" DefaultMode="Insert" DataSourceID="SqlDataSource5">
+                    <EditRowStyle Width="100%" Height="30px" />
+
+                    <FieldHeaderStyle Wrap="False" BackColor="LavenderBlush" Font-Bold="True" ForeColor="Black"></FieldHeaderStyle>
+                    <Fields>
+
+                        <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+                        <asp:BoundField DataField="WherePurchased" HeaderText="WherePurchased" SortExpression="WherePurchased" />
+                        <asp:CommandField ShowInsertButton="True" />
+                    </Fields>
+                </asp:DetailsView>
+
+
+                <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" 
+                    DeleteCommand="DELETE FROM ItemType] WHERE [ID] = @ID"
+                    InsertCommand="INSERT INTO ItemType(Name, WherePurchased,   Update_at,Update_by) VALUES (@Name, @WherePurchased,GETDATE(), @AT)" 
+                    SelectCommand="SELECT * FROM [ItemType]" UpdateCommand="UPDATE [ItemType] SET [Name] = @Name, [WherePurchased] = @WherePurchased WHERE [ID] = @ID">
+
+                    <DeleteParameters>
+                        <asp:Parameter Name="ID" Type="String"/>
+                    </DeleteParameters>
+
+                    <InsertParameters>
+                        <asp:Parameter Name="Name" Type="String" />
+                        <asp:Parameter Name="WherePurchased" Type="String" />       
+                        <asp:SessionParameter Name="AT" Type="String" SessionField="myLoginID" />
+                    </InsertParameters>
+
+                    <UpdateParameters>
+                        <asp:Parameter Name="Name" Type="String"/>
+                        <asp:Parameter Name="WherePurchased" Type="String"/>                      
+                       </UpdateParameters>
+
+                </asp:SqlDataSource>
+                <div class="modal-footer">
+                    <asp:Button ID="Button2" runat="server" OnClick="Button1_Click" Text="Close" class="btn btn-info" aria-hidden="true" />
+                </div>
+            </div>
+        </div>
+
 </asp:Content>

@@ -23,7 +23,7 @@
             min-height: 100%;
         }
     </style>
-    <Body class="bgimg w3-display-container w3-grayscale-min" id="home">
+    <Body>
         <div class="w3-display-bottomleft w3-padding">
 
             <div class="w3-display-middle w3-center">
@@ -54,12 +54,7 @@
                 </div>
             </div>
             &nbsp;&nbsp;&nbsp;&nbsp;
-           <%-- <asp:Label ID="lbPlace" runat="server" Text="Place : "></asp:Label>
-            <asp:DropDownList ID="ddlPlace" runat="server" DataSourceID="SDSPlace"  DataValueField="ID" DataTextField="Location" AutoPostBack="True" OnDataBound="ddlPlace_DataBound" Width="400px">
-            </asp:DropDownList>
-            &nbsp;&nbsp;--%>
-            <%--<asp:Button ID="btnSearch" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="btnSearch_Click" Height="35px" />
-            <br /><br />--%>
+ 
            
           
             <asp:GridView ID="GridView1" runat="server" Width="100%" HorizontalAlign="Center" EmptyDataText="ไม่พบข้อมูล !!" AllowSorting="True"
@@ -86,9 +81,9 @@
                     <asp:BoundField DataField="Area" HeaderText="Area" SortExpression="Area" />
                     <asp:BoundField DataField="ControllerID" HeaderText="ControllerID" SortExpression="ControllerID" />
                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+                    <asp:BoundField DataField="Ch_Approve" HeaderText="Status" SortExpression="Ch_Approve" />
                     <asp:TemplateField  HeaderText="Report">
                         <ItemTemplate>
-                            <%--<a  href="ReportCheckSheet.aspx?CheckSheetID=<%# Eval("ID") %>">Report</a>--%>
                             <asp:LinkButton ID="lbtnReport" runat="server" OnClick="lbtnReport_Click" >Report</asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>

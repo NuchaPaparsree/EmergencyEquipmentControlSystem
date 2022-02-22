@@ -5,9 +5,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-     <div style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top:100px; text-align: center" >
+    <div style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 100px; text-align: center; margin-bottom: 1135px;">
 
-    <div align="center">
+        <div align="center">
             <rsweb:ReportViewer ID="ReportViewer1" runat="server" Width="950px" BackColor="" HighlightBackgroundColor="" InternalBorderColor="204, 204, 204" InternalBorderStyle="Solid" InternalBorderWidth="1px" LinkActiveColor="" LinkActiveHoverColor="" LinkDisabledColor="" PrimaryButtonBackgroundColor="" PrimaryButtonForegroundColor="" PrimaryButtonHoverBackgroundColor="" PrimaryButtonHoverForegroundColor="" SecondaryButtonBackgroundColor="" SecondaryButtonForegroundColor="" SecondaryButtonHoverBackgroundColor="" SecondaryButtonHoverForegroundColor="" SplitterBackColor="" ToolbarDividerColor="" ToolbarForegroundColor="" ToolbarForegroundDisabledColor="" ToolbarHoverBackgroundColor="" ToolbarHoverForegroundColor="" ToolBarItemBorderColor="" ToolBarItemBorderStyle="Solid" ToolBarItemBorderWidth="1px" ToolBarItemHoverBackColor="" ToolBarItemPressedBorderColor="51, 102, 153" ToolBarItemPressedBorderStyle="Solid" ToolBarItemPressedBorderWidth="1px" ToolBarItemPressedHoverBackColor="153, 187, 226" DocumentMapWidth="100%" ExportContentDisposition="AlwaysInline" Height="750px" PageCountMode="Actual" ShowBackButton="False" ShowDocumentMapButton="False" ShowFindControls="False" ShowPromptAreaButton="False" ClientIDMode="AutoID" ShowPageNavigationControls="False" ShowRefreshButton="False" ZoomMode="PageWidth">
                 <LocalReport ReportPath="Report\Report_CheckSheet.rdlc">
                     <DataSources>
@@ -15,15 +15,16 @@
                     </DataSources>
                 </LocalReport>
             </rsweb:ReportViewer>
-          </div>
- 
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT ItemType.ID,(SELECT  CheckSheet.ID  FROM  CheckSheet where CheckSheet.ID = @CheckSheetID) as IDCheckSheet,
+        </div>
+
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT ItemType.ID,(SELECT  CheckSheet.ID  FROM  CheckSheet where CheckSheet.ID = @CheckSheetID) as IDCheckSheet,
 ItemType.Name,
 CheckItem.CheckID,CheckItem.Detail
 ,CASE 
-WHEN result &gt;= 1000 THEN '-'
-WHEN result &gt; 0 THEN 'O'
+WHEN result BETWEEN 1000  AND 9999 THEN '-'
+WHEN result BETWEEN 1  AND 999 THEN 'O'
 WHEN result = 0 THEN '/' 
+WHEN result &gt;= 10000 THEN '*' 
 ELSE '-'
 END as CheckResult
 ,CheckData.CommentNG
@@ -51,13 +52,17 @@ FROM CheckItem
 					LEFT JOIN  ItemType ON CheckItem.ItemTypeID = ItemType.ID 
 					LEFT JOIN
 						 
-						 (SELECT  CheckSheetDetail.CheckItemID,sum(case when (OK = 1 and NG = 0) then 0 when (OK = 0 and NG = 0) then 1000 else 1 end) as result ,DtComment.CommentNG
+						 (SELECT  CheckSheetDetail.CheckItemID ,sum(case when (OK = 1 and NG = 0 AND ISNULL(NA,0) = 0) then 0 
+							when (OK = 0 and NG = 0 AND ISNULL(NA,0) = 0) then 1000 
+							when (OK = 0 and NG = 0 AND ISNULL(NA,0) = 1) then 10000 
+							else 1 end
+							) as result ,DtComment.CommentNG
 						 FROM      CheckSheetDetail left join 
 							(SELECT distinct CheckItemID, STUFF((SELECT   ',' + Comment 
 							 FROM (SELECT distinct CheckItemID,Comment
 									FROM [dbo].[CheckSheetDetail]
 									where CheckSheetID = @CheckSheetID 
-									and (OK = 'false' and NG = 'true')	 
+									and (OK = 'false' and NG = 'true'and NA = 'false')	 
 									and Comment &lt;&gt; '') as TB
 			
 									where TB.CheckItemID=CheckSheetDetail.CheckItemID
@@ -66,21 +71,21 @@ FROM CheckItem
 						FROM [dbo].[CheckSheetDetail]
  
 						where CheckSheetID = @CheckSheetID 
-						and (OK = 'false' and NG = 'true')	 
+						and (OK = 'false' and NG = 'true'and NA = 'false')	 
 						and Comment &lt;&gt; '') as DtComment on DtComment.CheckItemID = CheckSheetDetail.CheckItemID
 
 						 where CheckSheetID = @CheckSheetID 
 						 group by CheckSheetDetail.CheckItemID,CommentNG
 						
                         ) as CheckData on CheckItem.ID = CheckData.CheckItemID order by ItemType.ID">
-        <SelectParameters>
-            <asp:QueryStringParameter Name="CheckSheetID" QueryStringField="CheckSheetID" />
-        </SelectParameters>
-         </asp:SqlDataSource>
-
-         <div  style="margin-top:40px">
-            <asp:Button ID="approve" runat="server" Text="APPROVE" CssClass=" btn btn-warning" Width="25%" Height="40px" OnClick="Approve_Click" />
-        </div>
-          <div  style="margin-bottom :60px">
-</div>
+            <SelectParameters>
+                <asp:QueryStringParameter Name="CheckSheetID" QueryStringField="CheckSheetID" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+    </div>
+    <div style="text-align: center;">
+        <asp:Button ID="approve" runat="server" Text="APPROVE" CssClass=" btn btn-warning" Width="25%" Height="40px" OnClick="Approve_Click" />
+    </div>
+    <div style="margin-bottom: 60px">
+    </div>
 </asp:Content>

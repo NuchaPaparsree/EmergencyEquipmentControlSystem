@@ -91,6 +91,7 @@
                     <asp:BoundField DataField="Floor" HeaderText="Floor" SortExpression="Floor" ReadOnly="True" />
                     <asp:BoundField DataField="Area" HeaderText="Area" SortExpression="Area" />
                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+                    <asp:BoundField DataField="Ch_Approve" HeaderText="Status" SortExpression="Ch_Approve" />
                     <asp:TemplateField  HeaderText="Report">
                         <ItemTemplate >
                            <%-- <a  href="ReportCheckSheet.aspx?CheckSheetID=<%# Eval("ID") %>">Report</a>--%>

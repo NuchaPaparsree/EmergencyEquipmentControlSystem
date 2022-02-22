@@ -49,7 +49,7 @@ namespace MyProject
                             Session["PlaceID"] = DropDownList1.Text;
                             Session["myLoginID"] = System.Convert.ToString(dv.Table.Rows[0][0]);
                             Session["myLoginUser"] = System.Convert.ToString(dv.Table.Rows[0][1]);
-                            Session.Timeout = 10;
+                            Session.Timeout = 60;
 
                             // Web System Allow
                             FormsAuthentication.SetAuthCookie("MyProjectSystemAdmin", false);

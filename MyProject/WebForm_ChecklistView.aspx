@@ -66,7 +66,7 @@
 
 
 				WHERE (ControllerID = @ControllerID) AND (ItemID = @ItemID) 
-				GROUP BY  YearMonth,Name,Code,ItemTypeName,OK,NG,TB.Note">
+				GROUP BY  YearMonth,Name,Code,ItemTypeName,OK,NG,TB.Note ORDER BY Datetime DESC">
                 <SelectParameters>
                     <asp:ControlParameter ControlID="lblControllerID" DefaultValue="1" Name="ControllerID" PropertyName="Text" Type="String" />
                     <asp:QueryStringParameter Name="ItemID" QueryStringField="ItemID" />
@@ -89,7 +89,7 @@
  
         </div>
 
-        <div align="center">
+        <div align="center"  style="margin-top: 415px;" >
             <br />
             <asp:Button ID="ButtonBack" class="btn btn-primary" runat="server" Text="Back" OnClick="ButtonBack_Click" />
             </div>

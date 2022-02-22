@@ -31,32 +31,71 @@ namespace MyProject.PageUser
 
             }
 
+
+            RadioButtonALLYes.Visible = false;
+            RadioButtonALLNO.Visible = false;
+            RadioButtonALLNA.Visible = false;
+
+
             string contr = System.Configuration.ConfigurationManager.ConnectionStrings["xPimConnectionString1"].ConnectionString;
-                SqlConnection con = new SqlConnection(contr);
-                DataTable dt = new DataTable();
+            SqlConnection con = new SqlConnection(contr);
+            DataTable dt = new DataTable();
 
-                //////////////Find CheckSheetID /////////////////////
-                SqlCommand query = new SqlCommand("select distinct CheckSheet.ID " +
-                "from CheckSheet " +
-                "where CheckSheet.ControllerID = '" + lblControllerID.Text + "' " +
-                "and CheckSheet.PlaceID = '" + lblPlaceID.Text + "' " +
-                "and CheckSheet.YearMonth = '" + DateTime.Now.ToString("yyyy-MM") + "'", con);
+            //////////////Find CheckSheetID /////////////////////
+            SqlCommand query = new SqlCommand("select distinct CheckSheet.ID " +
+            "from CheckSheet " +
+            "where CheckSheet.ControllerID = '" + lblControllerID.Text + "' " +
+            "and CheckSheet.PlaceID = '" + lblPlaceID.Text + "' " +
+            "and CheckSheet.YearMonth = '" + DateTime.Now.ToString("yyyy-MM") + "'", con);
 
-                SqlDataAdapter da = new SqlDataAdapter(query);
-                da.Fill(dt);
+            SqlDataAdapter da = new SqlDataAdapter(query);
+            da.Fill(dt);
 
-                if (dt.Rows.Count != 0)
+            if (dt.Rows.Count != 0)
+            {
+                try
                 {
-                    try
+                    Session["CheckSheetID"] = dt.Rows[0]["ID"];
+
+                    DataTable DTCheckNoQR = new DataTable();
+                    SqlCommand checkNoQR = new SqlCommand("SELECT  OK  AS CountNoQROK , NG  AS CountNoQRNG , NA  AS CountNoQRNA   FROM CheckSheetDetail INNER  JOIN Item ON Item.id = CheckSheetDetail.ItemID INNER JOIN ItemSubType ON ItemSubType.ID = Item.ItemSubTypeID INNER JOIN ItemType " +
+                        "ON ItemSubType.ItemTypeID = ItemType.ID WHERE CheckSheetDetail.CheckSheetID  = '" + dt.Rows[0]["ID"] + "' AND ItemTypeID NOT IN('1', '2', '5')", con);
+
+                    SqlDataAdapter dacheckNoQR = new SqlDataAdapter(checkNoQR);
+
+
+                    dacheckNoQR.Fill(DTCheckNoQR);
+
+                    if (DTCheckNoQR.Rows.Count > 0)
                     {
-                        Session["CheckSheetID"] = dt.Rows[0]["ID"];
+                        if (!Convert.ToBoolean(DTCheckNoQR.Rows[0]["CountNoQROK"]) && !Convert.ToBoolean(DTCheckNoQR.Rows[0]["CountNoQRNG"]) && !Convert.ToBoolean(DTCheckNoQR.Rows[0]["CountNoQRNA"]))
+                        {
+                            GridViewNoItemNew.DataBind();
+                            FormView4.DataBind();
+                            GridViewNoItemNew.Visible = true;
+                            FormView4.Visible = true;
+                            RadioButtonALLYes.Visible = true;
+                            RadioButtonALLNO.Visible = true;
+                            RadioButtonALLNA.Visible = true;
+                        }
+                        else
+                        {
+                            GridViewNoItemNew.Visible = false;
+                            FormView4.Visible = false;
+                            RadioButtonALLYes.Visible = false;
+                            RadioButtonALLNO.Visible = false;
+                            RadioButtonALLNA.Visible = false;
+                        }
                     }
-                    catch { }
                 }
 
-                Session["ItemID"] = Request.QueryString["ItemID"];
-                Session["YearMonth"] = DateTime.Now.ToString("yyyy-MM");
-            
+                catch { }
+            }
+
+           
+            Session["ItemID"] = Request.QueryString["ItemID"];
+            Session["YearMonth"] = DateTime.Now.ToString("yyyy-MM");
+
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -71,65 +110,12 @@ namespace MyProject.PageUser
                 SqlConnection con = new SqlConnection(contr);
                 DataTable dt = new DataTable();
 
-                //    //////////////Find CheckSheetID /////////////////////
-                //    SqlCommand query = new SqlCommand("select distinct CheckSheet.ID " +
-                //    ", CheckSheet.PlaceID, CheckSheet.YearMonth  from CheckSheet " +
-                //    "where CheckSheet.ControllerID = '" + lblControllerID.Text + "' " +
-                //    "and CheckSheet.PlaceID = '" + lblPlaceID.Text + "' " +
-                //    "and CheckSheet.YearMonth = '" + DateTime.Now.ToString("yyyy-MM") + "'", con);
-
-                //    SqlDataAdapter da = new SqlDataAdapter(query);
-                //    da.Fill(dt);
-
-                //    if (dt.Rows.Count > 0)
-                //    {
-                //        if (GridViewNoItem.Rows.Count == 0)
-                //        {
-                //            Session["CheckSheetID"] = dt.Rows[0]["ID"];
-                //            //////////////////////Create Check Sheet  Old//////////////////////////////////////
-                //            DataTable dtCI = new DataTable();
-                //            //////////////Find CheckID Not In ItemType 1,2,5 /////////////////////
-                //            SqlCommand queryCI = new SqlCommand("SELECT CheckItem.ID AS CheckID,CheckItem.ItemTypeID, Item.ID  " +
-                //            "FROM [dbo].[CheckItem] " +
-                //            "inner join ItemType on ItemType.ID = CheckItem.ItemTypeID " +
-                //            "inner join ItemSubType on ItemSubType.ItemTypeID = ItemType.ID " +
-                //            "inner join Item on Item.ItemSubTypeID = ItemSubType.ID " +
-                //            "where [dbo].[CheckItem].ItemTypeID not in ('1', '2', '5') order by CheckItem.ItemTypeID", con);
-
-                //            SqlDataAdapter daCI = new SqlDataAdapter(queryCI);
-                //            daCI.Fill(dtCI);
-
-                //            for (int i = 0; i < dtCI.Rows.Count; i++)
-                //            {
-                //                SqlCommand cmd = new SqlCommand("INSERT INTO CheckSheetDetail (ItemID,CheckItemID,CheckSheetID,Comment,Picture,OK,NG,Date) VALUES " +
-                //                   "('" + dtCI.Rows[i]["ID"] + "','" + dtCI.Rows[i]["CheckID"] + "','" + dt.Rows[0]["ID"] + "',NULL,NULL,0,0,NULL) ", con);
-
-                //                con.Open();
-                //                cmd.ExecuteNonQuery();
-                //                con.Close();
-                //            }
-                //        }
-                //    }
-                //    else
-                //    {
-                //        DataTable dtNS = new DataTable();
-                //        //////////////Find ItemID Not In ItemType 1,2,5 /////////////////////
-                //        SqlCommand queryNS = new SqlCommand(
-                //        "SELECT distinct Item.ID " +
-                //        "FROM [dbo].[CheckItem] " +
-                //        "inner join ItemType on ItemType.ID = CheckItem.ItemTypeID " +
-                //        "inner join ItemSubType on ItemSubType.ItemTypeID = ItemType.ID " +
-                //        "inner join Item on Item.ItemSubTypeID = ItemSubType.ID " +
-                //        "where [dbo].[CheckItem].ItemTypeID not in ('1', '2', '5') order by item.ID asc", con);
-
-                //        SqlDataAdapter daNS = new SqlDataAdapter(queryNS);
-                //        daNS.Fill(dtNS);
-
+ 
                 //////////////////////Create Check Sheet New//////////////////////////////////////
                 SqlCommand cmdNS = new SqlCommand("CheckSheet_Create", con);
                 cmdNS.Parameters.Add("@ControllerID", SqlDbType.VarChar).Value = lblControllerID.Text;
-                cmdNS.Parameters.Add("@PlaceID", SqlDbType.TinyInt).Value = lblPlaceID.Text;
-                cmdNS.Parameters.Add("@ItemID", SqlDbType.SmallInt).Value = Request.QueryString["ItemID"];
+                cmdNS.Parameters.Add("@PlaceID", SqlDbType.Int).Value = lblPlaceID.Text;
+                cmdNS.Parameters.Add("@ItemID", SqlDbType.Int).Value = Request.QueryString["ItemID"];
                 cmdNS.CommandType = CommandType.StoredProcedure;
                 con.Open();
                 cmdNS.ExecuteNonQuery();
@@ -155,10 +141,9 @@ namespace MyProject.PageUser
                 danoqr.Fill(dtnoqr);
 
 
+
                 if (dtnoqr.Rows[0]["ID"].ToString() == "0")
                 {
-
-
                     if (dtID.Rows.Count > 0)
                     {
                         Session["CheckSheetID"] = dtID.Rows[0]["ID"];
@@ -176,61 +161,73 @@ namespace MyProject.PageUser
 
                         for (int i = 0; i < dtCI.Rows.Count; i++)
                         {
-                            SqlCommand cmd = new SqlCommand("INSERT INTO CheckSheetDetail (ItemID,CheckItemID,CheckSheetID,Comment,Picture,OK,NG,Date) VALUES " +
-                               "('" + dtCI.Rows[i]["ID"] + "','" + dtCI.Rows[i]["CheckID"] + "','" + dtID.Rows[0]["ID"] + "',NULL,NULL,0,0,NULL) ", con);
+                            SqlCommand cmd = new SqlCommand("INSERT INTO CheckSheetDetail (ItemID,CheckItemID,CheckSheetID,Comment,Picture,OK,NG,Date,NA ) VALUES " +
+                               "('" + dtCI.Rows[i]["ID"] + "','" + dtCI.Rows[i]["CheckID"] + "','" + dtID.Rows[0]["ID"] + "',NULL,NULL,0,0,NULL,0) ", con);
 
                             con.Open();
                             cmd.ExecuteNonQuery();
                             con.Close();
                         }
+
                     }
-                    //else
-                    //{
-                    //    Page.ClientScript.RegisterStartupScript(this.GetType(), "Alert", "alert('Check Sheet ยังไม่ถูกสร้าง กรุณากดปุ่ม Create !!');", true);
-                    //}
+
                 }
+                else if (dtnoqr.Rows[0]["ID"].ToString() != "0")
+                {
+                    DataTable DTCheckNoQR = new DataTable();
+                    SqlCommand checkNoQR = new SqlCommand("SELECT  OK  AS CountNoQROK , NG  AS CountNoQRNG , NA  AS CountNoQRNA   " +
+                        "FROM CheckSheetDetail INNER  JOIN Item ON Item.id = CheckSheetDetail.ItemID INNER JOIN ItemSubType ON ItemSubType.ID = Item.ItemSubTypeID INNER JOIN ItemType " +
+                        "ON ItemSubType.ItemTypeID = ItemType.ID WHERE CheckSheetDetail.CheckSheetID  = '" + dtID.Rows[0]["ID"] + "' AND ItemTypeID NOT IN('1', '2', '5')", con);
 
-                //}
-                //else
-                //{
-                //    string contr = System.Configuration.ConfigurationManager.ConnectionStrings["xPimConnectionString1"].ConnectionString;
-                //    SqlConnection con = new SqlConnection(contr);
-                //    SqlCommand cmd = new SqlCommand("CheckSheet_Create", con);
-                //    cmd.Parameters.Add("@ControllerID", SqlDbType.VarChar).Value = lblControllerID.Text;
-                //    cmd.Parameters.Add("@PlaceID", SqlDbType.TinyInt).Value = lblPlaceID.Text;
-                //    cmd.Parameters.Add("@ItemID", SqlDbType.SmallInt).Value = Request.QueryString["ItemID"];
-                //    cmd.CommandType = CommandType.StoredProcedure;
-                //    con.Open();
-                //    cmd.ExecuteNonQuery();
-                //    con.Close();
-                //}
+                    SqlDataAdapter dacheckNoQR = new SqlDataAdapter(checkNoQR);
+                    dacheckNoQR.Fill(DTCheckNoQR);
 
+                    if (!Convert.ToBoolean(DTCheckNoQR.Rows[0]["CountNoQROK"]) && !Convert.ToBoolean(DTCheckNoQR.Rows[0]["CountNoQRNG"]) && !Convert.ToBoolean(DTCheckNoQR.Rows[0]["CountNoQRNA"]))
+                    {
+                        GridViewNoItemNew.DataBind();
+                        FormView4.DataBind();
+                        GridViewNoItemNew.Visible = true;
+                        FormView4.Visible = true;
+                        RadioButtonALLYes.Visible = true;
+                        RadioButtonALLNO.Visible = true;
+                        RadioButtonALLNA.Visible = true;
+                    }
+                    else
+                    {
+                        GridViewNoItemNew.Visible = false;
+                        FormView4.Visible = false;
+                        RadioButtonALLYes.Visible = false;
+                        RadioButtonALLNO.Visible = false;
+                        RadioButtonALLNA.Visible = false;
+                    }
+                }
                 GridView1.DataBind();
                 GridView2.DataBind();
-                GridViewNoItem.DataBind();
 
-                FormView4.DataBind();
+                
             }
         }
         protected void Button2_Click(object sender, EventArgs e)
         {
 
          
-                if (GridViewNoItem.Rows.Count == 0)
+                if (GridViewNoItemNew.Rows.Count == 0)
                 {
                     //Page.ClientScript.RegisterStartupScript(this.GetType(), "Alert", "alert('อุปกรณ์นี้ยังไม่ถูกเช็ค !!');", true);
                 }
 
                 else
                 {
-                    foreach (GridViewRow row in GridViewNoItem.Rows)
+                    foreach (GridViewRow row in GridViewNoItemNew.Rows)
                     {
-                        RadioButton statusOK = (row.Cells[3].FindControl("RadioButton1") as RadioButton);
-                        RadioButton statusNG = (row.Cells[4].FindControl("RadioButton2") as RadioButton);
-                        FileUpload imageFile = (row.Cells[5].FindControl("FileUploadCamera") as FileUpload);
-                        TextBox Comment = (row.Cells[7].FindControl("TextBoxComment") as TextBox);
-
-                        int ID = Convert.ToInt32(GridViewNoItem.DataKeys[row.RowIndex].Value.ToString());
+                    
+                    RadioButton statusOK = (row.Cells[3].FindControl("RadioButton1NoNew") as RadioButton);
+                    RadioButton statusNG = (row.Cells[4].FindControl("RadioButton2NoNew") as RadioButton);
+                    RadioButton statusNA = (row.Cells[5].FindControl("RadioButton3NoNew") as RadioButton);
+                    FileUpload imageFile = (row.Cells[6].FindControl("FileUploadCamera") as FileUpload);
+                    TextBox Comment = (row.Cells[8].FindControl("TextBoxCommentNo") as TextBox);
+ 
+                        int ID = Convert.ToInt32(GridViewNoItemNew.DataKeys[row.RowIndex].Value.ToString());
                     //Convert.ToInt32(row.Cells[0].Text);
 
                     int checkOK = 0;
@@ -244,10 +241,17 @@ namespace MyProject.PageUser
                         {
                             checkNG = 1;
                         }
-                        updaterow(ID, checkOK, checkNG, imageFile, Comment);
+
+                     int checkNA = 0;
+                        if (statusNA.Checked)
+                        {
+                        checkNA = 1;
+                        }
+
+                    updaterow(ID, checkOK, checkNG, checkNA, imageFile, Comment);
                     }
 
-                    GridViewNoItem.DataBind();
+                GridViewNoItemNew.DataBind();
                 }
            
                 if (GridView1.Rows.Count == 0)
@@ -279,7 +283,9 @@ namespace MyProject.PageUser
                         {
                             checkNG = 1;
                         }
-                        updaterow(ID, checkOK, checkNG, imageFile, Comment);
+                    int checkNA = 0;
+
+                    updaterow(ID, checkOK, checkNG , checkNA, imageFile, Comment);
                     }
 
                     GridView1.DataBind();
@@ -290,7 +296,7 @@ namespace MyProject.PageUser
 
         }
 
-        private void updaterow(int ID, int markstatusOK, int markstatusNG, FileUpload imageFile,TextBox Comment)
+        private void updaterow(int ID, int markstatusOK, int markstatusNG,int markstatusNA, FileUpload imageFile,TextBox Comment)
         {
             string filename = Path.GetFileName(imageFile.PostedFile.FileName);
             string contentType = imageFile.PostedFile.ContentType;
@@ -300,7 +306,7 @@ namespace MyProject.PageUser
 
             string contr = System.Configuration.ConfigurationManager.ConnectionStrings["xPimConnectionString1"].ConnectionString;
             SqlConnection con = new SqlConnection(contr);
-            String query = "Update CheckSheetDetail set OK = @markstatusOK, NG = @markstatusNG, Date = @Date, Comment = @Comment ";
+            String query = "Update CheckSheetDetail set OK = @markstatusOK, NG = @markstatusNG, NA = @markstatusNA , Date = @Date, Comment = @Comment ";
 
             if (imageFile.HasFile)
                 { query = query + ",Picture = @Picture where ID = @ID";}
@@ -310,6 +316,7 @@ namespace MyProject.PageUser
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.Add("@markstatusOK", SqlDbType.Bit).Value = markstatusOK;
             cmd.Parameters.Add("@markstatusNG", SqlDbType.Bit).Value = markstatusNG;
+            cmd.Parameters.Add("@markstatusNA", SqlDbType.Bit).Value = markstatusNA;
             cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = DateTime.Now.ToString();
             if (imageFile.HasFile){cmd.Parameters.Add("@Picture", SqlDbType.Image).Value = bytes;}
             cmd.Parameters.Add("@Comment", SqlDbType.VarChar).Value = Comment.Text;
@@ -353,11 +360,35 @@ namespace MyProject.PageUser
 
             GridView1.DataBind();
             GridView2.DataBind();
-            GridViewNoItem.DataBind();
+            GridViewNoItemNew.DataBind();
 
             FormsAuthentication.SignOut();
             Response.Redirect("../PageUser/WFCSD.aspx",true);
         }
 
+ 
+
+        protected void CheckShowGridNoQR_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CheckShowGridNoQR.Checked)
+            {
+                GridViewNoItemNew.DataBind();
+                FormView4.DataBind();
+                GridViewNoItemNew.Visible = true;
+                FormView4.Visible = true;
+                RadioButtonALLYes.Visible = true;
+                RadioButtonALLNO.Visible = true;
+                RadioButtonALLNA.Visible = true;
+            }
+            else
+            {
+                GridViewNoItemNew.Visible = false;
+                FormView4.Visible = false;
+                RadioButtonALLYes.Visible = false;
+                RadioButtonALLNO.Visible = false;
+                RadioButtonALLNA.Visible = false;
+            }
+         
+        }
     }
 }

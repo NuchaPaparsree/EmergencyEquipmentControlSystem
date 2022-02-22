@@ -50,9 +50,9 @@
      <div style="font-size:26px;  color:aliceblue;  width:500px;">
                         <div class="row">
                            <asp:Label ID="Label10" runat="server" Text="Year : " Font-Size="20"></asp:Label> 
-          <asp:DropDownList ID="DropDownList1" runat="server" class="form-control" style="width:170px;" Height="32px"  AutoPostBack="True" DataSourceID="SqlDataSource1" Width="200px" DataTextField="Column1" DataValueField="Column1"></asp:DropDownList>
+          <asp:DropDownList ID="DropDownList1" runat="server" class="form-control" style="width:170px;" Height="32px"  AutoPostBack="True" DataSourceID="SqlDataSource1" Width="200px" DataTextField="YearMonth" DataValueField="YearMonth"></asp:DropDownList>
        </div> 
-         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="select Distinct Substring(YearMonth,1,4)  from CheckSheet"></asp:SqlDataSource>
+         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:xPimConnectionString1 %>" SelectCommand="SELECT  DISTINCT Substring(YearMonth,1,4) AS YearMonth  FROM CheckSheet  ORDER BY YearMonth  "  ></asp:SqlDataSource>
     </div>
          </div>
 
@@ -179,7 +179,7 @@ GROUP by YearMonth">
                         <ItemTemplate>
                             <asp:Label ID="Label1" runat="server" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label>
                         </ItemTemplate>
-                        <HeaderStyle Width="30px" />
+                        <HeaderStyle Width="35px" />
                     </asp:TemplateField>
                 <asp:BoundField DataField="Building" HeaderText="Building" HeaderStyle-Width="13%" />
                 <asp:BoundField DataField="Name" HeaderText="Name" ReadOnly="True" HeaderStyle-Width="70%" />

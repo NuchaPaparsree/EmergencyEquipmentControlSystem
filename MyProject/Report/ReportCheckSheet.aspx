@@ -24,9 +24,10 @@
 ItemType.Name,
 CheckItem.CheckID,CheckItem.Detail
 ,CASE 
-WHEN result &gt;= 1000 THEN '-'
-WHEN result &gt; 0 THEN 'O'
+WHEN result BETWEEN 1000  AND 9999 THEN '-'
+WHEN result BETWEEN 1  AND 999 THEN 'O'
 WHEN result = 0 THEN '/' 
+WHEN result &gt;= 10000 THEN '*' 
 ELSE '-'
 END as CheckResult
 ,CheckData.CommentNG
@@ -51,16 +52,20 @@ FROM Controller)as TBCon INNER Join CheckSheet on CheckSheet.ControllerID = tbCo
 
 ,(SELECT (Controller.Department+' '+Controller.Section) as DIV  FROM  Controller INNER Join CheckSheet on CheckSheet.ControllerID = Controller.ID where CheckSheet.ID = @CheckSheetID) as DIV
 FROM CheckItem
-					LEFT JOIN  ItemType ON CheckItem.ItemTypeID = ItemType.ID 
-					LEFT JOIN
-						 
-						 (SELECT  CheckSheetDetail.CheckItemID,sum(case when (OK = 1 and NG = 0) then 0 when (OK = 0 and NG = 0) then 1000 else 1 end) as result ,DtComment.CommentNG
+LEFT JOIN  ItemType ON CheckItem.ItemTypeID = ItemType.ID 
+LEFT  JOIN (SELECT  CheckSheetDetail.CheckItemID 
+						 ,sum(case when (OK = 1 and NG = 0 AND ISNULL(NA,0) = 0) then 0 
+							when (OK = 0 and NG = 0 AND ISNULL(NA,0) = 0) then 1000 
+							when (OK = 0 and NG = 0 AND ISNULL(NA,0) = 1) then 10000 
+							else 1 end
+							) as result
+						 ,DtComment.CommentNG
 						 FROM      CheckSheetDetail left join 
 							(SELECT distinct CheckItemID, STUFF((SELECT   ',' + Comment 
 							 FROM (SELECT distinct CheckItemID,Comment
 									FROM [dbo].[CheckSheetDetail]
 									where CheckSheetID = @CheckSheetID 
-									and (OK = 'false' and NG = 'true')	 
+									and (OK = 'false' and NG = 'true'and NA = 'false')	 
 									and Comment &lt;&gt; '') as TB
 			
 									where TB.CheckItemID=CheckSheetDetail.CheckItemID
@@ -69,13 +74,15 @@ FROM CheckItem
 						FROM [dbo].[CheckSheetDetail]
  
 						where CheckSheetID = @CheckSheetID 
-						and (OK = 'false' and NG = 'true')	 
+						and (OK = 'false' and NG = 'true'and NA = 'false')	 
 						and Comment &lt;&gt; '') as DtComment on DtComment.CheckItemID = CheckSheetDetail.CheckItemID
 
 						 where CheckSheetID = @CheckSheetID 
 						 group by CheckSheetDetail.CheckItemID,CommentNG
 						
-                        ) as CheckData on CheckItem.ID = CheckData.CheckItemID order by ItemType.ID">
+                        ) as CheckData 
+						on CheckItem.ID = CheckData.CheckItemID 
+						order by ItemType.ID">
                 <SelectParameters>
                     <asp:QueryStringParameter  Name="CheckSheetID" QueryStringField="CheckSheetID" />
                 </SelectParameters>

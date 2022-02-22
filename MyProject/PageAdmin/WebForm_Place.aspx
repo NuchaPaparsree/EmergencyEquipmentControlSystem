@@ -180,7 +180,7 @@
                                         <asp:Label ID="lbComName" runat="server" Text='<%# Bind("Com_name") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:CommandField ShowEditButton="True" />
+                               <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
                             </Fields>
                             <FooterStyle Width="100%" />
                             <HeaderStyle Width="100%" />
@@ -229,7 +229,7 @@
         <div id="AddNewItem" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="True">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="AddLabel">Detailed View</h3>
+                <h3 id="AddLabel">Add New Place </h3>
             </div>
             <div class="modal-body">
                 <asp:DetailsView ID="DetailsView2" runat="server" CssClass="table table-bordered table-hover" BackColor="White" ForeColor="Black"
@@ -240,37 +240,9 @@
 
                     <FieldHeaderStyle Wrap="False" BackColor="LavenderBlush" Font-Bold="True" ForeColor="Black"></FieldHeaderStyle>
                     <Fields>
-
-                        <asp:TemplateField HeaderText="Building" SortExpression="Building">
-
-                            <InsertItemTemplate>
-                                <asp:DropDownList ID="DropDownList5" runat="server" SelectedValue='<%# Bind("Building") %>' DataTextField="Building" DataValueField="Building">
-                                    <asp:ListItem>A Building</asp:ListItem>
-                                    <asp:ListItem>B Building</asp:ListItem>
-                                    <asp:ListItem>C Building</asp:ListItem>
-                                    <asp:ListItem>D Building</asp:ListItem>
-                                    <asp:ListItem>E Building</asp:ListItem>
-                                    <asp:ListItem>F Building</asp:ListItem>
-                                    <asp:ListItem>G Building</asp:ListItem>
-                                    <asp:ListItem>H Building</asp:ListItem>
-                                    <asp:ListItem>I Building</asp:ListItem>
-                                </asp:DropDownList>
-                            </InsertItemTemplate>
-
-                        </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Floor" SortExpression="Floor">
-
-                            <InsertItemTemplate>
-                                <asp:DropDownList ID="DropDownList6" runat="server" SelectedValue='<%# Bind("Floor") %>'>
-                                    <asp:ListItem>1st Floor</asp:ListItem>
-                                    <asp:ListItem>2nd Floor</asp:ListItem>
-                                    <asp:ListItem>3rd Floor</asp:ListItem>
-                                </asp:DropDownList>
-                            </InsertItemTemplate>
-
-                        </asp:TemplateField>
-
-                        <asp:BoundField DataField="Area" HeaderText="Area" SortExpression="Area" />
+                    <asp:BoundField DataField="Building" HeaderText="Building" SortExpression="Building" />
+                    <asp:BoundField DataField="Floor" HeaderText="Floor" SortExpression="Floor" />
+                    <asp:BoundField DataField="Area" HeaderText="Area" SortExpression="Area" />
                         <asp:TemplateField HeaderText="ControllerID" SortExpression="ControllerID">
                             <InsertItemTemplate>
                                     <asp:DropDownList ID="DropDownList7" runat="server" DataSourceID="SqlDataSource6" DataTextField="ID" DataValueField="ID" SelectedValue='<%# Bind("ControllerID") %>'></asp:DropDownList>
