@@ -168,6 +168,15 @@ namespace MyProject.PageUser
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
 
         /// <summary>
+        /// UpdatePanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+
+        /// <summary>
         /// GridView1 control.
         /// </summary>
         /// <remarks>
@@ -193,6 +202,15 @@ namespace MyProject.PageUser
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox CheckShowGridNoQR;
+
+        /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
 
         /// <summary>
         /// RadioButtonALLYes control.
@@ -222,13 +240,13 @@ namespace MyProject.PageUser
         protected global::System.Web.UI.WebControls.RadioButton RadioButtonALLNA;
 
         /// <summary>
-        /// GridViewNoItemNew control.
+        /// GridViewNoItem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridViewNoItemNew;
+        protected global::System.Web.UI.WebControls.GridView GridViewNoItem;
 
         /// <summary>
         /// SqlDataSourceNoItem control.
