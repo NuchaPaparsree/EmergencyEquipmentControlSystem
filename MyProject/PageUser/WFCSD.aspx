@@ -246,7 +246,7 @@ WHERE (Item.ID = @ID)">
 
                 <asp:GridView ID="GridViewNoItem" runat="server" AutoGenerateColumns="False" DataKeyNames="CheckSheetDetailID" DataSourceID="SqlDataSourceNoItem" HorizontalAlign="Center" OnRowDataBound="OnRowDataBound" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black">
                     <Columns>
-
+ 
                         <asp:BoundField DataField="Name" HeaderText="ItemType" SortExpression="Name" />
                         <asp:BoundField DataField="CheckID" HeaderText="ID" SortExpression="CheckID" />
                         <asp:BoundField DataField="Detail" HeaderText="CheckingDataDetails" SortExpression="Detail" />

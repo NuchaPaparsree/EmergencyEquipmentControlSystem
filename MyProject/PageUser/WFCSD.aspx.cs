@@ -61,19 +61,19 @@ namespace MyProject.PageUser
                         if (!Convert.ToBoolean(DTCheckNoQR.Rows[0]["CountNoQROK"]) && !Convert.ToBoolean(DTCheckNoQR.Rows[0]["CountNoQRNG"]) && !Convert.ToBoolean(DTCheckNoQR.Rows[0]["CountNoQRNA"]))
                         {
                             GridViewNoItem.Visible = true;
-                            FormView4.Visible = true;
                             RadioButtonALLYes.Visible = true;
                             RadioButtonALLNO.Visible = true;
                             RadioButtonALLNA.Visible = true;
+                            CheckShowGridNoQR.Checked = true;
+
                         }
                         else
                         {
                             GridViewNoItem.Visible = false;
-                            FormView4.Visible = false;
                             RadioButtonALLYes.Visible = false;
                             RadioButtonALLNO.Visible = false;
                             RadioButtonALLNA.Visible = false;
-                          
+                             
                         }
                     }
                 }
@@ -174,43 +174,47 @@ namespace MyProject.PageUser
 
             if (GridViewNoItem.Rows.Count == 0)
             {
-                //Page.ClientScript.RegisterStartupScript(this.GetType(), "Alert", "alert('อุปกรณ์นี้ยังไม่ถูกเช็ค !!');", true);
             }
 
             else
             {
-                foreach (GridViewRow row in GridViewNoItem.Rows)
+                if (CheckShowGridNoQR.Checked)
                 {
-                    RadioButton statusOK = (row.Cells[3].FindControl("RadioButton1No") as RadioButton);
-                    RadioButton statusNG = (row.Cells[4].FindControl("RadioButton2No") as RadioButton);
-                    RadioButton statusNA = (row.Cells[5].FindControl("RadioButton3No") as RadioButton);
-                    FileUpload imageFile = (row.Cells[6].FindControl("FileUploadCamera") as FileUpload);
-                    TextBox Comment = (row.Cells[8].FindControl("TextBoxCommentNo") as TextBox);
-
-                    int ID = Convert.ToInt32(GridViewNoItem.DataKeys[row.RowIndex].Value.ToString());
-                    //Convert.ToInt32(row.Cells[0].Text);
-
-                    int checkOK = 0;
-                    if (statusOK.Checked)
+                    foreach (GridViewRow row in GridViewNoItem.Rows)
                     {
-                        checkOK = 1;
-                    }
+                        RadioButton statusOK = (row.Cells[3].FindControl("RadioButton1No") as RadioButton);
+                        RadioButton statusNG = (row.Cells[4].FindControl("RadioButton2No") as RadioButton);
+                        RadioButton statusNA = (row.Cells[5].FindControl("RadioButton3No") as RadioButton);
+                        FileUpload imageFile = (row.Cells[6].FindControl("FileUploadCamera") as FileUpload);
+                        TextBox Comment = (row.Cells[8].FindControl("TextBoxCommentNo") as TextBox);
 
-                    int checkNG = 0;
-                    if (statusNG.Checked)
-                    {
-                        checkNG = 1;
-                    }
+                        int ID = Convert.ToInt32(GridViewNoItem.DataKeys[row.RowIndex].Value.ToString());
+                        //Convert.ToInt32(row.Cells[0].Text);
 
-                    int checkNA = 0;
-                    if (statusNA.Checked)
-                    {
-                        checkNA = 1;
-                    }
+                        int checkOK = 0;
+                        if (statusOK.Checked)
+                        {
+                            checkOK = 1;
+                        }
 
-                    updaterow(ID, checkOK, checkNG, checkNA, imageFile, Comment);
+                        int checkNG = 0;
+                        if (statusNG.Checked)
+                        {
+                            checkNG = 1;
+                        }
+
+                        int checkNA = 0;
+                        if (statusNA.Checked)
+                        {
+                            checkNA = 1;
+                        }
+                        updaterow(ID, checkOK, checkNG, checkNA, imageFile, Comment);
+                    }
                 }
+                else
+                {
 
+                }
                 GridViewNoItem.DataBind();
             }
 
@@ -245,6 +249,12 @@ namespace MyProject.PageUser
                     }
                     int checkNA = 0;
 
+
+                    if (imageFile is null)
+                    {
+                        
+                    }
+
                     updaterow(ID, checkOK, checkNG, checkNA, imageFile, Comment);
                 }
 
@@ -257,7 +267,7 @@ namespace MyProject.PageUser
         }
 
 
-        private void updaterow(int ID, int markstatusOK, int markstatusNG,int markstatusNA, FileUpload imageFile,TextBox Comment)
+        private void updaterow(int ID, int markstatusOK, int markstatusNG,int markstatusNA, FileUpload imageFile, TextBox Comment)
         {
             string filename = Path.GetFileName(imageFile.PostedFile.FileName);
             string contentType = imageFile.PostedFile.ContentType;
@@ -334,9 +344,7 @@ namespace MyProject.PageUser
             if (CheckShowGridNoQR.Checked)
             {
                 GridViewNoItem.DataBind();
-                FormView4.DataBind();
                 GridViewNoItem.Visible = true;
-                FormView4.Visible = true;
                 RadioButtonALLYes.Visible = true;
                 RadioButtonALLNO.Visible = true;
                 RadioButtonALLNA.Visible = true;
@@ -344,7 +352,6 @@ namespace MyProject.PageUser
             else
             {
                 GridViewNoItem.Visible = false;
-                FormView4.Visible = false;
                 RadioButtonALLYes.Visible = false;
                 RadioButtonALLNO.Visible = false;
                 RadioButtonALLNA.Visible = false;
